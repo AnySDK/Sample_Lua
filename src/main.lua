@@ -38,7 +38,7 @@ local function main()
     cclog("result is " .. myadd(1, 1))
 
     --for anysdk
-    local agent = anysdk.AgentManager:getInstance()
+    local agent = AgentManager:getInstance()
     cclog("agent is---" .. type(agent))
     --init
     local appKey = "BA5B660B-6DD5-0F67-8CC7-8FE0BA7545D6";
@@ -312,7 +312,7 @@ local function main()
                     end
                 elseif item == user_menu.SHOW_TOOLBAR then
                     if user_plugin:isSupportFunction("showToolBar") then
-                        local param1 = anysdk.PluginParam:PluginParam(1)
+                        local param1 = PluginParam:PluginParam(1)
                         user_plugin:callFuncWithParam("showToolBar", {param1})
                     end
                 elseif item == user_menu.HIDE_TOOLBAR then
@@ -333,7 +333,7 @@ local function main()
                     end
                 elseif item == user_menu.SUBMIT_LOGIN_GAMEROLE then
                     if user_plugin:isSupportFunction("submitLoginGameRole") then
-                        local data = anysdk.PluginParam:PluginParam({roleId="123456",roleName="test",roleLevel="10",zoneId="123",zoneName="test",dataType="1",ext="login"})
+                        local data = PluginParam:PluginParam({roleId="123456",roleName="test",roleLevel="10",zoneId="123",zoneName="test",dataType="1",ext="login"})
                         user_plugin:callFuncWithParam("submitLoginGameRole", data)
                     end
                 end

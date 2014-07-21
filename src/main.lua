@@ -35,6 +35,7 @@ local function main()
         
     end
     require "hello2"
+    require "anysdkConst"
     cclog("result is " .. myadd(1, 1))
 
     --for anysdk
@@ -201,13 +202,7 @@ local function main()
     local FONT_SIZE = 24
     local current_menu_idx = -1
     local display_second_menu = false
-    local AdsType = {
-        "BANNER",     --enum value is banner ads .
-        "FULLSCREEN", --enum value is fullscreen ads .
-        "MOREAPP",    --enum value is moreapp ads .
-        "OFFERWALL"   --enum value is offerwall ads .
-    }
-    AdsType = CreatEnumTable(AdsType)
+
     local function createClickLayer()
         local pLayer = cc.Layer:create()
         local menu = cc.Menu:create()
@@ -312,7 +307,7 @@ local function main()
                     end
                 elseif item == user_menu.SHOW_TOOLBAR then
                     if user_plugin:isSupportFunction("showToolBar") then
-                        local param1 = PluginParam:PluginParam(1)
+                        local param1 = PluginParam:PluginParam(ToolBarPlace.kToolBarTopLeft)
                         user_plugin:callFuncWithParam("showToolBar", {param1})
                     end
                 elseif item == user_menu.HIDE_TOOLBAR then
@@ -377,13 +372,13 @@ local function main()
                 if item == ads_menu.SHOW_ADS then
                     if ads_plugin ~= nil then
                         if ads_plugin:isSupportFunction("AD_TYPE_FULLSCREEN") then
-                            ads_plugin:showAds(AdsType.FULLSCREEN)
+                            ads_plugin:showAds(AdsType.AD_TYPE_FULLSCREEN)
                         end
                     end
                 elseif item == ads_menu.HIDE_ADS then
                     if ads_plugin ~= nil then
                         if ads_plugin:isSupportFunction("AD_TYPE_FULLSCREEN") then
-                            ads_plugin:hideAds(AdsType.FULLSCREEN)
+                            ads_plugin:hideAds(AdsType.AD_TYPE_FULLSCREEN)
                         end
                     end
                 end

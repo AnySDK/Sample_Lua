@@ -307,7 +307,7 @@ local function main()
                     end
                 elseif item == user_menu.SHOW_TOOLBAR then
                     if user_plugin:isSupportFunction("showToolBar") then
-                        local param1 = PluginParam:PluginParam(ToolBarPlace.kToolBarTopLeft)
+                        local param1 = PluginParam:create(ToolBarPlace.kToolBarTopLeft)
                         user_plugin:callFuncWithParam("showToolBar", {param1})
                     end
                 elseif item == user_menu.HIDE_TOOLBAR then
@@ -328,7 +328,7 @@ local function main()
                     end
                 elseif item == user_menu.SUBMIT_LOGIN_GAMEROLE then
                     if user_plugin:isSupportFunction("submitLoginGameRole") then
-                        local data = PluginParam:PluginParam({roleId="123456",roleName="test",roleLevel="10",zoneId="123",zoneName="test",dataType="1",ext="login"})
+                        local data = PluginParam:create({roleId="123456",roleName="test",roleLevel="10",zoneId="123",zoneName="test",dataType="1",ext="login"})
                         user_plugin:callFuncWithParam("submitLoginGameRole", data)
                     end
                 end

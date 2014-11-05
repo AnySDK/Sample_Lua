@@ -7,10 +7,6 @@
         {
             "from": "../../../res",
             "to": "res"
-        },
-        {
-            "from": "../../cocos2d-x/cocos/scripting/lua-bindings/script",
-            "to": ""
         }
     ]
 }

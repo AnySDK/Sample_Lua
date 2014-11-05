@@ -14,6 +14,8 @@ public:
     AppDelegate();
     virtual ~AppDelegate();
 
+    virtual void initGLContextAttrs();
+
     /**
     @brief    Implement Director and Scene init code here.
     @return true    Initialize success, app continue.
@@ -32,8 +34,6 @@ public:
     @param  the pointer of the application
     */
     virtual void applicationWillEnterForeground();
-
-    void login();
 };
 
 #endif  // __APP_DELEGATE_H__

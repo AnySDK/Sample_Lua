@@ -28,5 +28,34 @@ package org.cocos2dx.lua;
 
 import org.cocos2dx.lib.Cocos2dxActivity;
 
+import android.content.Intent;
+import android.os.Bundle;
+
+import com.anysdk.framework.PluginWrapper;
+
 public class AppActivity extends Cocos2dxActivity {
+	protected void onCreate(Bundle savedState)
+    {
+        super.onCreate(savedState);
+        PluginWrapper.init(this); // for plugins
+    }
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data){
+		super.onActivityResult(requestCode, resultCode, data);
+		PluginWrapper.onActivityResult(requestCode, resultCode, data);
+	}
+	@Override
+	protected void onResume() {
+	    super.onResume();
+	    PluginWrapper.onResume();
+	}
+	@Override
+	public void onPause(){
+	    PluginWrapper.onPause();
+	    super.onPause();
+	}
+	protected void onNewIntent(Intent intent) {
+	    PluginWrapper.onNewIntent(intent);
+	    super.onNewIntent(intent);
+	}
 }

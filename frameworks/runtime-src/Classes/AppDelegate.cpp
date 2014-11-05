@@ -3,6 +3,9 @@
 #include "SimpleAudioEngine.h"
 #include "cocos2d.h"
 #include "lua_module_register.h"
+//for anysdk
+#include "anysdkbindings.h"
+#include "anysdk_manual_bindings.h"
 
 using namespace CocosDenshion;
 
@@ -35,6 +38,13 @@ bool AppDelegate::applicationDidFinishLaunching()
     ScriptEngineManager::getInstance()->setScriptEngine(engine);
     lua_State* L = engine->getLuaStack()->getLuaState();
     lua_module_register(L);
+
+    //for anysdk
+    LuaStack* stack = engine->getLuaStack();
+    lua_getglobal(stack->getLuaState(), "_G");
+    tolua_anysdk_open(stack->getLuaState());
+    tolua_anysdk_manual_open(stack->getLuaState());
+    lua_pop(stack->getLuaState(), 1);
 
     // If you want to use Quick-Cocos2d-X, please uncomment below code
     // register_all_quick_manual(L);

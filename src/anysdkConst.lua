@@ -30,7 +30,7 @@ AdsResultCode = {
     "kUnknownError",              --/**< enum the callback of Unknown error. */
     "kOfferWallOnPointsChanged",   --/**< enum the callback of Changing the point of offerwall. */
 };	--ads result code
-AdsResultCode = CreatEnumTable(AdsResultCode, 0)
+AdsResultCode = CreatEnumTable(AdsResultCode, 10000)
 
 AdsPos = {
     "kPosCenter",			--/**< enum the toolbar is at center. */
@@ -62,13 +62,13 @@ PayResultCode = {
 	"kPayInitFail",		--/**< enum value is callback of failing to init sdk . */
 	"kPayNowPaying" 	--/**< enum value is callback of paying now . */
 };
-PayResultCode = CreatEnumTable(PayResultCode, 0)
+PayResultCode = CreatEnumTable(PayResultCode, 30000)
 
 -- for push action result code
 PushActionResultCode = {
 	"kPushReceiveMessage"	--/**value is callback of Receiving Message . */
 };
-PushActionResultCode = CreatEnumTable(PushActionResultCode, 0)
+PushActionResultCode = CreatEnumTable(PushActionResultCode, 70000)
 
 -- for share result code
 ShareResultCode = {
@@ -77,7 +77,7 @@ ShareResultCode = {
     "kShareCancel",		--/**< enum value is callback of canceling to share . */
     "kShareNetworkError"	--/**< enum value is callback of network error . */
 };
-ShareResultCode = CreatEnumTable(ShareResultCode, 0)
+ShareResultCode = CreatEnumTable(ShareResultCode, 40000)
 
 --for social ret code
 SocialRetCode = {
@@ -92,7 +92,7 @@ SocialRetCode = {
     "kSocialSignOutSucceed",	--/**< enum value is callback of succeeding to login. */
     "kSocialSignOutFail"		--/**< enum value is callback of failing to  login. */
 };
-SocialRetCode = CreatEnumTable(SocialRetCode, 1)
+SocialRetCode = CreatEnumTable(SocialRetCode, 60001)
 
 -- for user action result code
 UserActionResultCode = {
@@ -114,7 +114,7 @@ UserActionResultCode = {
     "kAccountSwitchSuccess",	--/**< enum alue is callback of succeeding in switching account. */
     "kAccountSwitchFail"	--/**< enum value is callback of failing to switch account. */
 };
-UserActionResultCode = CreatEnumTable(UserActionResultCode, 0)
+UserActionResultCode = CreatEnumTable(UserActionResultCode, 50000)
 
 -- for toolBar place
 ToolBarPlace = {
@@ -126,3 +126,41 @@ ToolBarPlace = {
     "kToolBarBottomRight" 	--/**< enum the toolbar is at bottomright. */
 };
 ToolBarPlace = CreatEnumTable(ToolBarPlace, 1)
+
+-------------for analytics---------------
+-- for analytics
+AccountType = {
+    "ANONYMOUS",
+    "REGISTED",
+    "SINA_WEIBO",
+    "TENCENT_WEIBO",
+    "QQ",
+    "QQ_WEIBO",
+    "ND91"
+}; 
+AccountType = CreatEnumTable(AccountType, 0)
+
+AccountOperate = {
+    "LOGIN",
+    "LOGOUT",
+    "REGISTER"
+};
+AccountOperate = CreatEnumTable(AccountOperate, 0)
+
+AccountGender = {
+    "MALE",
+    "FEMALE",
+    "UNKNOWN"
+}
+AccountGender = CreatEnumTable(AccountGender, 0)
+
+TaskType = {
+    "GUIDE_LINE",
+    "MAIN_LINE",
+    "BRANCH_LINE",
+    "DAILY",
+    "ACTIVITY",
+    "OTHER"
+};
+TaskType = CreatEnumTable(TaskType, 0)
+-------------for analytics---------------

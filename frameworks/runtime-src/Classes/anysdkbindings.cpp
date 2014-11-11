@@ -1966,9 +1966,10 @@ static int tolua_anysdk_ProtocolUser_login01(lua_State* tolua_S)
   ProtocolUser* self = (ProtocolUser*)  tolua_tousertype(tolua_S,1,0);
   std::string server_id = ((std::string)  tolua_tocppstring(tolua_S,2,0));
   std::string server_ip = "";
-  if( lua_type(tolua_S, 3) == LUA_TSTRING )
+  if ( lua_type(tolua_S, 3) == LUA_TSTRING )
+  {
     server_ip = ((std::string)  tolua_tocppstring(tolua_S,3,0));
-
+  }
 #ifndef TOLUA_RELEASE
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'login'", NULL);
 #endif

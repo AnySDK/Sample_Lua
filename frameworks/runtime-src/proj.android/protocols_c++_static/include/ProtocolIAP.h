@@ -27,11 +27,12 @@ typedef enum
 	kPayInitSuccess,/**< enum value is callback of succeeding in initing sdk . */
 	kPayInitFail,/**< enum value is callback of failing to init sdk . */
 	kPayNowPaying,/**< enum value is callback of paying now . */
+	kPayRechareSuccess,/**< enum value is callback of  succeeding in recharging. */
 } PayResultCode;
 /** @brief RequestResultCode enum, with inline docs */
 typedef enum
 {
-    kRequestSuccess = 0,/**< enum value is callback of succeeding in paying . */
+    kRequestSuccess = 31000,/**< enum value is callback of succeeding in paying . */
     kRequestFail/**< enum value is callback of failing to pay . */
 } RequestResultCode;
 /**   

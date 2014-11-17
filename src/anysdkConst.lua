@@ -60,7 +60,8 @@ PayResultCode = {
     "kPayProductionInforIncomplete",	--/**< enum value is callback of incompleting info . */
 	"kPayInitSuccess",	--/**< enum value is callback of succeeding in initing sdk . */
 	"kPayInitFail",		--/**< enum value is callback of failing to init sdk . */
-	"kPayNowPaying" 	--/**< enum value is callback of paying now . */
+	"kPayNowPaying" ,	--/**< enum value is callback of paying now . */
+	"kPayRechareSuccess"--/**< enum value is callback of  succeeding in recharging. */
 };
 PayResultCode = CreatEnumTable(PayResultCode, 30000)
 
@@ -112,7 +113,8 @@ UserActionResultCode = {
     "kAntiAddictionQuery",	--/**< enum value is callback after querying antiAddiction. */
     "kRealNameRegister",	--/**< enum value is callback after registering realname. */
     "kAccountSwitchSuccess",	--/**< enum alue is callback of succeeding in switching account. */
-    "kAccountSwitchFail"	--/**< enum value is callback of failing to switch account. */
+    "kAccountSwitchFail",	--/**< enum value is callback of failing to switch account. */
+    "kOpenShop"			--/**< enum value is callback of open the shop. */
 };
 UserActionResultCode = CreatEnumTable(UserActionResultCode, 50000)
 

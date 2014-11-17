@@ -31,6 +31,7 @@ typedef enum
     kRealNameRegister,/**< enum value is callback after registering realname. */
     kAccountSwitchSuccess,/**< enum alue is callback of succeeding in switching account. */
     kAccountSwitchFail,/**< enum value is callback of failing to switch account. */
+    kOpenShop,/**< enum value is callback of open the shop. */
 
 
 } UserActionResultCode;

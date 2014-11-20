@@ -19,7 +19,7 @@ typedef std::map<std::string, TProductInfo> AllProductsInfo;
 /** @brief PayResultCode enum, with inline docs */
 typedef enum 
 {
-    kPaySuccess = 30000,/**< enum value is callback of succeeding in paying . */
+    kPaySuccess = 0,/**< enum value is callback of succeeding in paying . */
     kPayFail,/**< enum value is callback of failing to pay . */
     kPayCancel,/**< enum value is callback of canceling to pay . */
     kPayNetworkError,/**< enum value is callback of network error . */

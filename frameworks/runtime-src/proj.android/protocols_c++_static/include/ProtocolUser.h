@@ -14,7 +14,7 @@ typedef std::map<std::string, std::string> TUserDeveloperInfo;
 /** @brief Plugin_type enum, with inline docs */
 typedef enum
 {
-	kInitSuccess = 50000,/**< enum value is callback of succeeding in initing sdk. */
+	kInitSuccess = 0,/**< enum value is callback of succeeding in initing sdk. */
 	kInitFail,/**< enum  value is callback of failing to init sdk. */
     kLoginSuccess,/**< enum value is callback of succeeding in login.*/
     kLoginNetworkError,/**< enum value is callback of network error*/

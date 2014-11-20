@@ -17,7 +17,7 @@ typedef std::map<std::string, std::string> TShareInfo;
 /** @brief ShareResultCode enum, with inline docs */
 typedef enum 
 {
-    kShareSuccess = 40000,/**< enum value is callback of failing to sharing . */
+    kShareSuccess = 0,/**< enum value is callback of failing to sharing . */
     kShareFail,/**< enum value is callback of failing to share . */
     kShareCancel,/**< enum value is callback of canceling to share . */
     kShareNetworkError,/**< enum value is callback of network error . */

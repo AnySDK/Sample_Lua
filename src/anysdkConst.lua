@@ -30,7 +30,7 @@ AdsResultCode = {
     "kUnknownError",              --/**< enum the callback of Unknown error. */
     "kOfferWallOnPointsChanged",   --/**< enum the callback of Changing the point of offerwall. */
 };	--ads result code
-AdsResultCode = CreatEnumTable(AdsResultCode, 10000)
+AdsResultCode = CreatEnumTable(AdsResultCode, 0)
 
 AdsPos = {
     "kPosCenter",			--/**< enum the toolbar is at center. */
@@ -60,15 +60,16 @@ PayResultCode = {
     "kPayProductionInforIncomplete",	--/**< enum value is callback of incompleting info . */
 	"kPayInitSuccess",	--/**< enum value is callback of succeeding in initing sdk . */
 	"kPayInitFail",		--/**< enum value is callback of failing to init sdk . */
-	"kPayNowPaying" 	--/**< enum value is callback of paying now . */
+	"kPayNowPaying" ,	--/**< enum value is callback of paying now . */
+	"kPayRechareSuccess"--/**< enum value is callback of  succeeding in recharging. */
 };
-PayResultCode = CreatEnumTable(PayResultCode, 30000)
+PayResultCode = CreatEnumTable(PayResultCode, 0)
 
 -- for push action result code
 PushActionResultCode = {
 	"kPushReceiveMessage"	--/**value is callback of Receiving Message . */
 };
-PushActionResultCode = CreatEnumTable(PushActionResultCode, 70000)
+PushActionResultCode = CreatEnumTable(PushActionResultCode, 0)
 
 -- for share result code
 ShareResultCode = {
@@ -77,7 +78,7 @@ ShareResultCode = {
     "kShareCancel",		--/**< enum value is callback of canceling to share . */
     "kShareNetworkError"	--/**< enum value is callback of network error . */
 };
-ShareResultCode = CreatEnumTable(ShareResultCode, 40000)
+ShareResultCode = CreatEnumTable(ShareResultCode, 0)
 
 --for social ret code
 SocialRetCode = {
@@ -92,7 +93,7 @@ SocialRetCode = {
     "kSocialSignOutSucceed",	--/**< enum value is callback of succeeding to login. */
     "kSocialSignOutFail"		--/**< enum value is callback of failing to  login. */
 };
-SocialRetCode = CreatEnumTable(SocialRetCode, 60001)
+SocialRetCode = CreatEnumTable(SocialRetCode, 1)
 
 -- for user action result code
 UserActionResultCode = {
@@ -112,9 +113,10 @@ UserActionResultCode = {
     "kAntiAddictionQuery",	--/**< enum value is callback after querying antiAddiction. */
     "kRealNameRegister",	--/**< enum value is callback after registering realname. */
     "kAccountSwitchSuccess",	--/**< enum alue is callback of succeeding in switching account. */
-    "kAccountSwitchFail"	--/**< enum value is callback of failing to switch account. */
+    "kAccountSwitchFail",	--/**< enum value is callback of failing to switch account. */
+    "kOpenShop"			--/**< enum value is callback of open the shop. */
 };
-UserActionResultCode = CreatEnumTable(UserActionResultCode, 50000)
+UserActionResultCode = CreatEnumTable(UserActionResultCode, 0)
 
 -- for toolBar place
 ToolBarPlace = {

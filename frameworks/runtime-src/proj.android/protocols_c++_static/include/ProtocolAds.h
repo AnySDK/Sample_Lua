@@ -17,7 +17,7 @@ typedef std::map<std::string, std::string> TAdsInfo;
 /** @brief AdsResultCode enum, with inline docs */
 typedef enum
 {
-    kAdsReceived = 10000,           /**< enum the callback: the ad is received is at center. */
+    kAdsReceived = 0,           /**< enum the callback: the ad is received is at center. */
 
     kAdsShown,                  /**< enum the callback: the advertisement dismissed. */
     kAdsDismissed,             /**< enum the callback: the advertisement dismissed. */

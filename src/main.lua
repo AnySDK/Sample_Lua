@@ -316,36 +316,36 @@ local function main()
                     user_plugin:login("server_id")
                     analytics_plugin:logEvent("login")
                 elseif item == user_menu.LOGOUT then
-                    if user_plugin:isSupportFunction("logout") then
+                    if user_plugin:isFunctionSupported("logout") then
                         user_plugin:callFuncWithParam("logout")
                     end
                 elseif item == user_menu.ENTER_PLATFORM then
-                    if user_plugin:isSupportFunction("enterPlatform") then
+                    if user_plugin:isFunctionSupported("enterPlatform") then
                         user_plugin:callFuncWithParam("enterPlatform")
                     end
                 elseif item == user_menu.SHOW_TOOLBAR then
-                    if user_plugin:isSupportFunction("showToolBar") then
+                    if user_plugin:isFunctionSupported("showToolBar") then
                         local param1 = PluginParam:create(ToolBarPlace.kToolBarTopLeft)
                         user_plugin:callFuncWithParam("showToolBar", {param1})
                     end
                 elseif item == user_menu.HIDE_TOOLBAR then
-                    if user_plugin:isSupportFunction("hideToolBar") then
+                    if user_plugin:isFunctionSupported("hideToolBar") then
                         user_plugin:callFuncWithParam("hideToolBar")
                     end
                 elseif item == user_menu.ACCOUNTSWITCH_PAY then
-                    if user_plugin:isSupportFunction("accountSwitch") then
+                    if user_plugin:isFunctionSupported("accountSwitch") then
                         user_plugin:callFuncWithParam("accountSwitch")
                     end
                 elseif item == user_menu.REALNAME_REGISTER then
-                    if user_plugin:isSupportFunction("realNameRegister") then
+                    if user_plugin:isFunctionSupported("realNameRegister") then
                         user_plugin:callFuncWithParam("realNameRegister")
                     end
                 elseif item == user_menu.ANTI_ADDICTION_QUERY then
-                    if user_plugin:isSupportFunction("antiAddictionQuery") then
+                    if user_plugin:isFunctionSupported("antiAddictionQuery") then
                         user_plugin:callFuncWithParam("antiAddictionQuery")
                     end
                 elseif item == user_menu.SUBMIT_LOGIN_GAMEROLE then
-                    if user_plugin:isSupportFunction("submitLoginGameRole") then
+                    if user_plugin:isFunctionSupported("submitLoginGameRole") then
                         local data = PluginParam:create({roleId="123456",roleName="test",roleLevel="10",zoneId="123",zoneName="test",dataType="1",ext="login"})
                         user_plugin:callFuncWithParam("submitLoginGameRole", data)
                     end
@@ -389,13 +389,13 @@ local function main()
             elseif item < ADS_LEVEL then
                 if item == ads_menu.SHOW_ADS then
                     if ads_plugin ~= nil then
-                        if ads_plugin:isSupportFunction("AD_TYPE_FULLSCREEN") then
+                        if ads_plugin:isAdTypeSupported(AdsType.AD_TYPE_FULLSCREEN) then
                             ads_plugin:showAds(AdsType.AD_TYPE_FULLSCREEN)
                         end
                     end
                 elseif item == ads_menu.HIDE_ADS then
                     if ads_plugin ~= nil then
-                        if ads_plugin:isSupportFunction("AD_TYPE_FULLSCREEN") then
+                        if ads_plugin:isAdTypeSupported(AdsType.AD_TYPE_FULLSCREEN) then
                             ads_plugin:hideAds(AdsType.AD_TYPE_FULLSCREEN)
                         end
                     end

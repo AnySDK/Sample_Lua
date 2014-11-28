@@ -360,7 +360,7 @@ local function main()
                     cclog("on clicked pay.")
                     
                     local info = {
-                            Product_Price="1", 
+                            Product_Price="0.1", 
                             Product_Id="monthly",  
                             Product_Name="gold",  
                             Server_Id="13",  

@@ -59,9 +59,12 @@ local function main()
     local agent = AgentManager:getInstance()
     cclog("agent is---" .. type(agent))
     --init
-    local appKey = "BA5B660B-6DD5-0F67-8CC7-8FE0BA7545D6";
-    local appSecret = "e23ae7d6da34334d4cc11df0dc7f3de0";
-    local privateKey = "76E1D975EA4B9A4ECD0E85AF2D782E99";
+    -- local appKey = "BA5B660B-6DD5-0F67-8CC7-8FE0BA7545D6";
+    -- local appSecret = "e23ae7d6da34334d4cc11df0dc7f3de0";
+    -- local privateKey = "76E1D975EA4B9A4ECD0E85AF2D782E99";
+    local appKey = "D07766C0-6E82-3993-058C-83DF431DBB8A";
+    local appSecret = "efdcf8ff6afa6494f883f87a2d005c96";
+    local privateKey = "77663DB8B42A9FE0954DE5D36400280E";
     local oauthLoginServer = "http://oauth.anysdk.com/api/OauthLoginDemo/Login.php";
     agent:init(appKey,appSecret,privateKey,oauthLoginServer)
     --load
@@ -314,7 +317,9 @@ local function main()
             elseif item < USER_LEVEL then
                 if item == user_menu.LOGIN then
                     user_plugin:login("server_id")
-                    analytics_plugin:logEvent("login")
+                    -- if analytics_plugin != nil then
+                    --     analytics_plugin:logEvent("login")
+                    -- end
                 elseif item == user_menu.LOGOUT then
                     if user_plugin:isFunctionSupported("logout") then
                         user_plugin:callFuncWithParam("logout")
@@ -355,7 +360,7 @@ local function main()
                     cclog("on clicked pay.")
                     
                     local info = {
-                            Product_Price="1", 
+                            Product_Price="0.1", 
                             Product_Id="monthly",  
                             Product_Name="gold",  
                             Server_Id="13",  
@@ -363,7 +368,7 @@ local function main()
                             Role_Id="1001",  
                             Role_Name="asd"
                         }
-                    analytics_plugin:logEvent("pay", info)
+                    -- analytics_plugin:logEvent("pay", info)
                     for key, value in pairs(iap_plugin_maps) do
                         print("key:" .. key)
                         cclog("value: " .. type(value))
@@ -383,7 +388,7 @@ local function main()
                             comment = "无",
                         }
                         share_plugin:share(info)
-                        analytics_plugin:logEvent("share")
+                        -- analytics_plugin:logEvent("share")
                     end
                 end
             elseif item < ADS_LEVEL then
@@ -415,7 +420,7 @@ local function main()
                         social_plugin:unlockAchievement(achInfo);
                     elseif item == social_menu.SHOW_ACHIEVEMENT then
                         social_plugin:showAchievements();
-                        analytics_plugin:logEvent("showAchievements");
+                        -- analytics_plugin:logEvent("showAchievements");
                     end
                 end
             elseif item < PUSH_LEVEL then

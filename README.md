@@ -12,3 +12,14 @@ Sample_Lua
 <pre>1：在 frameworks/cocos2d-x/external 增加第三方扩展库 
 2：在 frameworks/cocos2d-x/tools/cocos下增加 abin
 3：修改main.lua下 isSupportFunction--> isFunctionSupported
+</pre>
+<font color="red">备注：</font>
+使用code-ide时，找不到 AgentManager: attemp to index global 'AgentManager' (a nil value)
+<pre>
+1：请运行到android真机；
+2：请重新编译项目。
+</pre>
+运行到手机：
+<img src="md_img/run_phone.jpg">
+重新编译：
+<img src="md_img/re_build.jpg">

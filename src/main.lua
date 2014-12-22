@@ -59,9 +59,18 @@ local function main()
     local agent = AgentManager:getInstance()
     cclog("agent is---" .. type(agent))
     --init
-    local appKey = "BA5B660B-6DD5-0F67-8CC7-8FE0BA7545D6";
-    local appSecret = "e23ae7d6da34334d4cc11df0dc7f3de0";
-    local privateKey = "76E1D975EA4B9A4ECD0E85AF2D782E99";
+    -- local appKey = "BA5B660B-6DD5-0F67-8CC7-8FE0BA7545D6";
+    -- local appSecret = "e23ae7d6da34334d4cc11df0dc7f3de0";
+    -- local privateKey = "76E1D975EA4B9A4ECD0E85AF2D782E99";
+    --cheng shanshan
+    -- local appKey = "03288161-B70D-7C7A-165F-DB2B837C4A05";
+    -- local appSecret = "b7b9201fedfd62862850cc6cb8e5f1bc";
+    -- local privateKey = "383891EC6485CC8B2DDC98E1E07DAE53";
+    --anysdk
+    local appKey = "CED525C0-8D41-F514-96D8-90092EB3899A";
+    local appSecret = "a29b4f22aa63b8274f7f6e2dd5893d9b";
+    local privateKey = "963C4B4DA71BC51C69EB11D24D0C7D49";
+    
     local oauthLoginServer = "http://oauth.anysdk.com/api/OauthLoginDemo/Login.php";
     agent:init(appKey,appSecret,privateKey,oauthLoginServer)
     --load
@@ -73,6 +82,11 @@ local function main()
     local share_plugin =  agent:getSharePlugin()
     local push_plugin =  agent:getPushPlugin()
     local analytics_plugin =  agent:getAnalyticsPlugin()
+
+    -- 
+    print("isAnaylticsEnabled:",agent:isAnaylticsEnabled())
+    agent:setIsAnaylticsEnabled(true)
+    print("isAnaylticsEnabled:",agent:isAnaylticsEnabled())
 
     local function onResult( ... )
         print("pay result----")
@@ -314,38 +328,38 @@ local function main()
             elseif item < USER_LEVEL then
                 if item == user_menu.LOGIN then
                     user_plugin:login("server_id")
-                    analytics_plugin:logEvent("login")
+                    -- analytics_plugin:logEvent("login")
                 elseif item == user_menu.LOGOUT then
-                    if user_plugin:isSupportFunction("logout") then
+                    if user_plugin:isFunctionSupported("logout") then
                         user_plugin:callFuncWithParam("logout")
                     end
                 elseif item == user_menu.ENTER_PLATFORM then
-                    if user_plugin:isSupportFunction("enterPlatform") then
+                    if user_plugin:isFunctionSupported("enterPlatform") then
                         user_plugin:callFuncWithParam("enterPlatform")
                     end
                 elseif item == user_menu.SHOW_TOOLBAR then
-                    if user_plugin:isSupportFunction("showToolBar") then
+                    if user_plugin:isFunctionSupported("showToolBar") then
                         local param1 = PluginParam:create(ToolBarPlace.kToolBarTopLeft)
                         user_plugin:callFuncWithParam("showToolBar", {param1})
                     end
                 elseif item == user_menu.HIDE_TOOLBAR then
-                    if user_plugin:isSupportFunction("hideToolBar") then
+                    if user_plugin:isFunctionSupported("hideToolBar") then
                         user_plugin:callFuncWithParam("hideToolBar")
                     end
                 elseif item == user_menu.ACCOUNTSWITCH_PAY then
-                    if user_plugin:isSupportFunction("accountSwitch") then
+                    if user_plugin:isFunctionSupported("accountSwitch") then
                         user_plugin:callFuncWithParam("accountSwitch")
                     end
                 elseif item == user_menu.REALNAME_REGISTER then
-                    if user_plugin:isSupportFunction("realNameRegister") then
+                    if user_plugin:isFunctionSupported("realNameRegister") then
                         user_plugin:callFuncWithParam("realNameRegister")
                     end
                 elseif item == user_menu.ANTI_ADDICTION_QUERY then
-                    if user_plugin:isSupportFunction("antiAddictionQuery") then
+                    if user_plugin:isFunctionSupported("antiAddictionQuery") then
                         user_plugin:callFuncWithParam("antiAddictionQuery")
                     end
                 elseif item == user_menu.SUBMIT_LOGIN_GAMEROLE then
-                    if user_plugin:isSupportFunction("submitLoginGameRole") then
+                    if user_plugin:isFunctionSupported("submitLoginGameRole") then
                         local data = PluginParam:create({roleId="123456",roleName="test",roleLevel="10",zoneId="123",zoneName="test",dataType="1",ext="login"})
                         user_plugin:callFuncWithParam("submitLoginGameRole", data)
                     end
@@ -363,7 +377,7 @@ local function main()
                             Role_Id="1001",  
                             Role_Name="asd"
                         }
-                    analytics_plugin:logEvent("pay", info)
+                    -- analytics_plugin:logEvent("pay", info)
                     for key, value in pairs(iap_plugin_maps) do
                         print("key:" .. key)
                         cclog("value: " .. type(value))
@@ -383,19 +397,19 @@ local function main()
                             comment = "无",
                         }
                         share_plugin:share(info)
-                        analytics_plugin:logEvent("share")
+                        -- analytics_plugin:logEvent("share")
                     end
                 end
             elseif item < ADS_LEVEL then
                 if item == ads_menu.SHOW_ADS then
                     if ads_plugin ~= nil then
-                        if ads_plugin:isSupportFunction("AD_TYPE_FULLSCREEN") then
+                        if ads_plugin:isAdTypeSupported(AdsType.AD_TYPE_FULLSCREEN) then
                             ads_plugin:showAds(AdsType.AD_TYPE_FULLSCREEN)
                         end
                     end
                 elseif item == ads_menu.HIDE_ADS then
                     if ads_plugin ~= nil then
-                        if ads_plugin:isSupportFunction("AD_TYPE_FULLSCREEN") then
+                        if ads_plugin:isAdTypeSupported(AdsType.AD_TYPE_FULLSCREEN) then
                             ads_plugin:hideAds(AdsType.AD_TYPE_FULLSCREEN)
                         end
                     end
@@ -415,7 +429,7 @@ local function main()
                         social_plugin:unlockAchievement(achInfo);
                     elseif item == social_menu.SHOW_ACHIEVEMENT then
                         social_plugin:showAchievements();
-                        analytics_plugin:logEvent("showAchievements");
+                        -- analytics_plugin:logEvent("showAchievements");
                     end
                 end
             elseif item < PUSH_LEVEL then

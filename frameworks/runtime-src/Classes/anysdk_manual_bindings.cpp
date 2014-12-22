@@ -1627,7 +1627,7 @@ public:
         CCLOG("on pay result: %d, msg: %s.", code, msg);
         LuaStack* stack = LuaEngine::getInstance()->getLuaStack();
         lua_State* tolua_S    = stack->getLuaState();
-        object_to_luaval<ProtocolPush>(tolua_S, "anysdk.ProtocolPush",(ProtocolPush*)pPlugin);
+        object_to_luaval<ProtocolPush>(tolua_S, "ProtocolPush",(ProtocolPush*)pPlugin);
         tolua_pushnumber(tolua_S, (lua_Number)code);
         tolua_pushstring(tolua_S, (const char *)msg);
         stack->executeFunctionByHandler(_handler, 3);
@@ -2063,7 +2063,7 @@ public:
         CCLOG("on action result: %d, msg: %s.", code, msg);
         LuaStack* stack = LuaEngine::getInstance()->getLuaStack();
         lua_State* tolua_S    = stack->getLuaState();
-        object_to_luaval<ProtocolUser>(tolua_S, "anysdk.ProtocolUser",(ProtocolUser*)pPlugin);
+        object_to_luaval<ProtocolUser>(tolua_S, "ProtocolUser",(ProtocolUser*)pPlugin);
         tolua_pushnumber(tolua_S, (lua_Number)code);
         tolua_pushstring(tolua_S, (const char *)msg);
         stack->executeFunctionByHandler(_handler, 3);
@@ -2281,7 +2281,7 @@ public:
         CCLOG("onPlayerGetPoints. points: %d.", points);
         CCLuaStack* stack = CCLuaEngine::defaultEngine()->getLuaStack();
         lua_State* tolua_S    = stack->getLuaState();
-        // object_to_luaval<ProtocolAds>(tolua_S, "anysdk.ProtocolAds",(ProtocolAds*)pAdsPlugin);
+        // object_to_luaval<ProtocolAds>(tolua_S, "ProtocolAds",(ProtocolAds*)pAdsPlugin);
         tolua_pushusertype(tolua_S,(void*)pAdsPlugin,"ProtocolAds");
         tolua_pushnumber(tolua_S, (lua_Number)points);
         stack->executeFunctionByHandler(_handler, 2);
@@ -2290,7 +2290,7 @@ public:
         CCLOG("onPlayerGetPoints. points: %d.", points);
         LuaStack* stack = LuaEngine::getInstance()->getLuaStack();
         lua_State* tolua_S    = stack->getLuaState();
-        object_to_luaval<ProtocolAds>(tolua_S, "anysdk.ProtocolAds",(ProtocolAds*)pAdsPlugin);
+        object_to_luaval<ProtocolAds>(tolua_S, "ProtocolAds",(ProtocolAds*)pAdsPlugin);
         tolua_pushnumber(tolua_S, (lua_Number)points);
         stack->executeFunctionByHandler(_handler, 2);
         stack->clean();

@@ -63,6 +63,8 @@ public:
     */
     virtual void setResultListener(ShareResultListener* pListener) = 0;
 
+    virtual ShareResultListener* getShareListener() = 0;
+
 };
 
 }} // namespace anysdk { namespace framework {

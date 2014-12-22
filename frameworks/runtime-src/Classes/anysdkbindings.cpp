@@ -544,6 +544,78 @@ static int tolua_anysdk_AgentManager_getCustomParam00(lua_State* tolua_S)
 }
 #endif //#ifndef TOLUA_DISABLE
 
+/* method: setIsAnaylticsEnabled of class  AgentManager */
+#ifndef TOLUA_DISABLE_tolua_anysdk_AgentManager_setIsAnaylticsEnabled00
+static int tolua_anysdk_AgentManager_setIsAnaylticsEnabled00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"AgentManager",0,&tolua_err) ||
+     !tolua_isboolean(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  AgentManager* self = (AgentManager*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setIsAnaylticsEnabled'", NULL);
+#endif
+  {
+    int argc = lua_gettop(tolua_S)-1;
+    if (argc == 1)
+    {
+      bool tolua_ret = ((bool)  tolua_toboolean(tolua_S,2,true));
+      CCLOG("setIsAnaylticsEnabled:%d", tolua_ret);
+      self->setIsAnaylticsEnabled(tolua_ret);
+    }
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'setIsAnaylticsEnabled'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: isAnaylticsEnabled of class  AgentManager */
+#ifndef TOLUA_DISABLE_tolua_anysdk_AgentManager_isAnaylticsEnabled00
+static int tolua_anysdk_AgentManager_isAnaylticsEnabled00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"AgentManager",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  AgentManager* self = (AgentManager*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'isAnaylticsEnabled'", NULL);
+#endif
+  {
+   bool tolua_ret = (bool)  self->isAnaylticsEnabled();
+    CCLOG("setIsAnaylticsEnabled:%d", tolua_ret);
+   tolua_pushboolean(tolua_S,(bool)tolua_ret);
+    return 1;
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'isAnaylticsEnabled'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
 /* method: delete of class  PluginFactory */
 #ifndef TOLUA_DISABLE_tolua_anysdk_PluginFactory_delete00
 static int tolua_anysdk_PluginFactory_delete00(lua_State* tolua_S)
@@ -1012,6 +1084,42 @@ static int tolua_anysdk_ProtocolAds_hideAds00(lua_State* tolua_S)
 #ifndef TOLUA_RELEASE
  tolua_lerror:
  tolua_error(tolua_S,"#ferror in function 'hideAds'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: preloadAds of class  ProtocolAds */
+#ifndef TOLUA_DISABLE_tolua_anysdk_ProtocolAds_preloadAds00
+static int tolua_anysdk_ProtocolAds_preloadAds00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"ProtocolAds",0,&tolua_err) ||
+     (tolua_isvaluenil(tolua_S,2,&tolua_err) ) ||
+     !tolua_isnumber(tolua_S,3,1,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,4,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  ProtocolAds* self = (ProtocolAds*)  tolua_tousertype(tolua_S,1,0);
+  AdsType adsType =  (AdsType) ((int)  tolua_tonumber(tolua_S,2,0));
+  int idx = ((int)  tolua_tonumber(tolua_S,3,1));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'preloadAds'", NULL);
+#endif
+  {
+    CCLOG("preloadAds, adsType:%d, %x\n", adsType, self);
+   self->preloadAds(adsType, idx);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'preloadAds'.",&tolua_err);
  return 0;
 #endif
 }
@@ -1966,9 +2074,10 @@ static int tolua_anysdk_ProtocolUser_login01(lua_State* tolua_S)
   ProtocolUser* self = (ProtocolUser*)  tolua_tousertype(tolua_S,1,0);
   std::string server_id = ((std::string)  tolua_tocppstring(tolua_S,2,0));
   std::string server_ip = "";
-  if( lua_type(tolua_S, 3) == LUA_TSTRING )
+  if ( lua_type(tolua_S, 3) == LUA_TSTRING )
+  {
     server_ip = ((std::string)  tolua_tocppstring(tolua_S,3,0));
-
+  }
 #ifndef TOLUA_RELEASE
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'login'", NULL);
 #endif
@@ -2139,6 +2248,8 @@ TOLUA_API int tolua_anysdk_open (lua_State* tolua_S)
    tolua_function(tolua_S,"getChannelId",tolua_anysdk_AgentManager_getChannelId00);
    tolua_function(tolua_S,"getPushPlugin",tolua_anysdk_AgentManager_getPushPlugin00);
    tolua_function(tolua_S,"getCustomParam",tolua_anysdk_AgentManager_getCustomParam00);
+   tolua_function(tolua_S,"setIsAnaylticsEnabled",tolua_anysdk_AgentManager_setIsAnaylticsEnabled00);
+   tolua_function(tolua_S,"isAnaylticsEnabled",tolua_anysdk_AgentManager_isAnaylticsEnabled00);
   tolua_endmodule(tolua_S);
   #ifdef __cplusplus
   tolua_cclass(tolua_S,"PluginFactory","PluginFactory","",tolua_collect_PluginFactory);
@@ -2174,6 +2285,7 @@ TOLUA_API int tolua_anysdk_open (lua_State* tolua_S)
   tolua_beginmodule(tolua_S,"ProtocolAds");
    tolua_function(tolua_S,"showAds",tolua_anysdk_ProtocolAds_showAds00);
    tolua_function(tolua_S,"hideAds",tolua_anysdk_ProtocolAds_hideAds00);
+   tolua_function(tolua_S,"preloadAds",tolua_anysdk_ProtocolAds_preloadAds00);
    tolua_function(tolua_S,"queryPoints",tolua_anysdk_ProtocolAds_queryPoints00);
    tolua_function(tolua_S,"spendPoints",tolua_anysdk_ProtocolAds_spendPoints00);
    tolua_function(tolua_S,"isAdTypeSupported",tolua_anysdk_ProtocolAds_isAdTypeSupported00);

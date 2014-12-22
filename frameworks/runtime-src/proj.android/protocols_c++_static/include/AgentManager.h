@@ -16,7 +16,16 @@
 #include <map>
 #include <string>
 namespace anysdk { namespace framework {
-
+typedef enum
+{
+	kAdsType = 1,
+	kAnalyticsType = 2,
+	kIAPType = 3,
+	kShareType = 4,
+	kUserType = 5,
+	kSocialType = 6,
+	kPushType = 7,
+}AnySDKType;
 /**   
  *  @class  AgentManager  
  */
@@ -114,6 +123,9 @@ public:
      */
     std::string getCustomParam();
 
+    void setIsAnaylticsEnabled(bool value){bIsAnaylticsEnabled = value;};
+    bool isAnaylticsEnabled(){return bIsAnaylticsEnabled;};
+
 
 
 
@@ -148,6 +160,8 @@ private:
     
     // Push plugins
     ProtocolPush* _pPush;
+
+    bool bIsAnaylticsEnabled;
 
 };
 

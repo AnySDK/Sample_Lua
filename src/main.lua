@@ -59,18 +59,11 @@ local function main()
     local agent = AgentManager:getInstance()
     cclog("agent is---" .. type(agent))
     --init
-    -- local appKey = "BA5B660B-6DD5-0F67-8CC7-8FE0BA7545D6";
-    -- local appSecret = "e23ae7d6da34334d4cc11df0dc7f3de0";
-    -- local privateKey = "76E1D975EA4B9A4ECD0E85AF2D782E99";
-    --cheng shanshan
-    -- local appKey = "03288161-B70D-7C7A-165F-DB2B837C4A05";
-    -- local appSecret = "b7b9201fedfd62862850cc6cb8e5f1bc";
-    -- local privateKey = "383891EC6485CC8B2DDC98E1E07DAE53";
     --anysdk
     local appKey = "CED525C0-8D41-F514-96D8-90092EB3899A";
     local appSecret = "a29b4f22aa63b8274f7f6e2dd5893d9b";
     local privateKey = "963C4B4DA71BC51C69EB11D24D0C7D49";
-    
+
     local oauthLoginServer = "http://oauth.anysdk.com/api/OauthLoginDemo/Login.php";
     agent:init(appKey,appSecret,privateKey,oauthLoginServer)
     --load
@@ -328,7 +321,9 @@ local function main()
             elseif item < USER_LEVEL then
                 if item == user_menu.LOGIN then
                     user_plugin:login("server_id")
-                    -- analytics_plugin:logEvent("login")
+                    -- if analytics_plugin != nil then
+                    --     analytics_plugin:logEvent("login")
+                    -- end
                 elseif item == user_menu.LOGOUT then
                     if user_plugin:isFunctionSupported("logout") then
                         user_plugin:callFuncWithParam("logout")
@@ -369,7 +364,7 @@ local function main()
                     cclog("on clicked pay.")
                     
                     local info = {
-                            Product_Price="1", 
+                            Product_Price="0.1", 
                             Product_Id="monthly",  
                             Product_Name="gold",  
                             Server_Id="13",  

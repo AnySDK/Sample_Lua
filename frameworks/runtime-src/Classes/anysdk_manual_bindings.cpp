@@ -72,7 +72,7 @@ USING_NS_CC;
 #ifndef TOLUA_DISABLE_tolua_anysdk_ProtocolShare_setDebugMode
 static int tolua_anysdk_ProtocolShare_setDebugMode(lua_State* tolua_S)
 {
-  CCLog("in function protocols share\n");
+  CCLOG("in function protocols share\n");
 #ifndef TOLUA_RELEASE
   tolua_Error tolua_err;
   if (
@@ -105,7 +105,7 @@ static int tolua_anysdk_ProtocolShare_setDebugMode(lua_State* tolua_S)
 #ifndef TOLUA_DISABLE_tolua_anysdk_ProtocolShare_share00
 static int tolua_anysdk_ProtocolShare_share00(lua_State* tolua_S)
 {
-	CCLog("in function protocols share\n");
+	CCLOG("in function protocols share\n");
 #ifndef TOLUA_RELEASE
 	tolua_Error tolua_err;
 	if (
@@ -139,7 +139,7 @@ static int tolua_anysdk_ProtocolShare_share00(lua_State* tolua_S)
                 key = tolua_tocppstring(tolua_S, -2, NULL);
                 std::string value = "";
                 value = tolua_tocppstring(tolua_S, -1, NULL);
-                CCLog("key: %s, value: %s.", key.c_str(), value.c_str());
+                CCLOG("key: %s, value: %s.", key.c_str(), value.c_str());
                 strmap.insert( StringMap::value_type(key, value) );
                 lua_pop(tolua_S, 1);                                          /* L: lotable ..... key */
             }
@@ -183,7 +183,7 @@ public:
     virtual void onShareResult(ShareResultCode ret, const char* msg)
     {
       #ifdef ON_VERSION_2
-        CCLog("on action result: %d, msg: %s.", ret, msg);
+        CCLOG("on action result: %d, msg: %s.", ret, msg);
         CCLuaStack* stack = CCLuaEngine::defaultEngine()->getLuaStack();
         lua_State* tolua_S    = stack->getLuaState();
         tolua_pushnumber(tolua_S, (lua_Number)ret);
@@ -248,7 +248,7 @@ static int tolua_anysdk_ProtocolShare_setResultListener(lua_State* tolua_S)
 #endif
   {
     int argc = lua_gettop(tolua_S)-1;
-    CCLog("argc: %d.", argc);
+    CCLOG("argc: %d.", argc);
     if (argc == 1)
     {
 #ifndef TOLUA_RELEASE
@@ -263,12 +263,10 @@ static int tolua_anysdk_ProtocolShare_setResultListener(lua_State* tolua_S)
         {
             return 0;
         }
-        CCLog("will set push action listener:");
+        CCLOG("will set push action listener:");
         ProtocolShareActionListener* listener = ProtocolShareActionListener::getInstance();
         listener->setHandler(handler);
         self->setResultListener(listener);
-
-        CCLog("set listener end");
 
         return 0;
     }
@@ -302,7 +300,6 @@ static int tolua_anysdk_ProtocolShare_removeListener(lua_State* tolua_S)
 #endif
   {
     int argc = lua_gettop(tolua_S)-1;
-    CCLog("argc: %d.", argc);
     if (argc == 1)
     {
         if (ProtocolShareActionListener::_instance != NULL)
@@ -340,13 +337,11 @@ static void extendProtocolsShare(lua_State* tolua_S)
 #ifndef TOLUA_DISABLE_tolua_anysdk_PluginParam_create
 static int tolua_anysdk_PluginParam_create(lua_State* tolua_S)
 {
-	CCLog("in function PluginParam create\n");
 #ifndef TOLUA_RELEASE
 	tolua_Error tolua_err;
 #endif
 	{
 		int argc = lua_gettop(tolua_S)-1;
-		CCLog("argc: %d.", argc);
 		PluginParam* param = NULL;
 		if (argc == 0){
 			param = new PluginParam();
@@ -399,7 +394,6 @@ static int tolua_anysdk_PluginParam_create(lua_State* tolua_S)
 	                std::string value = "";
 	                value = tolua_tocppstring(tolua_S, -1, NULL);
 	                strmap.insert( StringMap::value_type(key, value) );
-	                CCLog("key: %s, value: %s.", key.c_str(), value.c_str());
 	                lua_pop(tolua_S, 1);                                          /* L: lotable ..... key */
 	            }
 	            param = new PluginParam(strmap);
@@ -595,9 +589,7 @@ static int tolua_anysdk_PluginProtocol_callFuncWithParam(lua_State* tolua_S)
 #endif
   {
   	int argc = lua_gettop(tolua_S)-1;
-  	CCLog("argc: %d.", argc);
     if(argc == 0){
-      CCLog("error param number in callFuncWithParam.");
       return 0;
   	}
     else if (argc == 1)
@@ -614,19 +606,15 @@ static int tolua_anysdk_PluginProtocol_callFuncWithParam(lua_State* tolua_S)
       std::vector<PluginParam*> params;
       if (!tolua_istable(tolua_S, 3, 0, &tolua_err))
       {
-        CCLog("is not usertable");
-
         for (int i = 2; i <= argc; ++i)
         {
             PluginParam* param = (PluginParam*)tolua_tousertype(tolua_S,i+1,0);
-            CCLog("param:%s.", param->getStringValue());
             params.push_back(param);
         }
       }
       else
       {
         size_t len = lua_objlen(tolua_S, 3);
-        CCLog("is usertable: %d.", len);
         for (int i = 0; i < len; i++)
         {
             lua_pushnumber(tolua_S, i + 1);
@@ -641,11 +629,11 @@ static int tolua_anysdk_PluginProtocol_callFuncWithParam(lua_State* tolua_S)
             PluginParam* param = static_cast<PluginParam*>(tolua_tousertype(tolua_S, -1, NULL) );
             if (NULL != param)
             {
-                CCLog("param: %d", param->getIntValue());
+                CCLOG("param: %d", param->getIntValue());
                 params.push_back(param);
             }
             else{
-                CCLog("param is null");
+                CCLOG("param is null");
             }
             lua_pop(tolua_S, 1);
         }
@@ -683,9 +671,8 @@ static int tolua_anysdk_PluginProtocol_callStringFuncWithParam(lua_State* tolua_
 #endif
   {
     int argc = lua_gettop(tolua_S)-1;
-    CCLog("argc: %d.", argc);
     if(argc == 0){
-      CCLog("error param number in callStringFuncWithParam.");
+      CCLOG("error param number in callStringFuncWithParam.");
       return 0;
     }
     else if (argc == 1)
@@ -702,19 +689,15 @@ static int tolua_anysdk_PluginProtocol_callStringFuncWithParam(lua_State* tolua_
       std::vector<PluginParam*> params;
       if (!tolua_istable(tolua_S, 3, 0, &tolua_err))
       {
-        CCLog("is not usertable");
-
         for (int i = 2; i <= argc; ++i)
         {
             PluginParam* param = (PluginParam*)tolua_tousertype(tolua_S,i+1,0);
-            CCLog("param:%s.", param->getStringValue());
             params.push_back(param);
         }
       }
       else
       {
         size_t len = lua_objlen(tolua_S, 3);
-        CCLog("is usertable: %d.", len);
         for (int i = 0; i < len; i++)
         {
             lua_pushnumber(tolua_S, i + 1);
@@ -729,11 +712,10 @@ static int tolua_anysdk_PluginProtocol_callStringFuncWithParam(lua_State* tolua_
             PluginParam* param = static_cast<PluginParam*>(tolua_tousertype(tolua_S, -1, NULL) );
             if (NULL != param)
             {
-                CCLog("param: %d", param->getIntValue());
                 params.push_back(param);
             }
             else{
-                CCLog("param is null");
+                CCLOG("param is null");
             }
             lua_pop(tolua_S, 1);
         }
@@ -771,9 +753,8 @@ static int tolua_anysdk_PluginProtocol_callIntFuncWithParam(lua_State* tolua_S)
 #endif
   {
     int argc = lua_gettop(tolua_S)-1;
-    CCLog("argc: %d.", argc);
     if(argc == 0){
-      CCLog("error param number in callIntFuncWithParam.");
+      CCLOG("error param number in callIntFuncWithParam.");
       return 0;
     }
     else if (argc == 1)
@@ -790,19 +771,16 @@ static int tolua_anysdk_PluginProtocol_callIntFuncWithParam(lua_State* tolua_S)
       std::vector<PluginParam*> params;
       if (!tolua_istable(tolua_S, 3, 0, &tolua_err))
       {
-        CCLog("is not usertable");
 
         for (int i = 2; i <= argc; ++i)
         {
             PluginParam* param = (PluginParam*)tolua_tousertype(tolua_S,i+1,0);
-            CCLog("param:%s.", param->getStringValue());
             params.push_back(param);
         }
       }
       else
       {
         size_t len = lua_objlen(tolua_S, 3);
-        CCLog("is usertable: %d.", len);
         for (int i = 0; i < len; i++)
         {
             lua_pushnumber(tolua_S, i + 1);
@@ -817,11 +795,10 @@ static int tolua_anysdk_PluginProtocol_callIntFuncWithParam(lua_State* tolua_S)
             PluginParam* param = static_cast<PluginParam*>(tolua_tousertype(tolua_S, -1, NULL) );
             if (NULL != param)
             {
-                CCLog("param: %d", param->getIntValue());
                 params.push_back(param);
             }
             else{
-                CCLog("param is null");
+                CCLOG("param is null");
             }
             lua_pop(tolua_S, 1);
         }
@@ -859,9 +836,8 @@ static int tolua_anysdk_PluginProtocol_callBoolFuncWithParam(lua_State* tolua_S)
 #endif
   {
     int argc = lua_gettop(tolua_S)-1;
-    CCLog("argc: %d.", argc);
     if(argc == 0){
-      CCLog("error param number in callBoolFuncWithParam.");
+      CCLOG("error param number in callBoolFuncWithParam.");
       return 0;
     }
     else if (argc == 1)
@@ -878,19 +854,15 @@ static int tolua_anysdk_PluginProtocol_callBoolFuncWithParam(lua_State* tolua_S)
       std::vector<PluginParam*> params;
       if (!tolua_istable(tolua_S, 3, 0, &tolua_err))
       {
-        CCLog("is not usertable");
-
         for (int i = 2; i <= argc; ++i)
         {
             PluginParam* param = (PluginParam*)tolua_tousertype(tolua_S,i+1,0);
-            CCLog("param:%s.", param->getStringValue());
             params.push_back(param);
         }
       }
       else
       {
         size_t len = lua_objlen(tolua_S, 3);
-        CCLog("is usertable: %d.", len);
         for (int i = 0; i < len; i++)
         {
             lua_pushnumber(tolua_S, i + 1);
@@ -905,11 +877,10 @@ static int tolua_anysdk_PluginProtocol_callBoolFuncWithParam(lua_State* tolua_S)
             PluginParam* param = static_cast<PluginParam*>(tolua_tousertype(tolua_S, -1, NULL) );
             if (NULL != param)
             {
-                CCLog("param: %d", param->getIntValue());
                 params.push_back(param);
             }
             else{
-                CCLog("param is null");
+                CCLOG("param is null");
             }
             lua_pop(tolua_S, 1);
         }
@@ -947,9 +918,8 @@ static int tolua_anysdk_PluginProtocol_callFloatFuncWithParam(lua_State* tolua_S
 #endif
   {
     int argc = lua_gettop(tolua_S)-1;
-    CCLog("argc: %d.", argc);
     if(argc == 0){
-      CCLog("error param number in callFloatFuncWithParam.");
+      CCLOG("error param number in callFloatFuncWithParam.");
       return 0;
     }
     else if (argc == 1)
@@ -966,19 +936,15 @@ static int tolua_anysdk_PluginProtocol_callFloatFuncWithParam(lua_State* tolua_S
       std::vector<PluginParam*> params;
       if (!tolua_istable(tolua_S, 3, 0, &tolua_err))
       {
-        CCLog("is not usertable");
-
         for (int i = 2; i <= argc; ++i)
         {
             PluginParam* param = (PluginParam*)tolua_tousertype(tolua_S,i+1,0);
-            CCLog("param:%s.", param->getStringValue());
             params.push_back(param);
         }
       }
       else
       {
         size_t len = lua_objlen(tolua_S, 3);
-        CCLog("is usertable: %d.", len);
         for (int i = 0; i < len; i++)
         {
             lua_pushnumber(tolua_S, i + 1);
@@ -993,11 +959,10 @@ static int tolua_anysdk_PluginProtocol_callFloatFuncWithParam(lua_State* tolua_S
             PluginParam* param = static_cast<PluginParam*>(tolua_tousertype(tolua_S, -1, NULL) );
             if (NULL != param)
             {
-                CCLog("param: %d", param->getIntValue());
                 params.push_back(param);
             }
             else{
-                CCLog("param is null");
+                CCLOG("param is null");
             }
             lua_pop(tolua_S, 1);
         }
@@ -1035,7 +1000,6 @@ static void extendPluginProtocol(lua_State* tolua_S)
 #ifndef TOLUA_DISABLE_tolua_anysdk_ProtocolAnalytics_setDebugMode
 static int tolua_anysdk_ProtocolAnalytics_setDebugMode(lua_State* tolua_S)
 {
-  CCLog("in function protocols analytics\n");
 #ifndef TOLUA_RELEASE
   tolua_Error tolua_err;
   if (
@@ -1085,12 +1049,11 @@ static int tolua_anysdk_ProtocolAnalytics_logEvent(lua_State* tolua_S)
     int argc = lua_gettop(tolua_S)-1;
     if (argc == 0)
     {
-      CCLog("error params count of function logEvent.");
+      CCLOG("error params count of function logEvent.");
       return 0;
     }
     std::string temp = (std::string)tolua_tostring(tolua_S, 2, 0);
     const char* arg1 = temp.c_str();
-      CCLog("logevent, argc: %d, arg1: %s", argc, arg1);
     if (argc == 1)
     {
       self->logEvent(arg1, NULL);
@@ -1116,7 +1079,6 @@ static int tolua_anysdk_ProtocolAnalytics_logEvent(lua_State* tolua_S)
           key = tolua_tocppstring(tolua_S, -2, NULL);
           std::string value = "";
           value = tolua_tocppstring(tolua_S, -1, NULL);
-          CCLog("key: %s, value: %s.", key.c_str(), value.c_str());
           strmap.insert( LogEventParamMap::value_type(key, value) );
           lua_pop(tolua_S, 1);                                          /* L: lotable ..... key */
       }
@@ -1149,7 +1111,6 @@ static void extendProtocolAnalytics(lua_State* tolua_S)
 #ifndef TOLUA_DISABLE_tolua_anysdk_ProtocolIAP_setDebugMode
 static int tolua_anysdk_ProtocolIAP_setDebugMode(lua_State* tolua_S)
 {
-  CCLog("in function protocols iap\n");
 #ifndef TOLUA_RELEASE
   tolua_Error tolua_err;
   if (
@@ -1197,7 +1158,6 @@ static int tolua_anysdk_ProtocolIAP_payForProduct(lua_State* tolua_S)
 #endif
   {
     int argc = lua_gettop(tolua_S)-1;
-    CCLog("pay argc: %d.", argc);
     if (argc == 1)
     { 
       TProductInfo strmap;
@@ -1218,14 +1178,13 @@ static int tolua_anysdk_ProtocolIAP_payForProduct(lua_State* tolua_S)
           key = tolua_tocppstring(tolua_S, -2, NULL);
           std::string value = "";
           value = tolua_tocppstring(tolua_S, -1, NULL);
-          CCLog("key: %s, value: %s.", key.c_str(), value.c_str());
           strmap.insert( StringMap::value_type(key, value) );
           lua_pop(tolua_S, 1);                                          /* L: lotable ..... key */
       }
       self->payForProduct(strmap);
       return 0;
     }
-    CCLog("error params count of function payForProduct.");
+    CCLOG("error params count of function payForProduct.");
   }
 }
  return 0;
@@ -1257,7 +1216,11 @@ public:
     virtual void onPayResult(PayResultCode ret, const char* msg, TProductInfo info)
     {
       #ifdef ON_VERSION_2
+<<<<<<< HEAD
+        CCLOG("on action result: %d, msg: %s.", ret, msg);
+=======
         CCLog("on action result: %d, msg: %s.", ret, msg);
+>>>>>>> 487e35a3f7a7b9e095a6ce21ec462963202313ff
         CCLuaStack* stack = CCLuaEngine::defaultEngine()->getLuaStack();
         lua_State* tolua_S    = stack->getLuaState();
         tolua_pushnumber(tolua_S, (lua_Number)ret);
@@ -1347,7 +1310,6 @@ static int tolua_anysdk_ProtocolIAP_setResultListener(lua_State* tolua_S)
 #endif
   {
     int argc = lua_gettop(tolua_S)-1;
-    CCLog("argc: %d.", argc);
     if (argc == 1)
     {
 #ifndef TOLUA_RELEASE
@@ -1362,12 +1324,9 @@ static int tolua_anysdk_ProtocolIAP_setResultListener(lua_State* tolua_S)
         {
             return 0;
         }
-        CCLog("will set iap pay listener:");
         ProtocolIAPActionListener* listener = ProtocolIAPActionListener::getInstance();
         listener->setHandler(handler);
         self->setResultListener(listener);
-
-        CCLog("set listener end");
 
         return 0;
     }
@@ -1401,7 +1360,6 @@ static int tolua_anysdk_ProtocolIAP_removeListener(lua_State* tolua_S)
 #endif
   {
     int argc = lua_gettop(tolua_S)-1;
-    CCLog("argc: %d.", argc);
     if (argc == 1)
     {
         if (ProtocolIAPActionListener::_instance != NULL)
@@ -1454,13 +1412,11 @@ static int tolua_anysdk_ProtocolPush_setTags(lua_State* tolua_S)
 #endif
   {
     int argc = lua_gettop(tolua_S)-1;
-    CCLog("argc: %d.", argc);
     if (argc == 1)
     {
       if( tolua_istable(tolua_S, 2, 0, &tolua_err) )
       {
         size_t len = lua_objlen(tolua_S, 2);
-        CCLog("is usertable, len: %d.", len);
         std::list<std::string> tags;
         for (int i = 0; i < len; i++)
         {
@@ -1475,7 +1431,6 @@ static int tolua_anysdk_ProtocolPush_setTags(lua_State* tolua_S)
             std::string param = (std::string)tolua_tostring(tolua_S, -1, 0);
             if (param.length())
             {
-                CCLog("param: %s", param.c_str());
                 tags.push_back(param);
             }
             lua_pop(tolua_S, 1);
@@ -1483,10 +1438,10 @@ static int tolua_anysdk_ProtocolPush_setTags(lua_State* tolua_S)
         self->setTags(tags);
         return 0;
       }
-      CCLog("error param type.");
+      CCLOG("error param type.");
       return 0;
     }
-    CCLog("error params count of function setTags.");
+    CCLOG("error params count of function setTags.");
   }
 }
  return 0;
@@ -1502,7 +1457,6 @@ static int tolua_anysdk_ProtocolPush_setTags(lua_State* tolua_S)
 #ifndef TOLUA_DISABLE_tolua_anysdk_ProtocolPush_setDebugMode
 static int tolua_anysdk_ProtocolPush_setDebugMode(lua_State* tolua_S)
 {
-  CCLog("in function protocols push\n");
 #ifndef TOLUA_RELEASE
   tolua_Error tolua_err;
   if (
@@ -1550,13 +1504,11 @@ static int tolua_anysdk_ProtocolPush_delTags(lua_State* tolua_S)
 #endif
   {
     int argc = lua_gettop(tolua_S)-1;
-    CCLog("argc: %d.", argc);
     if (argc == 1)
     {
       if( tolua_istable(tolua_S, 2, 0, &tolua_err) )
       {
         size_t len = lua_objlen(tolua_S, 2);
-        CCLog("is usertable, len: %d.", len);
         std::list<std::string> tags;
         for (int i = 0; i < len; i++)
         {
@@ -1572,7 +1524,6 @@ static int tolua_anysdk_ProtocolPush_delTags(lua_State* tolua_S)
             std::string param = (std::string)tolua_tostring(tolua_S, -1, 0);
             if (param.length())
             {
-                CCLog("param: %s", param.c_str());
                 tags.push_back(param);
             }
             lua_pop(tolua_S, 1);
@@ -1580,10 +1531,10 @@ static int tolua_anysdk_ProtocolPush_delTags(lua_State* tolua_S)
         self->delTags(tags);
         return 0;
       }
-      CCLog("error param type.");
+      CCLOG("error param type.");
       return 0;
     }
-    CCLog("error params count of function delTags.");
+    CCLOG("error params count of function delTags.");
   }
 }
  return 0;
@@ -1615,7 +1566,6 @@ public:
     virtual void onActionResult(ProtocolPush* pPlugin, PushActionResultCode code, const char* msg)
     {
       #ifdef ON_VERSION_2
-        CCLog("on action result: %d, msg: %s.", code, msg);
         CCLuaStack* stack = CCLuaEngine::defaultEngine()->getLuaStack();
         lua_State* tolua_S    = stack->getLuaState();
         tolua_pushusertype(tolua_S,(void*)pPlugin,"ProtocolPush");
@@ -1627,7 +1577,7 @@ public:
         CCLOG("on pay result: %d, msg: %s.", code, msg);
         LuaStack* stack = LuaEngine::getInstance()->getLuaStack();
         lua_State* tolua_S    = stack->getLuaState();
-        object_to_luaval<ProtocolPush>(tolua_S, "anysdk.ProtocolPush",(ProtocolPush*)pPlugin);
+        object_to_luaval<ProtocolPush>(tolua_S, "ProtocolPush",(ProtocolPush*)pPlugin);
         tolua_pushnumber(tolua_S, (lua_Number)code);
         tolua_pushstring(tolua_S, (const char *)msg);
         stack->executeFunctionByHandler(_handler, 3);
@@ -1682,7 +1632,6 @@ static int tolua_anysdk_ProtocolPush_setActionListener(lua_State* tolua_S)
 #endif
   {
     int argc = lua_gettop(tolua_S)-1;
-    CCLog("argc: %d.", argc);
     if (argc == 1)
     {
 #ifndef TOLUA_RELEASE
@@ -1697,12 +1646,9 @@ static int tolua_anysdk_ProtocolPush_setActionListener(lua_State* tolua_S)
         {
             return 0;
         }
-        CCLog("will set push action listener:");
         ProtocolPushActionListener* listener = ProtocolPushActionListener::getInstance();
         listener->setHandler(handler);
         self->setActionListener(listener);
-
-        CCLog("set listener end");
 
         return 0;
     }
@@ -1736,7 +1682,6 @@ static int tolua_anysdk_ProtocolPush_removeListener(lua_State* tolua_S)
 #endif
   {
     int argc = lua_gettop(tolua_S)-1;
-    CCLog("argc: %d.", argc);
     if (argc == 1)
     {
         if (ProtocolPushActionListener::_instance != NULL)
@@ -1775,7 +1720,6 @@ static void extendProtocolPush(lua_State* tolua_S)
 #ifndef TOLUA_DISABLE_tolua_anysdk_ProtocolSocial_unlockAchievement
 static int tolua_anysdk_ProtocolSocial_unlockAchievement(lua_State* tolua_S)
 {
-  CCLog("in function protocols unlockAchievement\n");
 #ifndef TOLUA_RELEASE
   tolua_Error tolua_err;
   if (
@@ -1809,7 +1753,6 @@ static int tolua_anysdk_ProtocolSocial_unlockAchievement(lua_State* tolua_S)
                 key = tolua_tocppstring(tolua_S, -2, NULL);
                 std::string value = "";
                 value = tolua_tocppstring(tolua_S, -1, NULL);
-                CCLog("key: %s, value: %s.", key.c_str(), value.c_str());
                 strmap.insert( StringMap::value_type(key, value) );
                 lua_pop(tolua_S, 1);                                          /* L: lotable ..... key */
             }
@@ -1845,7 +1788,11 @@ public:
     virtual void onSocialResult(SocialRetCode code, const char* msg)
     {
       #ifdef ON_VERSION_2
+<<<<<<< HEAD
+        CCLOG("on action result: %d, msg: %s.", code, msg);
+=======
         CCLog("on action result: %d, msg: %s.", code, msg);
+>>>>>>> 487e35a3f7a7b9e095a6ce21ec462963202313ff
         CCLuaStack* stack = CCLuaEngine::defaultEngine()->getLuaStack();
         lua_State* tolua_S    = stack->getLuaState();
         tolua_pushnumber(tolua_S, (lua_Number)code);
@@ -1895,7 +1842,6 @@ ProtocolSocialActionListener* ProtocolSocialActionListener::_instance = NULL;
 #ifndef TOLUA_DISABLE_tolua_anysdk_ProtocolSocial_setDebugMode
 static int tolua_anysdk_ProtocolSocial_setDebugMode(lua_State* tolua_S)
 {
-  CCLog("in function protocols social\n");
 #ifndef TOLUA_RELEASE
   tolua_Error tolua_err;
   if (
@@ -1943,7 +1889,6 @@ static int tolua_anysdk_ProtocolSocial_setListener(lua_State* tolua_S)
 #endif
   {
     int argc = lua_gettop(tolua_S)-1;
-    CCLog("argc: %d.", argc);
     if (argc == 1)
     {
 #ifndef TOLUA_RELEASE
@@ -1958,12 +1903,9 @@ static int tolua_anysdk_ProtocolSocial_setListener(lua_State* tolua_S)
         {
             return 0;
         }
-        CCLog("will set ads listener:");
         ProtocolSocialActionListener* listener = ProtocolSocialActionListener::getInstance();
         listener->setHandler(handler);
         self->setListener(listener);
-
-        CCLog("set listener end");
 
         return 0;
     }
@@ -1997,7 +1939,6 @@ static int tolua_anysdk_ProtocolSocial_removeListener(lua_State* tolua_S)
 #endif
   {
     int argc = lua_gettop(tolua_S)-1;
-    CCLog("argc: %d.", argc);
     if (argc == 1)
     {
         if (ProtocolSocialActionListener::_instance != NULL)
@@ -2051,7 +1992,6 @@ public:
     virtual void onActionResult(ProtocolUser* pPlugin, UserActionResultCode code, const char* msg)
     {
       #ifdef ON_VERSION_2
-        CCLog("on action result: %d, msg: %s.", code, msg);
         CCLuaStack* stack = CCLuaEngine::defaultEngine()->getLuaStack();
         lua_State* tolua_S    = stack->getLuaState();
         tolua_pushusertype(tolua_S,(void*)pPlugin,"ProtocolUser");
@@ -2063,7 +2003,6 @@ public:
         CCLOG("on action result: %d, msg: %s.", code, msg);
         LuaStack* stack = LuaEngine::getInstance()->getLuaStack();
         lua_State* tolua_S    = stack->getLuaState();
-        object_to_luaval<ProtocolUser>(tolua_S, "anysdk.ProtocolUser",(ProtocolUser*)pPlugin);
         tolua_pushnumber(tolua_S, (lua_Number)code);
         tolua_pushstring(tolua_S, (const char *)msg);
         stack->executeFunctionByHandler(_handler, 3);
@@ -2103,7 +2042,6 @@ ProtocolUserActionListener* ProtocolUserActionListener::_instance = NULL;
 #ifndef TOLUA_DISABLE_tolua_anysdk_ProtocolUser_setDebugMode
 static int tolua_anysdk_ProtocolUser_setDebugMode(lua_State* tolua_S)
 {
-  CCLog("in function protocols user\n");
 #ifndef TOLUA_RELEASE
   tolua_Error tolua_err;
   if (
@@ -2151,7 +2089,6 @@ static int tolua_anysdk_ProtocolUser_setActionListener(lua_State* tolua_S)
 #endif
   {
     int argc = lua_gettop(tolua_S)-1;
-    CCLog("argc: %d.", argc);
     if (argc == 1)
     {
 #ifndef TOLUA_RELEASE
@@ -2166,12 +2103,9 @@ static int tolua_anysdk_ProtocolUser_setActionListener(lua_State* tolua_S)
         {
             return 0;
         }
-        CCLog("will set ads listener:");
         ProtocolUserActionListener* listener = ProtocolUserActionListener::getInstance();
         listener->setHandler(handler);
         self->setActionListener(listener);
-
-        CCLog("set listener end");
 
         return 0;
     }
@@ -2205,7 +2139,6 @@ static int tolua_anysdk_ProtocolUser_removeListener(lua_State* tolua_S)
 #endif
   {
     int argc = lua_gettop(tolua_S)-1;
-    CCLog("argc: %d.", argc);
     if (argc == 1)
     {
         if (ProtocolUserActionListener::_instance != NULL)
@@ -2281,7 +2214,7 @@ public:
         CCLOG("onPlayerGetPoints. points: %d.", points);
         CCLuaStack* stack = CCLuaEngine::defaultEngine()->getLuaStack();
         lua_State* tolua_S    = stack->getLuaState();
-        // object_to_luaval<ProtocolAds>(tolua_S, "anysdk.ProtocolAds",(ProtocolAds*)pAdsPlugin);
+        object_to_luaval<ProtocolAds>(tolua_S, "ProtocolAds",(ProtocolAds*)pAdsPlugin);
         tolua_pushusertype(tolua_S,(void*)pAdsPlugin,"ProtocolAds");
         tolua_pushnumber(tolua_S, (lua_Number)points);
         stack->executeFunctionByHandler(_handler, 2);
@@ -2290,7 +2223,7 @@ public:
         CCLOG("onPlayerGetPoints. points: %d.", points);
         LuaStack* stack = LuaEngine::getInstance()->getLuaStack();
         lua_State* tolua_S    = stack->getLuaState();
-        object_to_luaval<ProtocolAds>(tolua_S, "anysdk.ProtocolAds",(ProtocolAds*)pAdsPlugin);
+        object_to_luaval<ProtocolAds>(tolua_S, "ProtocolAds",(ProtocolAds*)pAdsPlugin);
         tolua_pushnumber(tolua_S, (lua_Number)points);
         stack->executeFunctionByHandler(_handler, 2);
         stack->clean();
@@ -2344,7 +2277,6 @@ static int tolua_anysdk_ProtocolAds_setAdsListener(lua_State* tolua_S)
 #endif
   {
     int argc = lua_gettop(tolua_S)-1;
-    CCLog("argc: %d.", argc);
     if (argc == 1)
     {
 #ifndef TOLUA_RELEASE
@@ -2359,12 +2291,9 @@ static int tolua_anysdk_ProtocolAds_setAdsListener(lua_State* tolua_S)
         {
             return 0;
         }
-        CCLog("will set ads listener:");
         ProtocolAdsListener* listener = ProtocolAdsListener::getInstance();
         listener->setHandler(handler);
         self->setAdsListener(listener);
-
-        CCLog("set listener end");
 
         return 0;
     }
@@ -2383,7 +2312,6 @@ static int tolua_anysdk_ProtocolAds_setAdsListener(lua_State* tolua_S)
 #ifndef TOLUA_DISABLE_tolua_anysdk_ProtocolAds_setDebugMode
 static int tolua_anysdk_ProtocolAds_setDebugMode(lua_State* tolua_S)
 {
-  CCLog("in function protocols ads\n");
 #ifndef TOLUA_RELEASE
   tolua_Error tolua_err;
   if (
@@ -2432,7 +2360,6 @@ static int tolua_anysdk_ProtocolAds_removeListener(lua_State* tolua_S)
 #endif
   {
     int argc = lua_gettop(tolua_S)-1;
-    CCLog("argc: %d.", argc);
     if (argc == 1)
     {
         if (ProtocolAdsListener::_instance != NULL)

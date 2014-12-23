@@ -30,6 +30,11 @@ public:
 
     static jobject getJObjFromParam(PluginParam* param);
 
+<<<<<<< HEAD
+    static void KPCount(std::string event);
+
+=======
+>>>>>>> 487e35a3f7a7b9e095a6ce21ec462963202313ff
     // methods have no return value
     template <typename T>
     static void callJavaFunctionWithName_oneParam(PluginProtocol* thiz, const char* funcName, const char* paramCode, T param)

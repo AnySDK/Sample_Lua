@@ -59,12 +59,11 @@ local function main()
     local agent = AgentManager:getInstance()
     cclog("agent is---" .. type(agent))
     --init
-    -- local appKey = "BA5B660B-6DD5-0F67-8CC7-8FE0BA7545D6";
-    -- local appSecret = "e23ae7d6da34334d4cc11df0dc7f3de0";
-    -- local privateKey = "76E1D975EA4B9A4ECD0E85AF2D782E99";
-    local appKey = "D07766C0-6E82-3993-058C-83DF431DBB8A";
-    local appSecret = "efdcf8ff6afa6494f883f87a2d005c96";
-    local privateKey = "77663DB8B42A9FE0954DE5D36400280E";
+    --anysdk
+    local appKey = "CED525C0-8D41-F514-96D8-90092EB3899A";
+    local appSecret = "a29b4f22aa63b8274f7f6e2dd5893d9b";
+    local privateKey = "963C4B4DA71BC51C69EB11D24D0C7D49";
+
     local oauthLoginServer = "http://oauth.anysdk.com/api/OauthLoginDemo/Login.php";
     agent:init(appKey,appSecret,privateKey,oauthLoginServer)
     --load
@@ -76,6 +75,11 @@ local function main()
     local share_plugin =  agent:getSharePlugin()
     local push_plugin =  agent:getPushPlugin()
     local analytics_plugin =  agent:getAnalyticsPlugin()
+
+    -- 
+    print("isAnaylticsEnabled:",agent:isAnaylticsEnabled())
+    agent:setIsAnaylticsEnabled(true)
+    print("isAnaylticsEnabled:",agent:isAnaylticsEnabled())
 
     local function onResult( ... )
         print("pay result----")

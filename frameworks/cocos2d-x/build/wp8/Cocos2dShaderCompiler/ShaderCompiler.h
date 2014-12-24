@@ -24,11 +24,10 @@ THE SOFTWARE.
 ****************************************************************************/
 #pragma once
 
-#include "cocos2d.h"
 
 #include "CCGL.h"
 
-class ShaderCompiler : private cocos2d::Application
+class ShaderCompiler
 
 {
 public:
@@ -40,9 +39,6 @@ private:
 
     Windows::UI::Xaml::Controls::TextBlock^ m_resultText;
 
-    virtual bool applicationDidFinishLaunching();
-    virtual void applicationDidEnterBackground();
-    virtual void applicationWillEnterForeground();
 
 
     void InitializeCocos2d();

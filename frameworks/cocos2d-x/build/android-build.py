@@ -123,6 +123,10 @@ def copy_files(src, dst):
             os.mkdir(new_dst)
             copy_files(path, new_dst)
 
+def copy_file(src_file, dst):
+    if not src_file.startswith('.') and not src_file.endswith('.gz') and os.path.isfile(src_file):
+        shutil.copy(src_file, dst)
+
 def copy_resources(target, app_android_root):
 
     # remove app_android_root/assets if it exists
@@ -153,8 +157,12 @@ def copy_resources(target, app_android_root):
         os.mkdir(assets_src_dir)
         copy_files(src_dir, assets_src_dir)
 
-        common_script_dir = os.path.join(app_android_root, "../../../../cocos/scripting/lua-bindings/script")
-        copy_files(common_script_dir, assets_dir)
+        common_script_dir = os.path.join(app_android_root, "../../../../cocos/scripting/lua-bindings/script/")
+        cocos_src_dir = os.path.join(assets_src_dir,"cocos")
+        if os.path.exists(cocos_src_dir):
+            shutil.rmtree(cocos_src_dir)
+        os.mkdir(cocos_src_dir)
+        copy_files(common_script_dir, cocos_src_dir)
 
         luasocket_script_dir = os.path.join(app_android_root, "../../../../external/lua/luasocket")
         for root, dirs, files in os.walk(luasocket_script_dir):

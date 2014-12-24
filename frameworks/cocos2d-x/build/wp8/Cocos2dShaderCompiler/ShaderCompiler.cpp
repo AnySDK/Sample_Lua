@@ -28,7 +28,6 @@ THE SOFTWARE.
 #include "CCPrecompiledShaders.h"
 
 using namespace Concurrency;
-using namespace DirectX;
 using namespace Microsoft::WRL;
 using namespace Windows::Foundation;
 using namespace Windows::UI::Core;
@@ -51,21 +50,6 @@ ShaderCompiler::~ShaderCompiler()
 
 }
 
-bool ShaderCompiler::applicationDidFinishLaunching()
-{
-    return true;
-}
-
-void ShaderCompiler::applicationDidEnterBackground()
-{
-
-}
-
-void ShaderCompiler::applicationWillEnterForeground()
-{
-
-
-}
 
 
 bool ShaderCompiler::Compile(Windows::UI::Xaml::Controls::TextBlock^ resultText)
@@ -79,7 +63,9 @@ bool ShaderCompiler::Compile(Windows::UI::Xaml::Controls::TextBlock^ resultText)
         return false;
     }
 
-    Director::getInstance()->setAnimationInterval(1.0 / 60.0);
+    auto director = cocos2d::Director::getInstance();
+
+    //Director::getInstance()->setAnimationInterval(1.0 / 60.0);
     CCShaderCache::getInstance()->loadDefaultShaders();
     CCPrecompiledShaders::getInstance()->savePrecompiledShaders();
     resultText->Text = "Complete";

@@ -15,32 +15,32 @@ typedef std::pair< std::string, std::string >   LogEventParamPair;
 /// typedef LogEventParamMap.
 typedef std::map< std::string, std::string >    LogEventParamMap;
 typedef enum {
-	ANONYMOUS,
-	REGISTED,
-	SINA_WEIBO,
-	TENCENT_WEIBO,
-	QQ,
-	QQ_WEIBO,
-	ND91,
+	ANONYMOUS,/**< enum value is anonymous typek. */
+	REGISTED,/**< enum value is registed type. */
+	SINA_WEIBO,/**< enum value is sineweibo type. */
+	TENCENT_WEIBO,/**< enum value is tecentweibo type */
+	QQ,/**< enum value is qq type */
+	QQ_WEIBO,/**< enum value is qqweibo type. */
+	ND91,/**< enum value is nd91 type. */
 } AccountType;
 typedef enum {
-	LOGIN,
-	LOGOUT,
-	REGISTER,
+	LOGIN,/**< enum value is the login operate. */
+	LOGOUT,/**< enum value is the logout operate. */
+	REGISTER,/**< enum value is the register operate. */
 } AccountOperate;
 typedef enum {
-	MALE,
-	FEMALE,
-	UNKNOWN,
+	MALE,/**< enum value is male. */
+	FEMALE,/**< enum value is female. */
+	UNKNOWN,/**< enum value is unknow. */
 
 } AccountGender;
 typedef enum {
-	GUIDE_LINE,
-	MAIN_LINE,
-	BRANCH_LINE,
-	DAILY,
-	ACTIVITY,
-	OTHER,
+	GUIDE_LINE,/**< enum value is the guideline type.. */
+	MAIN_LINE,/**< enum value is the mainline type.. */
+	BRANCH_LINE,/**<enum value is the branchline type.. */
+	DAILY,/**< enum value is the daily type.. */
+	ACTIVITY,/**< enum value is the activity type.  */
+	OTHER,/**< enum value is other type. */
 } TaskType;
 /**   
  *@class  ProtocolAnalytics
@@ -52,7 +52,6 @@ public:
 
 	/**
      @brief Start a new session.
-     @param appKey The identity of the application.
      */
 	virtual void startSession() = 0;
     

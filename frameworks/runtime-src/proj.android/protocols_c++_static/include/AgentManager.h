@@ -45,9 +45,9 @@ public:
     
     /**
     @breif the init of AgentManager
-    @param the appKey of plugin-x
-    @param the appSecret of plugin-x
-    @param the privateKey of plugin-x
+    @param the appKey of anysdk
+    @param the appSecret of anysdk
+    @param the privateKey of anysdk
     @param the url of oauthLoginServer
     @warning Must invoke this interface before loadALLPlugin
     */
@@ -123,7 +123,19 @@ public:
      */
     std::string getCustomParam();
 
+    /**
+    @Title: setIsAnaylticsEnabled
+    @Description: choose to open or close
+    @param @param enabled    true or false
+    @return void
+    */
     void setIsAnaylticsEnabled(bool value){bIsAnaylticsEnabled = value;};
+    /**
+    @Title: isAnaylticsEnabled
+    @Description: the status of Anayltics
+    @param @return    true or false
+    @return boolean
+    */
     bool isAnaylticsEnabled(){return bIsAnaylticsEnabled;};
 
 

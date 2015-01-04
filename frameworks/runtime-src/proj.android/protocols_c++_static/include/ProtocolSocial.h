@@ -88,7 +88,7 @@ public:
      */
     virtual void showAchievements() = 0;
     /**
-     @brief set pListener The callback object for user result
+     @brief set pListener The callback object for social result
      @param the listener
      */
     virtual void setListener(SocialListener* listener)  = 0;

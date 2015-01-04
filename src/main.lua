@@ -53,72 +53,19 @@ local function main()
     end
     require "hello2"
     require "anysdkConst"
-    cclog("result is " .. myadd(1, 1))
+    require "Ads"
+    require "Analytics"
+    require "Push"
+    require "Share"
+    require "Social"
+    require "PluginChannel"
 
-    --for anysdk
-    local agent = AgentManager:getInstance()
-    cclog("agent is---" .. type(agent))
-    --init
-    --anysdk
-    local appKey = "CED525C0-8D41-F514-96D8-90092EB3899A";
-    local appSecret = "a29b4f22aa63b8274f7f6e2dd5893d9b";
-    local privateKey = "963C4B4DA71BC51C69EB11D24D0C7D49";
-
-    local oauthLoginServer = "http://oauth.anysdk.com/api/OauthLoginDemo/Login.php";
-    agent:init(appKey,appSecret,privateKey,oauthLoginServer)
-    --load
-    agent:loadALLPlugin()
-    local user_plugin = agent:getUserPlugin()
-    cclog("getUserPlugin()--" .. type(user_plugin))
-    local ads_plugin = agent:getAdsPlugin()
-    local social_plugin =  agent:getSocialPlugin()
-    local share_plugin =  agent:getSharePlugin()
-    local push_plugin =  agent:getPushPlugin()
-    local analytics_plugin =  agent:getAnalyticsPlugin()
-
-    -- 
-    print("isAnaylticsEnabled:",agent:isAnaylticsEnabled())
-    agent:setIsAnaylticsEnabled(true)
-    print("isAnaylticsEnabled:",agent:isAnaylticsEnabled())
-
-    local function onResult( ... )
-        print("pay result----")
-    end
-    iap_plugin_maps = agent:getIAPPlugin()
-    for key, value in pairs(iap_plugin_maps) do
-        print("key:" .. key)
-        cclog("value: " .. type(value))
-        value:setResultListener(onResult)
-    end
-    --login
-    -- user_plugin:login()
-    
-    --add user action listener
-    local function onActionListener( ... )
-        print("on user action listener.")
-        print("agent is ", agent, "user_plugin is " , user_plugin)
-    end
-    user_plugin:setActionListener(onActionListener)
-
-    --add user share listener
-    local function onSharedResultListener( ... )
-        print("on user shared result listener.")
-    end
-    if nil ~= share_plugin then
-        share_plugin:setResultListener(onSharedResultListener)
-    else
-        cclog("share_plugin is nil.")
-    end
-
-    --add social listener
-    local function onSocialResultListener( ... )
-        print("on social result listener.")
-    end
-    if nil ~= social_plugin then
-        social_plugin:setListener(onSocialResultListener)
-    else
-        cclog("social_plugin is nil.")
-    end
+    local plugin_channel = PluginChannel.new()
+    local _ads = Ads.new()
+    local _social =  Social.new()
+    local _share =  Share.new()
+    local _push =  Push.new()
+    local _analytics =  Analytics.new()
 
     ---------------
 
@@ -320,127 +267,63 @@ local function main()
                 end
             elseif item < USER_LEVEL then
                 if item == user_menu.LOGIN then
-                    user_plugin:login("server_id")
-                    -- if analytics_plugin != nil then
-                    --     analytics_plugin:logEvent("login")
-                    -- end
+                    plugin_channel:login()
                 elseif item == user_menu.LOGOUT then
-                    if user_plugin:isFunctionSupported("logout") then
-                        user_plugin:callFuncWithParam("logout")
-                    end
+                    plugin_channel:logout()
                 elseif item == user_menu.ENTER_PLATFORM then
-                    if user_plugin:isFunctionSupported("enterPlatform") then
-                        user_plugin:callFuncWithParam("enterPlatform")
-                    end
+                    plugin_channel:enterPlatform()
                 elseif item == user_menu.SHOW_TOOLBAR then
-                    if user_plugin:isFunctionSupported("showToolBar") then
-                        local param1 = PluginParam:create(ToolBarPlace.kToolBarTopLeft)
-                        user_plugin:callFuncWithParam("showToolBar", {param1})
-                    end
+                    plugin_channel:showToolBar()
                 elseif item == user_menu.HIDE_TOOLBAR then
-                    if user_plugin:isFunctionSupported("hideToolBar") then
-                        user_plugin:callFuncWithParam("hideToolBar")
-                    end
+                    plugin_channel:hideToolBar()
                 elseif item == user_menu.ACCOUNTSWITCH_PAY then
-                    if user_plugin:isFunctionSupported("accountSwitch") then
-                        user_plugin:callFuncWithParam("accountSwitch")
-                    end
+                    plugin_channel:accountSwitch()
                 elseif item == user_menu.REALNAME_REGISTER then
-                    if user_plugin:isFunctionSupported("realNameRegister") then
-                        user_plugin:callFuncWithParam("realNameRegister")
-                    end
+                    plugin_channel:realNameRegister()
                 elseif item == user_menu.ANTI_ADDICTION_QUERY then
-                    if user_plugin:isFunctionSupported("antiAddictionQuery") then
-                        user_plugin:callFuncWithParam("antiAddictionQuery")
-                    end
+                    plugin_channel:antiAddictionQuery()
                 elseif item == user_menu.SUBMIT_LOGIN_GAMEROLE then
-                    if user_plugin:isFunctionSupported("submitLoginGameRole") then
-                        local data = PluginParam:create({roleId="123456",roleName="test",roleLevel="10",zoneId="123",zoneName="test",dataType="1",ext="login"})
-                        user_plugin:callFuncWithParam("submitLoginGameRole", data)
-                    end
+                    plugin_channel:submitLoginGameRole()
                 end
             elseif item < IAP_LEVEL then
                 if item == iap_menu.PAY then
                     cclog("on clicked pay.")
-                    
-                    local info = {
-                            Product_Price="0.1", 
-                            Product_Id="monthly",  
-                            Product_Name="gold",  
-                            Server_Id="13",  
-                            Product_Count="1",  
-                            Role_Id="1001",  
-                            Role_Name="asd"
-                        }
-                    -- analytics_plugin:logEvent("pay", info)
-                    for key, value in pairs(iap_plugin_maps) do
-                        print("key:" .. key)
-                        cclog("value: " .. type(value))
-                        value:payForProduct(info)
-                    end
+                    plugin_channel:pay();
                 end
             elseif item < SHARE_LEVEL then
                 if item == share_menu.SHARE then
                     cclog("on clicked share.")
-                    if share_plugin ~= nil then
-                        local info = {
-                            title = "ShareSDK是一个神奇的SDK",
-                            titleUrl = "http://sharesdk.cn",
-                            site = "ShareSDK",
-                            siteUrl = "http://sharesdk.cn",
-                            text = "ShareSDK集成了简单、支持如微信、新浪微博、腾讯微博等社交平台",
-                            comment = "无",
-                        }
-                        share_plugin:share(info)
-                        -- analytics_plugin:logEvent("share")
-                    end
+                    _share:share()
                 end
             elseif item < ADS_LEVEL then
                 if item == ads_menu.SHOW_ADS then
-                    if ads_plugin ~= nil then
-                        if ads_plugin:isAdTypeSupported(AdsType.AD_TYPE_FULLSCREEN) then
-                            ads_plugin:showAds(AdsType.AD_TYPE_FULLSCREEN)
-                        end
-                    end
+                    _ads:showAds(AdsType.AD_TYPE_FULLSCREEN)
                 elseif item == ads_menu.HIDE_ADS then
-                    if ads_plugin ~= nil then
-                        if ads_plugin:isAdTypeSupported(AdsType.AD_TYPE_FULLSCREEN) then
-                            ads_plugin:hideAds(AdsType.AD_TYPE_FULLSCREEN)
-                        end
-                    end
+                    _ads:hideAds(AdsType.AD_TYPE_FULLSCREEN)
                 end
             elseif item < SOCIAL_LEVEL then
-                if social_plugin ~= nil then
-                    cclog("on clicked social.")
-                    if item == social_menu.SUBMIT_SCORE then
-                        local score = 132   --score
-                        social_plugin:submitScore("friend", score)
-                        social_plugin:signIn();
-                        social_plugin:signOut();
-                    elseif item == social_menu.SHOW_LEADERBOARD then
-                        social_plugin:showLeaderboard("friend");
-                    elseif item == social_menu.UNLOCK_ACHIEVEMENT then
-                        local achInfo = {rank="friends"}
-                        social_plugin:unlockAchievement(achInfo);
-                    elseif item == social_menu.SHOW_ACHIEVEMENT then
-                        social_plugin:showAchievements();
-                        -- analytics_plugin:logEvent("showAchievements");
-                    end
+                cclog("on clicked social.")
+                if item == social_menu.SUBMIT_SCORE then
+                    _social:submitScore()
+                elseif item == social_menu.SHOW_LEADERBOARD then
+                    _social:showLeaderboard();
+                elseif item == social_menu.UNLOCK_ACHIEVEMENT then
+                    _social:unlockAchievement()
+                elseif item == social_menu.SHOW_ACHIEVEMENT then
+                    _social:showAchievements()
                 end
             elseif item < PUSH_LEVEL then
                 cclog("on clicked push.")
-                if push_plugin ~= nil then
-                    if item == push_menu.CLOSE_PUSH then
-                        push_plugin:closePush()
-                    elseif item == push_menu.SET_ALIAS then
-                        push_plugin:setAlias("AnySDK")
-                    elseif item == push_menu.DEL_ALIAS then
-                        push_plugin:delAlias("AnySDK")
-                    elseif item == push_menu.SET_TAGS then
-                        push_plugin:setTags({"easy","fast","qwe"})
-                    elseif item == push_menu.DEL_TAGS then
-                        push_plugin:delTags({"easy","qwe"})
-                    end
+                if item == push_menu.CLOSE_PUSH then
+                    _push:closePush()
+                elseif item == push_menu.SET_ALIAS then
+                    _push:setAlias()
+                elseif item == push_menu.DEL_ALIAS then
+                    _push:delAlias()
+                elseif item == push_menu.SET_TAGS then
+                    _push:setTags()
+                elseif item == push_menu.DEL_TAGS then
+                    _push:delTags()
                 end
             end
         end

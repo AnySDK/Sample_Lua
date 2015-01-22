@@ -53,6 +53,10 @@
 #include "anysdk_manual_bindings.h"
 #include "cocos2d.h"
 
+
+#define ASF_ANDROID_LUA_VERSION "<<<<<ANYSDK_FRAMEWORK_VERSION>>>>>@ANDROID_LUA_1.5.0"
+#define ASF_IOS_LUA_VERSION "<<<<<ANYSDK_FRAMEWORK_VERSION>>>>>@IOS_LUA_1.5.0"
+
 // #define ON_VERSION_2 1
 
 #ifndef ON_VERSION_2
@@ -559,6 +563,45 @@ static int tolua_anysdk_AgentManager_getIAPPlugin(lua_State* tolua_S)
 }
 #endif //#ifndef TOLUA_DISABLE
 
+/* method: getFrameworkVersion of class  PluginParam */
+#ifndef TOLUA_DISABLE_tolua_anysdk_AgentManager_getFrameworkVersion
+static int tolua_anysdk_AgentManager_getFrameworkVersion(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+    tolua_Error tolua_err;
+    if (
+        !tolua_isusertype(tolua_S,1,"AgentManager",0,&tolua_err) ||
+        !tolua_isnoobj(tolua_S,2,&tolua_err)
+        )
+        goto tolua_lerror;
+    else
+#endif
+    {
+        AgentManager* self = (AgentManager*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+        if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getFrameworkVersion'", NULL);
+#endif
+        {
+            std::string temp1,temp2;
+            if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+                temp1 = ASF_IOS_LUA_VERSION;
+            else
+                temp1 = ASF_ANDROID_LUA_VERSION;
+            
+            int pos = int(temp1.find('@'));
+            temp2 = temp1.substr(pos + 1,temp1.length());
+            tolua_pushstring(tolua_S,temp2.c_str());
+        }
+    }
+    return 1;
+#ifndef TOLUA_RELEASE
+tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'getFrameworkVersion'.",&tolua_err);
+    return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
 static void extendAgentManager(lua_State* tolua_S)
 {
     lua_pushstring(tolua_S, "AgentManager");
@@ -566,6 +609,7 @@ static void extendAgentManager(lua_State* tolua_S)
     if (lua_istable(tolua_S,-1))
     {
         tolua_function(tolua_S, "getIAPPlugin", tolua_anysdk_AgentManager_getIAPPlugin);
+        tolua_function(tolua_S, "getFrameworkVersion", tolua_anysdk_AgentManager_getFrameworkVersion);
     }
     lua_pop(tolua_S, 1);
 }

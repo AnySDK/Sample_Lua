@@ -33,6 +33,8 @@ function PluginChannel:ctor()
     --load
     agent:loadALLPlugin()
 
+    cclog("agent:getFrameworkVersion----" .. agent:getFrameworkVersion())
+
     -- get user plugin
     user_plugin = agent:getUserPlugin()
     cclog("getUserPlugin()--" .. type(user_plugin))

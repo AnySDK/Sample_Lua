@@ -134,11 +134,12 @@ local function main()
     local share_btns = {
         {text="share", tag = share_menu.SHARE}
     }
-    ads_menu = {"SHOW_ADS", "HIDE_ADS"}
+    ads_menu = {"SHOW_ADS", "HIDE_ADS", "PRELOAD_ADS"}
     ads_menu = CreatEnumTable(ads_menu, 400)
     local ads_btns = {
         {text="show ads", tag = ads_menu.SHOW_ADS},
-        {text="hide ads", tag = ads_menu.HIDE_ADS}
+        {text="hide ads", tag = ads_menu.HIDE_ADS},
+        {text="preload ads", tag = ads_menu.PRELOAD_ADS}
     }
     social_menu = {
         "SUBMIT_SCORE", 
@@ -297,9 +298,11 @@ local function main()
                 end
             elseif item < ADS_LEVEL then
                 if item == ads_menu.SHOW_ADS then
-                    _ads:showAds(AdsType.AD_TYPE_FULLSCREEN)
+                    _ads:showAds(AdsType.AD_TYPE_BANNER,1)
                 elseif item == ads_menu.HIDE_ADS then
-                    _ads:hideAds(AdsType.AD_TYPE_FULLSCREEN)
+                    _ads:hideAds(AdsType.AD_TYPE_BANNER,1)
+                elseif item == ads_menu.PRELOAD_ADS then
+                    _ads:preloadAds(AdsType.AD_TYPE_FULLSCREEN,1)
                 end
             elseif item < SOCIAL_LEVEL then
                 cclog("on clicked social.")

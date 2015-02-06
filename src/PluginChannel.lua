@@ -38,7 +38,9 @@ function PluginChannel:ctor()
     -- get user plugin
     user_plugin = agent:getUserPlugin()
     cclog("getUserPlugin()--" .. type(user_plugin))
-    user_plugin:setActionListener(onUserLogin)
+    if nil ~= user_plugin then
+        user_plugin:setActionListener(onUserLogin)
+    end
 
     iap_plugin_maps = agent:getIAPPlugin()
     for key, value in pairs(iap_plugin_maps) do

@@ -187,7 +187,7 @@ public:
     virtual void onShareResult(ShareResultCode ret, const char* msg)
     {
       #ifdef ON_VERSION_2
-        CCLOG("on action result: %d, msg: %s.", ret, msg);
+        CCLOG("on share action result: %d, msg: %s.", ret, msg);
         CCLuaStack* stack = CCLuaEngine::defaultEngine()->getLuaStack();
         lua_State* tolua_S    = stack->getLuaState();
         tolua_pushnumber(tolua_S, (lua_Number)ret);
@@ -1260,11 +1260,8 @@ public:
     virtual void onPayResult(PayResultCode ret, const char* msg, TProductInfo info)
     {
       #ifdef ON_VERSION_2
-<<<<<<< HEAD
-        CCLOG("on action result: %d, msg: %s.", ret, msg);
-=======
-        CCLog("on action result: %d, msg: %s.", ret, msg);
->>>>>>> 487e35a3f7a7b9e095a6ce21ec462963202313ff
+        CCLOG("on pay action result: %d, msg: %s.", ret, msg);
+        
         CCLuaStack* stack = CCLuaEngine::defaultEngine()->getLuaStack();
         lua_State* tolua_S    = stack->getLuaState();
         tolua_pushnumber(tolua_S, (lua_Number)ret);
@@ -1832,11 +1829,8 @@ public:
     virtual void onSocialResult(SocialRetCode code, const char* msg)
     {
       #ifdef ON_VERSION_2
-<<<<<<< HEAD
-        CCLOG("on action result: %d, msg: %s.", code, msg);
-=======
-        CCLog("on action result: %d, msg: %s.", code, msg);
->>>>>>> 487e35a3f7a7b9e095a6ce21ec462963202313ff
+        CCLOG("on social action result: %d, msg: %s.", code, msg);
+        
         CCLuaStack* stack = CCLuaEngine::defaultEngine()->getLuaStack();
         lua_State* tolua_S    = stack->getLuaState();
         tolua_pushnumber(tolua_S, (lua_Number)code);

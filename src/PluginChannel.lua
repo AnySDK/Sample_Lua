@@ -4,6 +4,7 @@ local user_plugin = nil
 local iap_plugin_maps = nil
 
 local function onUserLogin(plugin,code,msg)
+    cclog("onUserAction, code:" .. code .. ", msg:" .. msg)
 	if code == UserActionResultCode.kInitSuccess then
 	    --do
 	    cclog("sdk init success!")
@@ -24,9 +25,12 @@ function PluginChannel:ctor()
     cclog("agent is---" .. type(agent))
     --init
     --anysdk
-    local appKey = "CED525C0-8D41-F514-96D8-90092EB3899A";
-    local appSecret = "a29b4f22aa63b8274f7f6e2dd5893d9b";
-    local privateKey = "963C4B4DA71BC51C69EB11D24D0C7D49";
+    -- local appKey = "CED525C0-8D41-F514-96D8-90092EB3899A";
+    -- local appSecret = "a29b4f22aa63b8274f7f6e2dd5893d9b";
+    -- local privateKey = "963C4B4DA71BC51C69EB11D24D0C7D49";
+    local appKey = "96418BB3-2DD9-4ADC-3FF9-E0F18857FD3E";
+    local appSecret = "5c11e736bb3bca886effb70886a85830";
+    local privateKey = "ACB121D6FF9D7CEAAACE3960ADF4A9CE";
 
     local oauthLoginServer = "http://oauth.anysdk.com/api/OauthLoginDemo/Login.php";
     agent:init(appKey,appSecret,privateKey,oauthLoginServer)

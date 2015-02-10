@@ -15,6 +15,12 @@ end
 local function onPayResult( code, msg, info )
     print("pay result----", code, msg)
     _myProducts = info
+    print(type(_myProducts))
+    if type(_myProducts) == type({}) then
+        for key, value in pairs(_myProducts) do
+            print("key:", key, type( value ))
+        end
+    end
     if code == PayResultCode.kPaySuccess then
         --do
         cclog("pay success.")

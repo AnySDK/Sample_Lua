@@ -1311,15 +1311,22 @@ public:
         tolua_pushnumber(tolua_S, (lua_Number)ret);
         tolua_pushstring(tolua_S, (const char *)msg);
         lua_newtable(tolua_S);
-        TProductInfo::iterator iter= info.begin();
+        AllProductsInfo::iterator iter= info.begin();
         if (NULL != tolua_S)
         {
             for (; iter != info.end(); ++iter)
             {
                 std::string key = iter->first;
-                std::string value = iter->second;
                 lua_pushstring(tolua_S, key.c_str());
-                lua_pushstring(tolua_S, value.c_str());
+                lua_newtable(tolua_S);
+                TProductInfo::iterator iter1= iter->second.begin();
+                for (; iter1 != iter->second.end(); iter1++) {
+                    std::string key1 = iter1->first;
+                    std::string value1 = iter1->second;
+                    lua_pushstring(tolua_S, key1.c_str());
+                    lua_pushstring(tolua_S, value1.c_str());
+                    lua_rawset(tolua_S, -3);
+                }
                 lua_rawset(tolua_S, -3);
             }
         }
@@ -1337,16 +1344,17 @@ public:
             for (auto iter = info.begin(); iter != info.end(); ++iter)
             {
                 std::string key = iter->first;
-//                std::string value = iter->second;
+                lua_pushstring(tolua_S, key.c_str());
+                lua_newtable(tolua_S);
+                
                 for (auto iter1 = iter->second.begin(); iter1 != iter->second.end(); iter1++) {
                     std::string key1 = iter1->first;
                     std::string value1 = iter1->second;
+                    
                     lua_pushstring(tolua_S, key1.c_str());
                     lua_pushstring(tolua_S, value1.c_str());
                     lua_rawset(tolua_S, -3);
                 }
-                lua_pushstring(tolua_S, key.c_str());
-//                lua_pushstring(tolua_S, value.c_str());
                 lua_rawset(tolua_S, -3);
             }
         }

@@ -2,6 +2,8 @@ require "ClassBase"
 
 local user_plugin = nil
 local iap_plugin_maps = nil
+local _iapIPhone = nil
+local _myProducts = nil
 
 local function onUserLogin(plugin,code,msg)
     cclog("onUserAction, code:" .. code .. ", msg:" .. msg)
@@ -12,6 +14,7 @@ local function onUserLogin(plugin,code,msg)
 end
 local function onPayResult( code, msg, info )
     print("pay result----", code, msg)
+    _myProducts = info
     if code == PayResultCode.kPaySuccess then
         --do
         cclog("pay success.")
@@ -51,6 +54,7 @@ function PluginChannel:ctor()
         print("key:" .. key)
         cclog("value: " .. type(value))
         value:setResultListener(onPayResult)
+        _iapIPhone = value
     end
 
     agent:setIsAnaylticsEnabled(true)
@@ -128,8 +132,22 @@ function PluginChannel:submitLoginGameRole()
 	end
 end
 
+function PluginChannel:productRequest()
+    cclog("productRequest 111")
+    param1 = PluginParam.create(PluginParam, "PD_10005");
+    param2 = PluginParam.create(PluginParam, "PD_10004");
+    param3 = PluginParam.create(PluginParam, "PD_10003");
+    cclog("param:" .. param1:getStringValue())
+    _iapIPhone:callFuncWithParam("requestProducts", param1, param2, param3);
+    cclog("productRequest 222")
+end
+
 function PluginChannel:pay()
 	if iap_plugin_maps ~= nil then
+        if _iapIPhone ~= nil then
+            _iapIPhone:payForProduct(_myProducts["1"])
+            return
+        end
         local info = {
                 Product_Price="0.1", 
                 Product_Id="monthly",  

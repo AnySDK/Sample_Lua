@@ -378,7 +378,6 @@ static int tolua_anysdk_PluginParam_create(lua_State* tolua_S)
 	        }
 	        else if (tolua_istable(tolua_S, 2, 0, &tolua_err))
 	        {
-	        	CCLOG("is table");
 	            StringMap strmap;
 	            lua_pushnil(tolua_S);                                            /* first key L: lotable ..... nil */
 	            while ( 0 != lua_next(tolua_S, 2 ) )                             /* L: lotable ..... key value */
@@ -401,7 +400,6 @@ static int tolua_anysdk_PluginParam_create(lua_State* tolua_S)
 	                lua_pop(tolua_S, 1);                                          /* L: lotable ..... key */
 	            }
 	            param = new PluginParam(strmap);
-	            CCLOG("end");
 	        }
 		}
 		tolua_pushusertype(tolua_S,(void*)param,"PluginParam");
@@ -673,7 +671,6 @@ static int tolua_anysdk_PluginProtocol_callFuncWithParam(lua_State* tolua_S)
             PluginParam* param = static_cast<PluginParam*>(tolua_tousertype(tolua_S, -1, NULL) );
             if (NULL != param)
             {
-                CCLOG("param: %d", param->getIntValue());
                 params.push_back(param);
             }
             else{
@@ -1302,6 +1299,60 @@ public:
         stack->executeFunctionByHandler(_handler, 3);
         stack->clean();
       #endif
+    }
+    
+    virtual void onRequestResult(RequestResultCode ret, const char* msg, AllProductsInfo info)
+    {
+#ifdef ON_VERSION_2
+        CCLOG("on pay request action result: %d, msg: %s.", ret, msg);
+        
+        CCLuaStack* stack = CCLuaEngine::defaultEngine()->getLuaStack();
+        lua_State* tolua_S    = stack->getLuaState();
+        tolua_pushnumber(tolua_S, (lua_Number)ret);
+        tolua_pushstring(tolua_S, (const char *)msg);
+        lua_newtable(tolua_S);
+        TProductInfo::iterator iter= info.begin();
+        if (NULL != tolua_S)
+        {
+            for (; iter != info.end(); ++iter)
+            {
+                std::string key = iter->first;
+                std::string value = iter->second;
+                lua_pushstring(tolua_S, key.c_str());
+                lua_pushstring(tolua_S, value.c_str());
+                lua_rawset(tolua_S, -3);
+            }
+        }
+        stack->executeFunctionByHandler(_handler, 3);
+        stack->clean();
+#else
+        CCLOG("on pay request result: %d, msg: %s.", ret, msg);
+        LuaStack* stack = LuaEngine::getInstance()->getLuaStack();
+        lua_State* tolua_S    = stack->getLuaState();
+        tolua_pushnumber(tolua_S, (lua_Number)ret);
+        tolua_pushstring(tolua_S, (const char *)msg);
+        lua_newtable(tolua_S);
+        if (nullptr != tolua_S)
+        {
+            for (auto iter = info.begin(); iter != info.end(); ++iter)
+            {
+                std::string key = iter->first;
+//                std::string value = iter->second;
+                for (auto iter1 = iter->second.begin(); iter1 != iter->second.end(); iter1++) {
+                    std::string key1 = iter1->first;
+                    std::string value1 = iter1->second;
+                    lua_pushstring(tolua_S, key1.c_str());
+                    lua_pushstring(tolua_S, value1.c_str());
+                    lua_rawset(tolua_S, -3);
+                }
+                lua_pushstring(tolua_S, key.c_str());
+//                lua_pushstring(tolua_S, value.c_str());
+                lua_rawset(tolua_S, -3);
+            }
+        }
+        stack->executeFunctionByHandler(_handler, 3);
+        stack->clean();
+#endif
     }
 
     static ProtocolIAPActionListener* _instance;

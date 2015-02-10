@@ -124,10 +124,11 @@ local function main()
         {text = "antiAddictionQuery", tag = user_menu.ANTI_ADDICTION_QUERY},
         {text = "submitLoginGameRole", tag = user_menu.SUBMIT_LOGIN_GAMEROLE}
     }
-    iap_menu = {"PAY"}
+    iap_menu = {"PAY", "REQUEST"}
     iap_menu = CreatEnumTable(iap_menu, 200)
     local iap_btns = {
-        {text="pay", tag = iap_menu.PAY}
+        {text="pay", tag = iap_menu.PAY},
+        {text="request", tag = iap_menu.REQUEST}
     }
     share_menu = {"SHARE"}
     share_menu = CreatEnumTable(share_menu, 300)
@@ -290,6 +291,9 @@ local function main()
                 if item == iap_menu.PAY then
                     cclog("on clicked pay.")
                     plugin_channel:pay();
+                elseif item == iap_menu.REQUEST then
+                    cclog("on clicked request")
+                    plugin_channel:productRequest()
                 end
             elseif item < SHARE_LEVEL then
                 if item == share_menu.SHARE then

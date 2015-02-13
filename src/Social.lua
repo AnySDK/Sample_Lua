@@ -2,9 +2,20 @@ require "ClassBase"
 
 local social_plugin = nil
 
+local function onSocialListener(code, msg)
+    cclog("code:%d, msg:%s", code, msg)
+    if code == SocialRetCode.kScoreSubmitSucceed then
+        --do
+        cclog("submit score success!")
+    end
+end
+
 Social = class()
 function Social:ctor()
 	social_plugin = AgentManager:getInstance():getSocialPlugin()
+	if nil ~= social_plugin then
+	    social_plugin:setListener(onSocialListener)
+	end
 end
 
 function Social:submitScore()

@@ -124,21 +124,23 @@ local function main()
         {text = "antiAddictionQuery", tag = user_menu.ANTI_ADDICTION_QUERY},
         {text = "submitLoginGameRole", tag = user_menu.SUBMIT_LOGIN_GAMEROLE}
     }
-    iap_menu = {"PAY"}
+    iap_menu = {"PAY", "REQUEST"}
     iap_menu = CreatEnumTable(iap_menu, 200)
     local iap_btns = {
-        {text="pay", tag = iap_menu.PAY}
+        {text="pay", tag = iap_menu.PAY},
+        {text="request", tag = iap_menu.REQUEST}
     }
     share_menu = {"SHARE"}
     share_menu = CreatEnumTable(share_menu, 300)
     local share_btns = {
         {text="share", tag = share_menu.SHARE}
     }
-    ads_menu = {"SHOW_ADS", "HIDE_ADS"}
+    ads_menu = {"SHOW_ADS", "HIDE_ADS", "PRELOAD_ADS"}
     ads_menu = CreatEnumTable(ads_menu, 400)
     local ads_btns = {
         {text="show ads", tag = ads_menu.SHOW_ADS},
-        {text="hide ads", tag = ads_menu.HIDE_ADS}
+        {text="hide ads", tag = ads_menu.HIDE_ADS},
+        {text="preload ads", tag = ads_menu.PRELOAD_ADS}
     }
     social_menu = {
         "SUBMIT_SCORE", 
@@ -289,6 +291,9 @@ local function main()
                 if item == iap_menu.PAY then
                     cclog("on clicked pay.")
                     plugin_channel:pay();
+                elseif item == iap_menu.REQUEST then
+                    cclog("on clicked request")
+                    plugin_channel:productRequest()
                 end
             elseif item < SHARE_LEVEL then
                 if item == share_menu.SHARE then
@@ -297,9 +302,11 @@ local function main()
                 end
             elseif item < ADS_LEVEL then
                 if item == ads_menu.SHOW_ADS then
-                    _ads:showAds(AdsType.AD_TYPE_FULLSCREEN)
+                    _ads:showAds(AdsType.AD_TYPE_BANNER,1)
                 elseif item == ads_menu.HIDE_ADS then
-                    _ads:hideAds(AdsType.AD_TYPE_FULLSCREEN)
+                    _ads:hideAds(AdsType.AD_TYPE_BANNER,1)
+                elseif item == ads_menu.PRELOAD_ADS then
+                    _ads:preloadAds(AdsType.AD_TYPE_FULLSCREEN,1)
                 end
             elseif item < SOCIAL_LEVEL then
                 cclog("on clicked social.")

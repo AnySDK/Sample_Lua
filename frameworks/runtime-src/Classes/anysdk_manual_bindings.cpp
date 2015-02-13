@@ -53,6 +53,10 @@
 #include "anysdk_manual_bindings.h"
 #include "cocos2d.h"
 
+
+#define ASF_ANDROID_LUA_VERSION "<<<<<ANYSDK_FRAMEWORK_VERSION>>>>>@ANDROID_LUA_1.5.0"
+#define ASF_IOS_LUA_VERSION "<<<<<ANYSDK_FRAMEWORK_VERSION>>>>>@IOS_LUA_1.5.0"
+
 // #define ON_VERSION_2 1
 
 #ifndef ON_VERSION_2
@@ -183,7 +187,7 @@ public:
     virtual void onShareResult(ShareResultCode ret, const char* msg)
     {
       #ifdef ON_VERSION_2
-        CCLOG("on action result: %d, msg: %s.", ret, msg);
+        CCLOG("on share action result: %d, msg: %s.", ret, msg);
         CCLuaStack* stack = CCLuaEngine::defaultEngine()->getLuaStack();
         lua_State* tolua_S    = stack->getLuaState();
         tolua_pushnumber(tolua_S, (lua_Number)ret);
@@ -374,7 +378,6 @@ static int tolua_anysdk_PluginParam_create(lua_State* tolua_S)
 	        }
 	        else if (tolua_istable(tolua_S, 2, 0, &tolua_err))
 	        {
-	        	CCLOG("is table");
 	            StringMap strmap;
 	            lua_pushnil(tolua_S);                                            /* first key L: lotable ..... nil */
 	            while ( 0 != lua_next(tolua_S, 2 ) )                             /* L: lotable ..... key value */
@@ -397,7 +400,6 @@ static int tolua_anysdk_PluginParam_create(lua_State* tolua_S)
 	                lua_pop(tolua_S, 1);                                          /* L: lotable ..... key */
 	            }
 	            param = new PluginParam(strmap);
-	            CCLOG("end");
 	        }
 		}
 		tolua_pushusertype(tolua_S,(void*)param,"PluginParam");
@@ -559,6 +561,45 @@ static int tolua_anysdk_AgentManager_getIAPPlugin(lua_State* tolua_S)
 }
 #endif //#ifndef TOLUA_DISABLE
 
+/* method: getFrameworkVersion of class  PluginParam */
+#ifndef TOLUA_DISABLE_tolua_anysdk_AgentManager_getFrameworkVersion
+static int tolua_anysdk_AgentManager_getFrameworkVersion(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+    tolua_Error tolua_err;
+    if (
+        !tolua_isusertype(tolua_S,1,"AgentManager",0,&tolua_err) ||
+        !tolua_isnoobj(tolua_S,2,&tolua_err)
+        )
+        goto tolua_lerror;
+    else
+#endif
+    {
+        AgentManager* self = (AgentManager*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+        if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getFrameworkVersion'", NULL);
+#endif
+        {
+            std::string temp1,temp2;
+            if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+                temp1 = ASF_IOS_LUA_VERSION;
+            else
+                temp1 = ASF_ANDROID_LUA_VERSION;
+            
+            int pos = int(temp1.find('@'));
+            temp2 = temp1.substr(pos + 1,temp1.length());
+            tolua_pushstring(tolua_S,temp2.c_str());
+        }
+    }
+    return 1;
+#ifndef TOLUA_RELEASE
+tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'getFrameworkVersion'.",&tolua_err);
+    return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
 static void extendAgentManager(lua_State* tolua_S)
 {
     lua_pushstring(tolua_S, "AgentManager");
@@ -566,6 +607,7 @@ static void extendAgentManager(lua_State* tolua_S)
     if (lua_istable(tolua_S,-1))
     {
         tolua_function(tolua_S, "getIAPPlugin", tolua_anysdk_AgentManager_getIAPPlugin);
+        tolua_function(tolua_S, "getFrameworkVersion", tolua_anysdk_AgentManager_getFrameworkVersion);
     }
     lua_pop(tolua_S, 1);
 }
@@ -629,7 +671,6 @@ static int tolua_anysdk_PluginProtocol_callFuncWithParam(lua_State* tolua_S)
             PluginParam* param = static_cast<PluginParam*>(tolua_tousertype(tolua_S, -1, NULL) );
             if (NULL != param)
             {
-                CCLOG("param: %d", param->getIntValue());
                 params.push_back(param);
             }
             else{
@@ -1216,11 +1257,8 @@ public:
     virtual void onPayResult(PayResultCode ret, const char* msg, TProductInfo info)
     {
       #ifdef ON_VERSION_2
-<<<<<<< HEAD
-        CCLOG("on action result: %d, msg: %s.", ret, msg);
-=======
-        CCLog("on action result: %d, msg: %s.", ret, msg);
->>>>>>> 487e35a3f7a7b9e095a6ce21ec462963202313ff
+        CCLOG("on pay action result: %d, msg: %s.", ret, msg);
+        
         CCLuaStack* stack = CCLuaEngine::defaultEngine()->getLuaStack();
         lua_State* tolua_S    = stack->getLuaState();
         tolua_pushnumber(tolua_S, (lua_Number)ret);
@@ -1261,6 +1299,68 @@ public:
         stack->executeFunctionByHandler(_handler, 3);
         stack->clean();
       #endif
+    }
+    
+    virtual void onRequestResult(RequestResultCode ret, const char* msg, AllProductsInfo info)
+    {
+#ifdef ON_VERSION_2
+        CCLOG("on pay request action result: %d, msg: %s.", ret, msg);
+        
+        CCLuaStack* stack = CCLuaEngine::defaultEngine()->getLuaStack();
+        lua_State* tolua_S    = stack->getLuaState();
+        tolua_pushnumber(tolua_S, (lua_Number)ret);
+        tolua_pushstring(tolua_S, (const char *)msg);
+        lua_newtable(tolua_S);
+        AllProductsInfo::iterator iter= info.begin();
+        if (NULL != tolua_S)
+        {
+            for (; iter != info.end(); ++iter)
+            {
+                std::string key = iter->first;
+                lua_pushstring(tolua_S, key.c_str());
+                lua_newtable(tolua_S);
+                TProductInfo::iterator iter1= iter->second.begin();
+                for (; iter1 != iter->second.end(); iter1++) {
+                    std::string key1 = iter1->first;
+                    std::string value1 = iter1->second;
+                    lua_pushstring(tolua_S, key1.c_str());
+                    lua_pushstring(tolua_S, value1.c_str());
+                    lua_rawset(tolua_S, -3);
+                }
+                lua_rawset(tolua_S, -3);
+            }
+        }
+        stack->executeFunctionByHandler(_handler, 3);
+        stack->clean();
+#else
+        CCLOG("on pay request result: %d, msg: %s.", ret, msg);
+        LuaStack* stack = LuaEngine::getInstance()->getLuaStack();
+        lua_State* tolua_S    = stack->getLuaState();
+        tolua_pushnumber(tolua_S, (lua_Number)ret);
+        tolua_pushstring(tolua_S, (const char *)msg);
+        lua_newtable(tolua_S);
+        if (nullptr != tolua_S)
+        {
+            for (auto iter = info.begin(); iter != info.end(); ++iter)
+            {
+                std::string key = iter->first;
+                lua_pushstring(tolua_S, key.c_str());
+                lua_newtable(tolua_S);
+                
+                for (auto iter1 = iter->second.begin(); iter1 != iter->second.end(); iter1++) {
+                    std::string key1 = iter1->first;
+                    std::string value1 = iter1->second;
+                    
+                    lua_pushstring(tolua_S, key1.c_str());
+                    lua_pushstring(tolua_S, value1.c_str());
+                    lua_rawset(tolua_S, -3);
+                }
+                lua_rawset(tolua_S, -3);
+            }
+        }
+        stack->executeFunctionByHandler(_handler, 3);
+        stack->clean();
+#endif
     }
 
     static ProtocolIAPActionListener* _instance;
@@ -1788,11 +1888,8 @@ public:
     virtual void onSocialResult(SocialRetCode code, const char* msg)
     {
       #ifdef ON_VERSION_2
-<<<<<<< HEAD
-        CCLOG("on action result: %d, msg: %s.", code, msg);
-=======
-        CCLog("on action result: %d, msg: %s.", code, msg);
->>>>>>> 487e35a3f7a7b9e095a6ce21ec462963202313ff
+        CCLOG("on social action result: %d, msg: %s.", code, msg);
+        
         CCLuaStack* stack = CCLuaEngine::defaultEngine()->getLuaStack();
         lua_State* tolua_S    = stack->getLuaState();
         tolua_pushnumber(tolua_S, (lua_Number)code);

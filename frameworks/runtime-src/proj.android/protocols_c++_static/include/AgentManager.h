@@ -16,6 +16,7 @@
 #include <map>
 #include <string>
 namespace anysdk { namespace framework {
+#define ASF_ANDROID_CPP_VERSION "<<<<<ANYSDK_FRAMEWORK_VERSION>>>>>@ANDROID_CPP_1.5.0"
 typedef enum
 {
 	kAdsType = 1,
@@ -122,6 +123,12 @@ public:
      @return  return value is custom param for channel.
      */
     std::string getCustomParam();
+
+    /**
+     @brief Get framework version
+     @return  return value is the version of AnySDKFramework.
+     */
+    std::string getFrameworkVersion();
 
     /**
     @Title: setIsAnaylticsEnabled

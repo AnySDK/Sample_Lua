@@ -94,7 +94,7 @@ public:
     virtual bool isLogined() = 0 ;
 
     /**
-     @brief Get session ID
+     @brief Get USER ID
      @return If user logined, return value is userID;
              else return value is empty string.
      */

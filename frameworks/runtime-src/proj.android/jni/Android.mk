@@ -16,7 +16,7 @@ LOCAL_C_INCLUDES := $(LOCAL_PATH)/../../Classes \
 					../protocols_c++_static/android
 					
 LOCAL_STATIC_LIBRARIES := cocos2d_lua_static
-LOCAL_STATIC_LIBRARIES += PluginProtocolStatic
+LOCAL_WHOLE_STATIC_LIBRARIES := PluginProtocolStatic
 
 include $(BUILD_SHARED_LIBRARY)
 

@@ -10,6 +10,11 @@
 
 @interface AdsUtil : NSObject
 
+/**
+ *  get the parameters of ads system in special case
+ *
+ *  @return return the parameters
+ */
 + (NSMutableDictionary*)getAdsParams;
 
 @end

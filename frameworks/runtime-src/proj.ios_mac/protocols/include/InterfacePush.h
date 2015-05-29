@@ -24,15 +24,73 @@ THE SOFTWARE.
 
 @protocol InterfacePush <NSObject>
 
-- (void) configDeveloperInfo : (NSMutableDictionary*) cpInfo;
+@required
+/**
+ *  start push service
+ */
 - (void) startPush;
+
+/**
+ *  close push service
+ */
 - (void) closePush;
+
+/**
+ *  set alias
+ *
+ *  @param alias the value of alias
+ */
 - (void) setAlias: (NSString*)alias;
+
+/**
+ *  delete alias
+ *
+ *  @param alias the value of alias
+ */
 - (void) delAlias: (NSString*)alias;
+
+/**
+ *  set tags
+ *
+ *  @param tags the content of tags
+ */
 - (void) setTags: (NSMutableArray*)tags;
+
+/**
+ *  delete tags
+ *
+ *  @param tags the content of tags
+ */
 - (void) delTags: (NSMutableArray*)tags;
-- (void) setDebugMode: (BOOL) debug;
+
+/**
+ *  get the version of SDK
+ *
+ *  @return the version of SDK
+ */
 - (NSString*) getSDKVersion;
+
+/**
+ *  get the version of plugin
+ *
+ *  @return the version of plugin
+ */
 - (NSString*) getPluginVersion;
+
+@optional
+/**
+ *  init SDK
+ *
+ *  @param cpInfo the parameters of SDK
+ */
+- (void) configDeveloperInfo : (NSMutableDictionary*) cpInfo;
+
+/**
+ *  set debug mode true or false
+ *
+ *  @param debug the status of debug
+ */
+- (void) setDebugMode: (BOOL) debug;
+
 
 @end

@@ -30,7 +30,8 @@ typedef enum
 
     kSocialSignOutSucceed,/**< enum value is callback of succeeding to login. */
     kSocialSignOutFail,/**< enum value is callback of failing to  login. */
-
+    kSocialGetGameFriends,/**< enum value is callback of getGameFriends. */
+    kSocialExtensionCode = 20000 /**< enum value is  extension code . */
 
 } SocialRetCode;
 /**   
@@ -88,7 +89,7 @@ public:
      */
     virtual void showAchievements() = 0;
     /**
-     @brief set pListener The callback object for user result
+     @brief set pListener The callback object for social result
      @param the listener
      */
     virtual void setListener(SocialListener* listener)  = 0;

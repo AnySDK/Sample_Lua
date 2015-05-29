@@ -24,17 +24,89 @@ THE SOFTWARE.
 
 #import <Foundation/Foundation.h>
 
-@protocol InterfaceAds
+@protocol InterfaceAds<NSObject>
 
-- (void) configDeveloperInfo: (NSMutableDictionary*) devInfo;
+@required
+/**
+ *  show advertising
+ *
+ *  @param info the parameters of the advertising
+                key:Param1 value:the type of advertising
+                key:Param2 value:the order of advertising
+ */
 - (void) showAds: (NSMutableDictionary*) info;
+
+/**
+ *  hide advertising
+ *
+ *  @param info the parameters of the advertising
+                key:Param1 value:the type of advertising
+                key:Param2 value:the order of advertising
+ */
 - (void) hideAds: (NSMutableDictionary*) info;
+
+/**
+ *   preload advertising
+ *
+ *  @param info the parameters of the advertising
+                key:Param1 value:the type of advertising
+                key:Param2 value:the order of advertising
+ */
 - (void) preloadAds: (NSMutableDictionary*) info;
+
+/**
+ *  query the points
+ *
+ *  @return points
+ */
 - (float) queryPoints;
+
+/**
+ *  spend user`s points
+ *
+ *  @param points the points of spending
+ */
 - (void) spendPoints: (int) points;
-- (void) setDebugMode: (BOOL) debug;
+
+/**
+ *  Description
+ *
+ *  @param adType the type of advertising
+ *
+ *  @return if the type is supported ,return true
+            or if the type is supported ,return false
+ */
 - (BOOL) isAdTypeSupported: (int)adType;
+
+/**
+ *  get the version of SDK
+ *
+ *  @return the version of SDK
+ */
 - (NSString*) getSDKVersion;
+
+/**
+ *  get the version of plugin
+ *
+ *  @return the version of plugin
+ */
 - (NSString*) getPluginVersion;
+
+
+@optional
+/**
+ *  init SDK
+ *
+ *  @param cpInfo the parameters of SDK
+ */
+- (void) configDeveloperInfo : (NSMutableDictionary*) cpInfo;
+
+/**
+ *  set debug mode true or false
+ *
+ *  @param debug the status of debug
+ */
+- (void) setDebugMode: (BOOL) debug;
+
 
 @end

@@ -24,21 +24,109 @@ THE SOFTWARE.
 
 #import <Foundation/Foundation.h>
 
-@protocol InterfaceAnalytics <NSObject>
+@protocol InterfaceAnalytics<NSObject>
 
-- (void) configDeveloperInfo : (NSMutableDictionary*) cpInfo;
+@required
+/**
+ *  start session analytics
+ */
 - (void) startSession;
+
+/**
+ *  stop session analytics
+ */
 - (void) stopSession;
+
+/**
+ *  Set the timeout for expiring a session.
+ *
+ *  @param millis In milliseconds as the unit of time.
+ *  @note It must be invoked before calling startSession.
+ */
 - (void) setSessionContinueMillis: (long) millis;
+
+/**
+ * Whether to catch uncaught exceptions to server.
+ *
+ * @warning This interface only worked on android.
+ */
 - (void) setCaptureUncaughtException: (BOOL) isEnabled;
-- (void) setDebugMode: (BOOL) debug;
+
+/**
+ *  log an error
+ *
+ *  @param errorId The identity of event
+ *  @param message message for the error
+ */
 - (void) logError: (NSString*) errorId withMsg:(NSString*) message;
+
+/**
+ *  log an event
+ *
+ *  @param eventId The identity of event
+ */
 - (void) logEvent: (NSString*) eventId;
+
+/**
+ *  log an event
+ *
+ *  @param eventId  The identity of event
+ *  @param paramMap Extern parameters of the event
+ */
 - (void) logEvent: (NSString*) eventId withParam:(NSMutableDictionary*) paramMap;
+
+/**
+ *  Track an event begin
+ *
+ *  @param eventId The identity of event
+ */
 - (void) logTimedEventBegin: (NSString*) eventId;
+
+/**
+ *  Track an event end.
+ *
+ *  @param eventId The identity of event
+ */
 - (void) logTimedEventEnd: (NSString*) eventId;
-- (BOOL) isFunctionSupported:(NSString*) funcName;
+
+/**
+ *  whether function is supported
+ *
+ *  @param functionName the name of function
+ *
+ *  @return return If the function is supported, return true
+ or if the function is  not supported, return false
+ */
+- (BOOL) isFunctionSupported : (NSString*) functionName;
+
+/**
+ *  get the version of SDK
+ *
+ *  @return the version of SDK
+ */
 - (NSString*) getSDKVersion;
+
+/**
+ *  get the version of plugin
+ *
+ *  @return the version of plugin
+ */
 - (NSString*) getPluginVersion;
+
+@optional
+/**
+ *  init SDK
+ *
+ *  @param cpInfo the parameters of SDK
+ */
+- (void) configDeveloperInfo : (NSMutableDictionary*) cpInfo;
+
+/**
+ *  set debug mode true or false
+ *
+ *  @param debug the status of debug
+ */
+- (void) setDebugMode: (BOOL) debug;
+
 
 @end

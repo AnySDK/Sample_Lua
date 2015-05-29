@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>1CC7C844-7B38-42FE-B4EA-8DB4F3EFBB42</string>
+	<key>IDESourceControlProjectName</key>
+	<string>anysdklua</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>5B457FEB28C14A0A723690C60BDA02AB41BDEADD</key>
+		<string>ssh://172.16.0.235:10022/G_Sample/Sample_Lua.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>frameworks/runtime-src/proj.ios_mac/anysdklua.xcodeproj</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>5B457FEB28C14A0A723690C60BDA02AB41BDEADD</key>
+		<string>../../../../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>ssh://172.16.0.235:10022/G_Sample/Sample_Lua.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>5B457FEB28C14A0A723690C60BDA02AB41BDEADD</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>5B457FEB28C14A0A723690C60BDA02AB41BDEADD</string>
+			<key>IDESourceControlWCCName</key>
+			<string>Sample_Lua</string>
+		</dict>
+	</array>
+</dict>
+</plist>

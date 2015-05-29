@@ -56,8 +56,6 @@ using namespace anysdk::framework;
 USING_NS_CC;
 
 
-
-
 /* function to release collected object via destructor */
 #ifdef __cplusplus
 
@@ -230,6 +228,7 @@ static int tolua_anysdk_AgentManager_init00(lua_State* tolua_S)
 #ifndef TOLUA_DISABLE_tolua_anysdk_AgentManager_loadALLPlugin00
 static int tolua_anysdk_AgentManager_loadALLPlugin00(lua_State* tolua_S)
 {
+    CCLOG("\n********** \nloadALLPlugin was deprecated, please use loadAllPlugins instead.\n**********");
 #ifndef TOLUA_RELEASE
  tolua_Error tolua_err;
  if (
@@ -261,6 +260,7 @@ static int tolua_anysdk_AgentManager_loadALLPlugin00(lua_State* tolua_S)
 #ifndef TOLUA_DISABLE_tolua_anysdk_AgentManager_unloadALLPlugin00
 static int tolua_anysdk_AgentManager_unloadALLPlugin00(lua_State* tolua_S)
 {
+    CCLOG("\n********** \nunloadALLPlugin was deprecated, please use unloadAllPlugins instead.\n**********");
 #ifndef TOLUA_RELEASE
  tolua_Error tolua_err;
  if (
@@ -284,6 +284,68 @@ static int tolua_anysdk_AgentManager_unloadALLPlugin00(lua_State* tolua_S)
  tolua_lerror:
  tolua_error(tolua_S,"#ferror in function 'unloadALLPlugin'.",&tolua_err);
  return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: loadAllPlugins of class  AgentManager */
+#ifndef TOLUA_DISABLE_tolua_anysdk_AgentManager_loadAllPlugins00
+static int tolua_anysdk_AgentManager_loadAllPlugins00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+    tolua_Error tolua_err;
+    if (
+        !tolua_isusertype(tolua_S,1,"AgentManager",0,&tolua_err) ||
+        !tolua_isnoobj(tolua_S,2,&tolua_err)
+        )
+        goto tolua_lerror;
+    else
+#endif
+    {
+        AgentManager* self = (AgentManager*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+        if (!self) tolua_error(tolua_S,"invalid 'self' in function 'loadAllPlugins'", NULL);
+#endif
+        {
+            self->loadAllPlugins();
+        }
+    }
+    return 0;
+#ifndef TOLUA_RELEASE
+tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'loadAllPlugins'.",&tolua_err);
+    return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: unloadAllPlugins of class  AgentManager */
+#ifndef TOLUA_DISABLE_tolua_anysdk_AgentManager_unloadAllPlugins00
+static int tolua_anysdk_AgentManager_unloadAllPlugins00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+    tolua_Error tolua_err;
+    if (
+        !tolua_isusertype(tolua_S,1,"AgentManager",0,&tolua_err) ||
+        !tolua_isnoobj(tolua_S,2,&tolua_err)
+        )
+        goto tolua_lerror;
+    else
+#endif
+    {
+        AgentManager* self = (AgentManager*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+        if (!self) tolua_error(tolua_S,"invalid 'self' in function 'unloadAllPlugins'", NULL);
+#endif
+        {
+            self->unloadAllPlugins();
+        }
+    }
+    return 0;
+#ifndef TOLUA_RELEASE
+tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'unloadAllPlugins'.",&tolua_err);
+    return 0;
 #endif
 }
 #endif //#ifndef TOLUA_DISABLE
@@ -988,6 +1050,7 @@ static int tolua_anysdk_PluginProtocol_getSDKVersion00(lua_State* tolua_S)
 #ifndef TOLUA_DISABLE_tolua_anysdk_PluginProtocol_setDebugMode00
 static int tolua_anysdk_PluginProtocol_setDebugMode00(lua_State* tolua_S)
 {
+    CCLOG("\n********** \nsetDebugMode was deprecated.\n**********");
 #ifndef TOLUA_RELEASE
  tolua_Error tolua_err;
  if (
@@ -2240,6 +2303,8 @@ TOLUA_API int tolua_anysdk_open (lua_State* tolua_S)
    tolua_function(tolua_S,"init",tolua_anysdk_AgentManager_init00);
    tolua_function(tolua_S,"loadALLPlugin",tolua_anysdk_AgentManager_loadALLPlugin00);
    tolua_function(tolua_S,"unloadALLPlugin",tolua_anysdk_AgentManager_unloadALLPlugin00);
+    tolua_function(tolua_S,"loadAllPlugins",tolua_anysdk_AgentManager_loadAllPlugins00);
+    tolua_function(tolua_S,"unloadAllPlugins",tolua_anysdk_AgentManager_unloadAllPlugins00);
    tolua_function(tolua_S,"getAnalyticsPlugin",tolua_anysdk_AgentManager_getAnalyticsPlugin00);
    tolua_function(tolua_S,"getUserPlugin",tolua_anysdk_AgentManager_getUserPlugin00);
    tolua_function(tolua_S,"getSharePlugin",tolua_anysdk_AgentManager_getSharePlugin00);

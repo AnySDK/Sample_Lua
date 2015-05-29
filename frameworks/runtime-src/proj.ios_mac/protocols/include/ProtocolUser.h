@@ -29,9 +29,10 @@ typedef enum
     kExitPage,/**< enum value is callback after exit exit page. */
     kAntiAddictionQuery,/**< enum value is callback after querying antiAddiction. */
     kRealNameRegister,/**< enum value is callback after registering realname. */
-    kAccountSwitchSuccess,/**< enum alue is callback of succeeding in switching account. */
+    kAccountSwitchSuccess,/**< enum value is callback of succeeding in switching account. */
     kAccountSwitchFail,/**< enum value is callback of failing to switch account. */
     kOpenShop,/**< enum value is callback of open the shop. */
+    kUserExtension = 50000 /**< enum value is  extension code . */
 
 
 } UserActionResultCode;
@@ -94,7 +95,7 @@ public:
     virtual bool isLogined() = 0 ;
 
     /**
-     @brief Get session ID
+     @brief Get USER ID
      @return If user logined, return value is userID;
              else return value is empty string.
      */

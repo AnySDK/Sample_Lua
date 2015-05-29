@@ -1,168 +1,149 @@
-
-function CreatEnumTable(tbl, index) 
-    local enumtbl = {} 
-    local enumindex = index or 0 
-    for i, v in ipairs(tbl) do 
-        enumtbl[v] = enumindex + i - 1
-    end 
-    return enumtbl 
-end 
-
 Plugin_type = {
-    "kPluginAds",
-    "kPluginAnalytics",
-    "kPluginIAP",
-    "kPluginShare",
-    "kPluginUser",
-    "kPluginSocial",
-    "kPluginPush"
+    kPluginAds          = 16,
+    kPluginAnalytics    = 1,
+    kPluginIAP          = 8,
+    kPluginShare        = 4,
+    kPluginUser         = 32,
+    kPluginSocial       = 2,
+    kPluginPush         = 64
 }
-Plugin_type = CreatEnumTable(Plugin_type, 1)
 
 -- for ads
 AdsResultCode = {
-    "kAdsReceived",           	--/**< enum the callback: the ad is received is at center. */
-    "kAdsShown",                  --/**< enum the callback: the advertisement dismissed. */
-    "kAdsDismissed",             --/**< enum the callback: the advertisement dismissed. */
-    "kPointsSpendSucceed",       --/**< enum the callback: the points spend succeed. */
-    "kPointsSpendFailed",        --/**< enum the callback: the points spend failed. */
-    "kNetworkError",              --/**< enum the callback of Network error at center. */
-    "kUnknownError",              --/**< enum the callback of Unknown error. */
-    "kOfferWallOnPointsChanged",   --/**< enum the callback of Changing the point of offerwall. */
-};	--ads result code
-AdsResultCode = CreatEnumTable(AdsResultCode, 0)
+    kAdsReceived                 = 0,       --enum value is callback of ad is received at center.
+    kAdsShown                    = 1,       --enum value is callback of advertisement shown.
+    kAdsDismissed                = 2,       --enum value is callback of advertisement dismissed.
+    kPointsSpendSucceed          = 3,       --enum value is callback of points spend succeed.
+    kPointsSpendFailed           = 4,       --enum value is callback of points spend failed.
+    kNetworkError                = 5,       --enum value is callback of network error at center.
+    kUnknownError                = 6,       --enum value is callback of unknown error.
+    kOfferWallOnPointsChanged    = 7,       --enum value is callback of changing the point of offerwall.
+    kAdsExtension                = 40000    --enum value is extension code.
+}	--ads result code
 
 AdsPos = {
-    "kPosCenter",			--/**< enum the toolbar is at center. */
-    "kPosTop",				--/**< enum the toolbar is at top. */
-    "kPosTopLeft",			--/**< enum the toolbar is at topleft. */
-    "kPosTopRight",			--/**< enum the toolbar is at topright. */
-    "kPosBottom",				--/**< enum the toolbar is at bottom. */
-    "kPosBottomLeft",			--/**< enum the toolbar is at bottomleft. */
-    "kPosBottomRight" 		--/**< enum the toolbar is at bottomright. */
-};	--ads pos
-AdsPos = CreatEnumTable(AdsPos, 0)
+    kPosCenter         = 0,   --enum the toolbar is at center.
+    kPosTop            = 1,   --enum the toolbar is at top.
+    kPosTopLeft        = 2,	  --enum the toolbar is at topleft.
+    kPosTopRight       = 3,	  --enum the toolbar is at topright.
+    kPosBottom         = 4,   --enum the toolbar is at bottom.
+    kPosBottomLeft     = 5,	  --enum the toolbar is at bottomleft.
+    kPosBottomRight    = 6    --enum the toolbar is at bottomright.
+}	--ads pos
 
 AdsType = {
-	"AD_TYPE_BANNER",		--/**< enum value is banner ads . */
-	"AD_TYPE_FULLSCREEN",	--/**< enum value is fullscreen ads . */
-	"AD_TYPE_MOREAPP",		--/**< enum value is moreapp ads . */
-	"AD_TYPE_OFFERWALL"	--/**< enum value is offerwall ads . */
-};	--ads type
-AdsType = CreatEnumTable(AdsType, 0)
+	AD_TYPE_BANNER        = 0,   --enum value is banner ads.
+	AD_TYPE_FULLSCREEN    = 1,   --enum value is fullscreen ads.
+	AD_TYPE_MOREAPP       = 2,   --enum value is moreapp ads.
+	AD_TYPE_OFFERWALL	  = 3    --enum value is offerwall ads.
+}	--ads type
 
 --for pay result code
 PayResultCode = {
-    "kPaySuccess",		--/**< enum value is callback of succeeding in paying . */
-    "kPayFail",			--/**< enum value is callback of failing to pay . */
-    "kPayCancel",		--/**< enum value is callback of canceling to pay . */
-    "kPayNetworkError",	--/**< enum value is callback of network error . */
-    "kPayProductionInforIncomplete",	--/**< enum value is callback of incompleting info . */
-	"kPayInitSuccess",	--/**< enum value is callback of succeeding in initing sdk . */
-	"kPayInitFail",		--/**< enum value is callback of failing to init sdk . */
-	"kPayNowPaying" ,	--/**< enum value is callback of paying now . */
-	"kPayRechareSuccess"--/**< enum value is callback of  succeeding in recharging. */
-};
-PayResultCode = CreatEnumTable(PayResultCode, 0)
+    kPaySuccess                      = 0,       --enum value is callback of succeeding in paying.
+    kPayFail                         = 1,       --enum value is callback of failing to pay.
+    kPayCancel                       = 2,       --enum value is callback of canceling to pay.
+    kPayNetworkError                 = 3,       --enum value is callback of network error.
+    kPayProductionInforIncomplete    = 4,       --enum value is callback of incomplete info.
+	kPayInitSuccess                  = 5,       --enum value is callback of succeeding in initing sdk.
+	kPayInitFail                     = 6,       --enum value is callback of failing to init sdk.
+	kPayNowPaying                    = 7,       --enum value is callback of paying now.
+	kPayRechargeSuccess              = 8,       --enum value is callback of succeeding in recharging.
+    kPayExtension                    = 30000    --enum value is extension code.
+}
 
 -- for push action result code
 PushActionResultCode = {
-	"kPushReceiveMessage"	--/**value is callback of Receiving Message . */
-};
-PushActionResultCode = CreatEnumTable(PushActionResultCode, 0)
+	kPushReceiveMessage    = 0,       --enum value is callback of receiving message.
+	kPushExtensionCode     = 60000    --enum value is extension code.
+}
 
 -- for share result code
 ShareResultCode = {
-    "kShareSuccess",	--/**< enum value is callback of failing to sharing . */
-    "kShareFail",		--/**< enum value is callback of failing to share . */
-    "kShareCancel",		--/**< enum value is callback of canceling to share . */
-    "kShareNetworkError"	--/**< enum value is callback of network error . */
-};
-ShareResultCode = CreatEnumTable(ShareResultCode, 0)
+    kShareSuccess         = 0,       --enum value is callback of succeeding in sharing.
+    kShareFail            = 1,       --enum value is callback of failing to share.
+    kShareCancel          = 2,       --enum value is callback of canceling to share.
+    kShareNetworkError    = 3,       --enum value is callback of network error.
+    kShareExtension       = 10000    --enum value is extension code.
+}
 
 --for social ret code
 SocialRetCode = {
 	-- code for leaderboard feature
-	"kScoreSubmitSucceed",		--/**< enum value is callback of succeeding in submiting. */
-    "kScoreSubmitfail",			--/**< enum value is callback of failing to submit . */
+	kScoreSubmitSucceed      = 1,       --enum value is callback of succeeding in submiting.
+    kScoreSubmitfail         = 2,       --enum value is callback of failing to submit.
     -- code for achievement feature
-    "kAchUnlockSucceed",		--/**< enum value is callback of succeeding in unlocking. */
-    "kAchUnlockFail",			--/**< enum value is callback of failing to  unlock. */
-    "kSocialSignInSucceed",		--/**< enum value is callback of succeeding to login. */
-    "kSocialSignInFail",		--/**< enum value is callback of failing to  login. */
-    "kSocialSignOutSucceed",	--/**< enum value is callback of succeeding to login. */
-    "kSocialSignOutFail"		--/**< enum value is callback of failing to  login. */
-};
-SocialRetCode = CreatEnumTable(SocialRetCode, 1)
+    kAchUnlockSucceed        = 3,       --enum value is callback of succeeding in unlocking.
+    kAchUnlockFail           = 4,       --enum value is callback of failing to unlock.
+    kSocialSignInSucceed     = 5,       --enum value is callback of succeeding to login.
+    kSocialSignInFail        = 6,       --enum value is callback of failing to login.
+    kSocialSignOutSucceed    = 7,       --enum value is callback of succeeding in logouting.
+    kSocialSignOutFail       = 8,       --enum value is callback of failing to logout.
+    kSocialGetGameFriends    = 9,       --enum value is callback of getting game friends.
+    kSocialExtensionCode     = 20000    --enum value is extension code.
+}
 
 -- for user action result code
 UserActionResultCode = {
-	"kInitSuccess",		--/**< enum value is callback of succeeding in initing sdk. */
-	"kInitFail",     		--/**< enum  value is callback of failing to init sdk. */
-    "kLoginSuccess",	    --/**< enum value is callback of succeeding in login.*/
-    "kLoginNetworkError",	--/**< enum value is callback of network error*/
-    "kLoginNoNeed",		--/**< enum value is callback of no need login.*/
-    "kLoginFail",		--/**< enum value is callback of failing to login. */
-    "kLoginCancel",		--/**< enum value is callback of canceling to login. */
-    "kLogoutSuccess", 	--/**< enum value is callback of succeeding in logout. */
-    "kLogoutFail",		--/**< enum value is callback of failing to logout. */
-    "kPlatformEnter", 	--/**< enum value is callback after enter platform. */
-    "kPlatformBack",  	--/**< enum value is callback after exit antiAddiction. */
-    "kPausePage", 		--/**< enum value is callback after exit pause page. */
-    "kExitPage",  		--/**< enum value is callback after exit exit page. */
-    "kAntiAddictionQuery",	--/**< enum value is callback after querying antiAddiction. */
-    "kRealNameRegister",	--/**< enum value is callback after registering realname. */
-    "kAccountSwitchSuccess",	--/**< enum alue is callback of succeeding in switching account. */
-    "kAccountSwitchFail",	--/**< enum value is callback of failing to switch account. */
-    "kOpenShop"			--/**< enum value is callback of open the shop. */
-};
-UserActionResultCode = CreatEnumTable(UserActionResultCode, 0)
+	kInitSuccess             = 0,       --enum value is callback of succeeding in initing sdk.
+	kInitFail                = 1,       --enum value is callback of failing to init sdk.
+    kLoginSuccess            = 2,       --enum value is callback of succeeding in logining.
+    kLoginNetworkError       = 3,       --enum value is callback of network error.
+    kLoginNoNeed             = 4,       --enum value is callback of no need login.
+    kLoginFail               = 5,       --enum value is callback of failing to login.
+    kLoginCancel             = 6,       --enum value is callback of canceling to login.
+    kLogoutSuccess           = 7,       --enum value is callback of succeeding in logouting.
+    kLogoutFail              = 8,       --enum value is callback of failing to logout.
+    kPlatformEnter           = 9,       --enum value is callback of after enter platform.
+    kPlatformBack            = 10,      --enum value is callback of after exit antiAddiction.
+    kPausePage               = 11,      --enum value is callback of after exit pause page.
+    kExitPage                = 12,      --enum value is callback of after exit exit page.
+    kAntiAddictionQuery      = 13,      --enum value is callback of after querying antiAddiction.
+    kRealNameRegister        = 14,      --enum value is callback of after registering realname.
+    kAccountSwitchSuccess    = 15,      --enum value is callback of succeeding in switching account.
+    kAccountSwitchFail       = 16,      --enum value is callback of failing to switch account.
+    kOpenShop                = 17,      --enum value is callback of opening the shop.
+    kUserExtension           = 50000    --enum value is extension code.
+}
 
 -- for toolBar place
 ToolBarPlace = {
-    "kToolBarTopLeft",		--/**< enum the toolbar is at topleft. */
-    "kToolBarTopRight",		--/**< enum the toolbar is at topright. */
-    "kToolBarMidLeft",		--/**< enum the toolbar is at midleft. */
-    "kToolBarMidRight",		--/**< enum the toolbar is at midright. */
-    "kToolBarBottomLeft", 	--/**< enum the toolbar is at bottomleft. */
-    "kToolBarBottomRight" 	--/**< enum the toolbar is at bottomright. */
-};
-ToolBarPlace = CreatEnumTable(ToolBarPlace, 1)
+    kToolBarTopLeft        = 1,   --enum the toolbar is at topleft.
+    kToolBarTopRight       = 2,   --enum the toolbar is at topright.
+    kToolBarMidLeft        = 3,   --enum the toolbar is at midleft.
+    kToolBarMidRight       = 4,   --enum the toolbar is at midright.
+    kToolBarBottomLeft     = 5,   --enum the toolbar is at bottomleft.
+    kToolBarBottomRight    = 6    --enum the toolbar is at bottomright.
+}
 
 -------------for analytics---------------
--- for analytics
 AccountType = {
-    "ANONYMOUS",
-    "REGISTED",
-    "SINA_WEIBO",
-    "TENCENT_WEIBO",
-    "QQ",
-    "QQ_WEIBO",
-    "ND91"
-}; 
-AccountType = CreatEnumTable(AccountType, 0)
+    ANONYMOUS        = 0,
+    REGISTED         = 1,
+    SINA_WEIBO       = 2,
+    TENCENT_WEIBO    = 3,
+    QQ               = 4,
+    ND91             = 5
+} 
 
 AccountOperate = {
-    "LOGIN",
-    "LOGOUT",
-    "REGISTER"
-};
-AccountOperate = CreatEnumTable(AccountOperate, 0)
+    LOGIN       = 0,
+    LOGOUT      = 1,
+    REGISTER    = 2
+}
 
 AccountGender = {
-    "MALE",
-    "FEMALE",
-    "UNKNOWN"
+    MALE       = 0,
+    FEMALE     = 1,
+    UNKNOWN    = 2
 }
-AccountGender = CreatEnumTable(AccountGender, 0)
 
 TaskType = {
-    "GUIDE_LINE",
-    "MAIN_LINE",
-    "BRANCH_LINE",
-    "DAILY",
-    "ACTIVITY",
-    "OTHER"
-};
-TaskType = CreatEnumTable(TaskType, 0)
+    GUIDE_LINE     = 0,
+    MAIN_LINE      = 1,
+    BRANCH_LINE    = 2,
+    DAILY          = 3,
+    ACTIVITY       = 4,
+    OTHER          = 5
+}
 -------------for analytics---------------

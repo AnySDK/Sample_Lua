@@ -24,10 +24,42 @@ THE SOFTWARE.
 
 @protocol InterfaceShare <NSObject>
 
-- (void) configDeveloperInfo : (NSMutableDictionary*) cpInfo;
+@required
+/**
+ *  share
+ *
+ *  @param shareInfo the content of share
+ *  @note  the description is subject to the wiki(http://docs.anysdk.com/IAPSystem#.E6.94.AF.E4.BB.98)
+ */
 - (void) share: (NSMutableDictionary*) shareInfo;
-- (void) setDebugMode: (BOOL) debug;
+/**
+ *  get the version of SDK
+ *
+ *  @return the version of SDK
+ */
 - (NSString*) getSDKVersion;
+
+/**
+ *  get the version of plugin
+ *
+ *  @return the version of plugin
+ */
 - (NSString*) getPluginVersion;
+
+@optional
+/**
+ *  init SDK
+ *
+ *  @param cpInfo the parameters of SDK
+ */
+- (void) configDeveloperInfo : (NSMutableDictionary*) cpInfo;
+
+/**
+ *  set debug mode true or false
+ *
+ *  @param debug the status of debug
+ */
+- (void) setDebugMode: (BOOL) debug;
+
 
 @end

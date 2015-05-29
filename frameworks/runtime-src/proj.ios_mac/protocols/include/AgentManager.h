@@ -16,16 +16,16 @@
 #include <map>
 #include <string>
 namespace anysdk { namespace framework {
-typedef enum
-{
-	kAdsType = 1,
-	kAnalyticsType = 2,
-	kIAPType = 3,
-	kShareType = 4,
-	kUserType = 5,
-	kSocialType = 6,
-	kPushType = 7,
-}AnySDKType;
+/** @brief Plugin_type enum, with inline docs */
+typedef enum {
+    kPluginAds = 16,/**< enum value kPluginAds. */
+    kPluginAnalytics = 1,/**< enum value kPluginAnalytics. */
+    kPluginIAP = 8,/**< enum value kPluginIAP. */
+    kPluginShare = 2,/**< enum value kPluginShare. */
+    kPluginUser = 32,/**< enum value kPluginUser. */
+    kPluginSocial = 4,/**< enum value kPluginSocial. */
+    kPluginPush = 64,/**< enum value kPluginPush. */
+}Plugin_type;
 /**   
  *  @class  AgentManager  
  */
@@ -45,9 +45,9 @@ public:
     
     /**
     @breif the init of AgentManager
-    @param the appKey of plugin-x
-    @param the appSecret of plugin-x
-    @param the privateKey of plugin-x
+    @param the appKey of anysdk
+    @param the appSecret of anysdk
+    @param the privateKey of anysdk
     @param the url of oauthLoginServer
     @warning Must invoke this interface before loadALLPlugin
     */
@@ -56,12 +56,22 @@ public:
     /**
      @brief load the plugins
      */
-    void loadALLPlugin();
+    CC_DEPRECATED_ATTRIBUTE void loadALLPlugin();
     /**
      @brief unload the plugins
      */
-    void unloadALLPlugin();
+    CC_DEPRECATED_ATTRIBUTE void unloadALLPlugin();
     
+    /**
+     @brief load the plugins
+    */
+    void loadAllPlugins();
+
+    /**
+     @brief unload the plugins
+    */
+    void unloadAllPlugins();
+
     /**
      @brief Get Analytics plugin
      @return  if Analytics plugin exist ,return value is Analytics plugin.
@@ -123,7 +133,25 @@ public:
      */
     std::string getCustomParam();
 
+    /**
+     @brief Get framework version
+     @return  return value is the version of AnySDKFramework.
+     */
+    std::string getFrameworkVersion();
+
+    /**
+    @Title: setIsAnaylticsEnabled
+    @Description: choose to open or close
+    @param @param enabled    true or false
+    @return void
+    */
     void setIsAnaylticsEnabled(bool value){bIsAnaylticsEnabled = value;};
+    /**
+    @Title: isAnaylticsEnabled
+    @Description: the status of Anayltics
+    @param @return    true or false
+    @return boolean
+    */
     bool isAnaylticsEnabled(){return bIsAnaylticsEnabled;};
 
 
@@ -132,7 +160,7 @@ public:
 
 protected:
     void setDebugMode(bool flag);
-    std::string getFileData(const char* pFileName);
+    std::string getSupportPlugin();
     void loadPlugin(const char* nodeName,int type);
     
 

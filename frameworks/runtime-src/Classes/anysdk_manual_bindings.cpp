@@ -54,14 +54,12 @@
 #include "cocos2d.h"
 
 
-#define ASF_ANDROID_LUA_VERSION "<<<<<ANYSDK_FRAMEWORK_VERSION>>>>>@ANDROID_LUA_1.5.0"
-#define ASF_IOS_LUA_VERSION "<<<<<ANYSDK_FRAMEWORK_VERSION>>>>>@IOS_LUA_1.5.0"
-
 // #define ON_VERSION_2 1
 
 #ifndef ON_VERSION_2
     #include "LuaBasicConversions.h"
 #endif
+
 
 /* Exported function */
 TOLUA_API int  tolua_anysdk_manual_open (lua_State* tolua_S);
@@ -76,6 +74,7 @@ USING_NS_CC;
 #ifndef TOLUA_DISABLE_tolua_anysdk_ProtocolShare_setDebugMode
 static int tolua_anysdk_ProtocolShare_setDebugMode(lua_State* tolua_S)
 {
+  CCLOG("\n********** setDebugMode was deprecated.\n**********");
   CCLOG("in function protocols share\n");
 #ifndef TOLUA_RELEASE
   tolua_Error tolua_err;
@@ -580,15 +579,9 @@ static int tolua_anysdk_AgentManager_getFrameworkVersion(lua_State* tolua_S)
         if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getFrameworkVersion'", NULL);
 #endif
         {
-            std::string temp1,temp2;
-            if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-                temp1 = ASF_IOS_LUA_VERSION;
-            else
-                temp1 = ASF_ANDROID_LUA_VERSION;
-            
-            int pos = int(temp1.find('@'));
-            temp2 = temp1.substr(pos + 1,temp1.length());
-            tolua_pushstring(tolua_S,temp2.c_str());
+            std::string version;
+            version = self->getFrameworkVersion();
+            tolua_pushstring(tolua_S,version.c_str());
         }
     }
     return 1;
@@ -1041,6 +1034,7 @@ static void extendPluginProtocol(lua_State* tolua_S)
 #ifndef TOLUA_DISABLE_tolua_anysdk_ProtocolAnalytics_setDebugMode
 static int tolua_anysdk_ProtocolAnalytics_setDebugMode(lua_State* tolua_S)
 {
+    CCLOG("\n********** setDebugMode was deprecated.\n**********");
 #ifndef TOLUA_RELEASE
   tolua_Error tolua_err;
   if (
@@ -1152,6 +1146,7 @@ static void extendProtocolAnalytics(lua_State* tolua_S)
 #ifndef TOLUA_DISABLE_tolua_anysdk_ProtocolIAP_setDebugMode
 static int tolua_anysdk_ProtocolIAP_setDebugMode(lua_State* tolua_S)
 {
+    CCLOG("\n********** setDebugMode was deprecated.\n**********");
 #ifndef TOLUA_RELEASE
   tolua_Error tolua_err;
   if (
@@ -1557,6 +1552,7 @@ static int tolua_anysdk_ProtocolPush_setTags(lua_State* tolua_S)
 #ifndef TOLUA_DISABLE_tolua_anysdk_ProtocolPush_setDebugMode
 static int tolua_anysdk_ProtocolPush_setDebugMode(lua_State* tolua_S)
 {
+    CCLOG("\n********** setDebugMode was deprecated.\n**********");
 #ifndef TOLUA_RELEASE
   tolua_Error tolua_err;
   if (
@@ -1742,10 +1738,6 @@ static int tolua_anysdk_ProtocolPush_setActionListener(lua_State* tolua_S)
 #endif
         LUA_FUNCTION handler = (  toluafix_ref_function(tolua_S,2,0));
 
-        if (ProtocolPushActionListener::_instance != NULL)
-        {
-            return 0;
-        }
         ProtocolPushActionListener* listener = ProtocolPushActionListener::getInstance();
         listener->setHandler(handler);
         self->setActionListener(listener);
@@ -1939,6 +1931,7 @@ ProtocolSocialActionListener* ProtocolSocialActionListener::_instance = NULL;
 #ifndef TOLUA_DISABLE_tolua_anysdk_ProtocolSocial_setDebugMode
 static int tolua_anysdk_ProtocolSocial_setDebugMode(lua_State* tolua_S)
 {
+    CCLOG("\n********** setDebugMode was deprecated.\n**********");
 #ifndef TOLUA_RELEASE
   tolua_Error tolua_err;
   if (
@@ -1996,10 +1989,6 @@ static int tolua_anysdk_ProtocolSocial_setListener(lua_State* tolua_S)
 #endif
         LUA_FUNCTION handler = (  toluafix_ref_function(tolua_S,2,0));
 
-        if (ProtocolSocialActionListener::_instance != NULL)
-        {
-            return 0;
-        }
         ProtocolSocialActionListener* listener = ProtocolSocialActionListener::getInstance();
         listener->setHandler(handler);
         self->setListener(listener);
@@ -2139,6 +2128,7 @@ ProtocolUserActionListener* ProtocolUserActionListener::_instance = NULL;
 #ifndef TOLUA_DISABLE_tolua_anysdk_ProtocolUser_setDebugMode
 static int tolua_anysdk_ProtocolUser_setDebugMode(lua_State* tolua_S)
 {
+    CCLOG("\n********** setDebugMode was deprecated.\n**********");
 #ifndef TOLUA_RELEASE
   tolua_Error tolua_err;
   if (
@@ -2311,7 +2301,7 @@ public:
         CCLOG("onPlayerGetPoints. points: %d.", points);
         CCLuaStack* stack = CCLuaEngine::defaultEngine()->getLuaStack();
         lua_State* tolua_S    = stack->getLuaState();
-        object_to_luaval<ProtocolAds>(tolua_S, "ProtocolAds",(ProtocolAds*)pAdsPlugin);
+        //object_to_luaval<ProtocolAds>(tolua_S, "ProtocolAds",(ProtocolAds*)pAdsPlugin);
         tolua_pushusertype(tolua_S,(void*)pAdsPlugin,"ProtocolAds");
         tolua_pushnumber(tolua_S, (lua_Number)points);
         stack->executeFunctionByHandler(_handler, 2);
@@ -2409,6 +2399,7 @@ static int tolua_anysdk_ProtocolAds_setAdsListener(lua_State* tolua_S)
 #ifndef TOLUA_DISABLE_tolua_anysdk_ProtocolAds_setDebugMode
 static int tolua_anysdk_ProtocolAds_setDebugMode(lua_State* tolua_S)
 {
+    CCLOG("\n********** setDebugMode was deprecated.\n**********");
 #ifndef TOLUA_RELEASE
   tolua_Error tolua_err;
   if (

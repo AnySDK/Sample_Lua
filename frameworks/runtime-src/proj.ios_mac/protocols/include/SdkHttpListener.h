@@ -11,7 +11,16 @@
 //@protocol  <NSObject>
 @protocol SdkHttpListener <NSObject>
 
+/**
+ *  network response
+ *
+ *  @param response the response message
+ */
 - (void) onResponse:(NSString*)response;
+
+/**
+ *  network return error
+ */
 - (void) onError;
 
 @end

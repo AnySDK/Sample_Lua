@@ -10,22 +10,91 @@
 
 @interface Wrapper : NSObject
 
-+(void) setAppParam:(const char*)appKey AppSecret:(const char*)appSeceret PrivateKey:(const char*)privateKey OauthLoginServer:(const char*)oauthLoginServer;
+/**
+ *  init developer.xml
+ */
++ (void) analysisDeveloperInfo;
 
-+(NSMutableDictionary*) getDeveloperInfo;
+/**
+ *  check application
+ *
+ *  @param appKey           the value of appkey from AnySDK Client
+ *  @param appSeceret       the value of appSeceret from AnySDK Client
+ *  @param privateKey       the value of privateKey from AnySDK Client
+ *  @param oauthLoginServer the value of appkey from AnySDK Client
+ */
++ (void) setAppParam:(const char*)appKey AppSecret:(const char*)appSeceret PrivateKey:(const char*)privateKey OauthLoginServer:(const char*)oauthLoginServer;
 
-+(NSString*)pluginDecode:(const char*)str;
+/**
+ *  get the parameters of SDK
+ *
+ *  @return the parameters of SDK
+ */
++ (NSMutableDictionary*) getDeveloperInfo;
 
-+(NSString*)dictToNSString:(NSMutableDictionary*)dict;
+/**
+ *  get the information of channel
+ *
+ *  @return the information of channel
+ */
++ (NSMutableDictionary*) getChannelInfo;
 
-+(NSString*)getChannelId;
+/**
+ *  get the information of game
+ *
+ *  @return  the information of game
+ */
++ (NSMutableDictionary*) getGameInfo;
 
-+(NSString*)getCustomParam;
+/**
+ *  get the information of plugin
+ *
+ *  @return the information of plugin
+ */
++ (NSMutableDictionary*) getPluginInfo;
 
-+(void)analysisDeveloperInfo;
+/**
+ *  get the information of tool
+ *
+ *  @return the information of tool
+ */
++ (NSMutableDictionary*) getToolInfo;
 
-+ (BOOL) networkReachable;
+/**
+ *  get support for plug-ins
+ *
+ *  @return  support for plug-ins 
+ */
++ (NSMutableArray*) getSupportForPlugins;
 
-+ (NSMutableDictionary*) getXmlInfoByFileName:(NSString*)fileName;
+/**
+ *  NSMutableDictionary  change to NSString
+ *
+ *  @param dict NSMutableDictionary value
+ *
+ *  @return NSString value
+ */
++ (NSString*)dictToNSString:(NSMutableDictionary*)dict;
+
+/**
+ * get the identifier of value
+ *
+ *  @return the identifier of value
+ */
++ (NSString*)getChannelId;
+
+/**
+ *  get custom parameter from AnySDK Client
+ *
+ *  @return return value description
+ */
++ (NSString*) getCustomParam;
+
++ (BOOL)networkReachable;
+
++ (NSString*) replaceNotifyURL:(Class)class1 url:(NSString*)url;
+
+
+
 
 @end

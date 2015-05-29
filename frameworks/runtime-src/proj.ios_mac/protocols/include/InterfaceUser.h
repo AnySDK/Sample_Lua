@@ -24,14 +24,71 @@ THE SOFTWARE.
 
 @protocol InterfaceUser <NSObject>
 
-- (void) configDeveloperInfo : (NSMutableDictionary*) cpInfo;
+@required
+/**
+ *  user login
+ */
 - (void) login;
+
+/**
+ *  get the status of login
+ *
+ *  @return  status of login 
+ */
 - (BOOL) isLogined;
+
+/**
+ *  get user identifier
+ *
+ *  @return user identifier
+ */
 - (NSString*) getUserID;
-- (void) setDebugMode: (BOOL) debug;
+
+/**
+ *  get the version of SDK
+ *
+ *  @return the version of SDK
+ */
 - (NSString*) getSDKVersion;
+
+/**
+ *  get the version of plugin
+ *
+ *  @return the version of plugin
+ */
 - (NSString*) getPluginVersion;
+
+/**
+ *  get the identifier of plugin
+ *
+ *  @return the identifier of plugin
+ */
 - (NSString*) getPluginId;
+
+/**
+ *  whether function is supported
+ *
+ *  @param functionName the name of function
+ *
+ *  @return return If the function is supported, return true 
+                or if the function is  not supported, return false
+ */
 - (BOOL) isFunctionSupported : (NSString*) functionName;
+
+@optional
+/**
+ *  init SDK
+ *
+ *  @param cpInfo the parameters of SDK
+ */
+- (void) configDeveloperInfo : (NSMutableDictionary*) cpInfo;
+
+/**
+ *  set debug mode true or false
+ *
+ *  @param debug the status of debug
+ */
+- (void) setDebugMode: (BOOL) debug;
+
 
 @end

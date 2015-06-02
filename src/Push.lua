@@ -3,9 +3,10 @@ require "ClassBase"
 local push_plugin = nil
 
 local function onActionResult(plugin, code, msg)
+	print("on push result listener.")
+	print("code:"..code..",msg:"..msg)
 	if code == PushActionResultCode.kPushReceiveMessage then
 	    --do
-	    print(code,msg)
 	end
 end
 

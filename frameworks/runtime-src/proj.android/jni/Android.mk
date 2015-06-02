@@ -1,4 +1,5 @@
 LOCAL_PATH := $(call my-dir)
+$(call import-add-path,$(LOCAL_PATH)/../)
 
 include $(CLEAR_VARS)
 
@@ -11,9 +12,7 @@ LOCAL_SRC_FILES := hellolua/main.cpp \
                    ../../Classes/anysdkbindings.cpp \
                    ../../Classes/anysdk_manual_bindings.cpp
 
-LOCAL_C_INCLUDES := $(LOCAL_PATH)/../../Classes \
-					../protocols_c++_static/include \
-					../protocols_c++_static/android
+LOCAL_C_INCLUDES := $(LOCAL_PATH)/../../Classes
 					
 LOCAL_STATIC_LIBRARIES := cocos2d_lua_static
 LOCAL_WHOLE_STATIC_LIBRARIES := PluginProtocolStatic

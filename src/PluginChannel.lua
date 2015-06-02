@@ -3,17 +3,69 @@ require "ClassBase"
 local user_plugin = nil
 local iap_plugin_maps = nil
 
-local function onUserLogin(plugin,code,msg)
-	if code == UserActionResultCode.kInitSuccess then
-	    --do
-	    cclog("sdk init success!")
-	end
+local function onUserResult( plugin, code, msg )
+    print("on user action listener.")
+    print("code:"..code..",msg:"..msg)
+    if code == UserActionResultCode.kInitSuccess then
+        --do
+    elseif code == UserActionResultCode.kInitFail then
+        --do
+    elseif code == UserActionResultCode.kLoginSuccess then
+        --do
+    elseif code == UserActionResultCode.kLoginNetworkError then
+        --do
+    elseif code == UserActionResultCode.kLoginNoNeed then
+        --do
+    elseif code == UserActionResultCode.kLoginFail then
+        --do
+    elseif code == UserActionResultCode.kLoginCancel then
+        --do
+    elseif code == UserActionResultCode.kLogoutSuccess then
+        --do
+    elseif code == UserActionResultCode.kLogoutFail then
+        --do
+    elseif code == UserActionResultCode.kPlatformEnter then
+        --do
+    elseif code == UserActionResultCode.kPlatformBack then
+        --do
+    elseif code == UserActionResultCode.kPausePage then
+        --do
+    elseif code == UserActionResultCode.kExitPage then
+        --do
+    elseif code == UserActionResultCode.kAntiAddictionQuery then
+        --do
+    elseif code == UserActionResultCode.kRealNameRegister then
+        --do
+    elseif code == UserActionResultCode.kAccountSwitchSuccess then
+        --do
+    elseif code == UserActionResultCode.kAccountSwitchFail then
+        --do
+    elseif code == UserActionResultCode.kOpenShop then
+        --do
+    end
 end
+
 local function onPayResult( code, msg, info )
-    print("pay result----", code, msg)
+    print("on iap result listener.")
+    print("code:"..code..",msg:"..msg)
     if code == PayResultCode.kPaySuccess then
         --do
-        cclog("pay success.")
+    elseif code == PayResultCode.kPayFail then
+        --do
+    elseif code == PayResultCode.kPayCancel then
+        --do
+    elseif code == PayResultCode.kPayNetworkError then
+        --do
+    elseif code == PayResultCode.kPayProductionInforIncomplete then
+        --do
+    elseif code == PayResultCode.kPayInitSuccess then
+        --do
+    elseif code == PayResultCode.kPayInitFail then
+        --do
+    elseif code == PayResultCode.kPayNowPaying then
+        --do
+    elseif code == PayResultCode.kPayRechargeSuccess then
+        --do
     end
 end
 
@@ -21,7 +73,6 @@ PluginChannel = class()
 function PluginChannel:ctor()
     --for anysdk
     local agent = AgentManager:getInstance()
-    cclog("agent is---" .. type(agent))
     --init
     --anysdk
     local appKey = "CED525C0-8D41-F514-96D8-90092EB3899A";
@@ -31,17 +82,18 @@ function PluginChannel:ctor()
     local oauthLoginServer = "http://oauth.anysdk.com/api/OauthLoginDemo/Login.php";
     agent:init(appKey,appSecret,privateKey,oauthLoginServer)
     --load
-    agent:loadALLPlugin()
+    agent:loadAllPlugins()
 
     -- get user plugin
     user_plugin = agent:getUserPlugin()
-    cclog("getUserPlugin()--" .. type(user_plugin))
-    user_plugin:setActionListener(onUserLogin)
+    if user_plugin ~= nil then
+        user_plugin:setActionListener(onUserResult)
+    end
 
     iap_plugin_maps = agent:getIAPPlugin()
     for key, value in pairs(iap_plugin_maps) do
         print("key:" .. key)
-        cclog("value: " .. type(value))
+        print("value: " .. type(value))
         value:setResultListener(onPayResult)
     end
 
@@ -74,7 +126,7 @@ function PluginChannel:showToolBar()
 	if user_plugin ~= nil then
 	    if user_plugin:isFunctionSupported("showToolBar") then
 	        local param1 = PluginParam:create(ToolBarPlace.kToolBarTopLeft)
-	        user_plugin:callFuncWithParam("showToolBar", {param1})
+	        user_plugin:callFuncWithParam("showToolBar", param1)
 	    end
 	end
 end
@@ -134,7 +186,7 @@ function PluginChannel:pay()
         -- analytics_plugin:logEvent("pay", info)
         for key, value in pairs(iap_plugin_maps) do
             print("key:" .. key)
-            cclog("value: " .. type(value))
+            print("value: " .. type(value))
             value:payForProduct(info)
         end
 	end

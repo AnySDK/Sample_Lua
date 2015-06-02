@@ -36,7 +36,7 @@ local function main()
     glview:setDesignResolutionSize(480, 320, cc.ResolutionPolicy.NO_BORDER)
 
     --turn on display FPS
-    director:setDisplayStats(true)
+    director:setDisplayStats(false)
 
     --set FPS. the default value is 1.0/60 if you don't call this
     director:setAnimationInterval(1.0 / 60)
@@ -91,6 +91,7 @@ local function main()
         "ADS_SYS",
         "SOCIAL_SYS",
         "PUSH_SYS",
+        "ANALYTICS_SYS"
     }
     base_menu = CreatEnumTable(base_menu, 1)
     local info_btns = {
@@ -99,7 +100,8 @@ local function main()
         {text = "Share system", tag = base_menu.SHARE_SYS},
         {text = "Ads system", tag = base_menu.ADS_SYS},
         {text = "Social system", tag = base_menu.SOCIAL_SYS},
-        {text = "Push system", tag = base_menu.PUSH_SYS}
+        {text = "Push system", tag = base_menu.PUSH_SYS},
+        {text = "Analytics system", tag = base_menu.ANALYTICS_SYS}
     }
     user_menu = {
         "LOGIN",
@@ -127,18 +129,27 @@ local function main()
     iap_menu = {"PAY"}
     iap_menu = CreatEnumTable(iap_menu, 200)
     local iap_btns = {
-        {text="pay", tag = iap_menu.PAY}
+        {text="payForProduct", tag = iap_menu.PAY}
     }
     share_menu = {"SHARE"}
     share_menu = CreatEnumTable(share_menu, 300)
     local share_btns = {
         {text="share", tag = share_menu.SHARE}
     }
-    ads_menu = {"SHOW_ADS", "HIDE_ADS"}
+    ads_menu = {
+        "PRELOAD_ADS",
+        "SHOW_ADS", 
+        "HIDE_ADS",
+        "QUERY_POINTS",
+        "SPEND_POINTS"
+    }
     ads_menu = CreatEnumTable(ads_menu, 400)
     local ads_btns = {
-        {text="show ads", tag = ads_menu.SHOW_ADS},
-        {text="hide ads", tag = ads_menu.HIDE_ADS}
+        {text="preloadAds", tag = ads_menu.PRELOAD_ADS},
+        {text="showAds", tag = ads_menu.SHOW_ADS},
+        {text="hideAds", tag = ads_menu.HIDE_ADS},
+        {text="queryPoints", tag = ads_menu.QUERY_POINTS},
+        {text="spendPoints", tag = ads_menu.SPEND_POINTS}
     }
     social_menu = {
         "SUBMIT_SCORE", 
@@ -148,12 +159,13 @@ local function main()
     }
     social_menu = CreatEnumTable(social_menu, 500)
     local social_btns = {
-        {text="submit score", tag = social_menu.SUBMIT_SCORE},
-        {text="show Leaderboard", tag = social_menu.SHOW_LEADERBOARD},
-        {text="unlock achievement", tag = social_menu.UNLOCK_ACHIEVEMENT},
-        {text="show achievements", tag = social_menu.SHOW_ACHIEVEMENT}
+        {text="submitScore", tag = social_menu.SUBMIT_SCORE},
+        {text="showLeaderboard", tag = social_menu.SHOW_LEADERBOARD},
+        {text="unlockAchievement", tag = social_menu.UNLOCK_ACHIEVEMENT},
+        {text="showAchievements", tag = social_menu.SHOW_ACHIEVEMENT}
     }
     push_menu = {
+        "START_PUSH", 
         "CLOSE_PUSH", 
         "SET_ALIAS", 
         "DEL_ALIAS", 
@@ -162,14 +174,38 @@ local function main()
     }
     push_menu = CreatEnumTable(push_menu, 600)
     local push_btns = {
-        {text="close push", tag = push_menu.CLOSE_PUSH},
-        {text="set Alias", tag = push_menu.SET_ALIAS},
-        {text="del Alias", tag = push_menu.DEL_ALIAS},
-        {text="set Tags", tag = push_menu.SET_TAGS},
-        {text="del Tags", tag = push_menu.DEL_TAGS}
+        {text="startPush", tag = push_menu.START_PUSH},
+        {text="closePush", tag = push_menu.CLOSE_PUSH},
+        {text="setAlias", tag = push_menu.SET_ALIAS},
+        {text="delAlias", tag = push_menu.DEL_ALIAS},
+        {text="setTags", tag = push_menu.SET_TAGS},
+        {text="delTags", tag = push_menu.DEL_TAGS}
+    }
+    analytics_menu = {
+        "START_SESSION", 
+        "STOP_SESSION", 
+        "LOG_ERROR", 
+        "LOG_EVENT", 
+        "SET_ACCOUNT",
+        "ON_CHARGE_REQUEST",
+        "ON_CHARGE_SUCCESS",
+        "ON_CHARGE_ONLY_SUCCESS",
+        "ON_CHARGE_FAIL"
+    }
+    analytics_menu = CreatEnumTable(analytics_menu, 700)
+    local analytics_btns = {
+        {text="startSession", tag = analytics_menu.START_SESSION},
+        {text="stopSession", tag = analytics_menu.STOP_SESSION},
+        {text="logError", tag = analytics_menu.LOG_ERROR},
+        {text="logEvent", tag = analytics_menu.LOG_EVENT},
+        {text="setAccount", tag = analytics_menu.SET_ACCOUNT},
+        {text="onchargeRequest", tag = analytics_menu.ON_CHARGE_REQUEST},
+        {text="onChargeSuccess", tag = analytics_menu.ON_CHARGE_SUCCESS},
+        {text="onChargeOnlySuccess", tag = analytics_menu.ON_CHARGE_ONLY_SUCCESS},
+        {text="onChargeFail", tag = analytics_menu.ON_CHARGE_FAIL}
     }
     local sec_infos = {
-        user_btns, iap_btns, share_btns, ads_btns, social_btns, push_btns
+        user_btns, iap_btns, share_btns, ads_btns, social_btns, push_btns, analytics_btns
     }
     local FONT_SIZE = 24
     local current_menu_idx = -1
@@ -183,7 +219,7 @@ local function main()
 
         local x = 100
         local y = 310
-        local h = 43
+        local h = 35
         
         local function createBtn(str, tag, pos)
             local lb = cc.Label:createWithSystemFont(str, "Helvetica", FONT_SIZE)
@@ -200,18 +236,16 @@ local function main()
         local ADS_LEVEL = 500
         local SOCIAL_LEVEL = 600
         local PUSH_LEVEL = 700
+        local ANALYTICS_LEVEL = 800
         local sec_btns = {}
         local sec_top_arr = {}
         local sec_top_idx = 0
         local function menuCallback(item)
             cclog("on click:%d", item)
             x = 300
-            if item == base_menu.USER_SYS then
+            if item == base_menu.USER_SYS or item == base_menu.ANALYTICS_SYS then
                 y = 320
                 h = 31.5
-            elseif item == base_menu.ADS_SYS then
-                y = 330
-                h = 35
             else
                 y = 300
                 h = 35
@@ -243,7 +277,7 @@ local function main()
                         tb[i]:setVisible(false)
                     end
                 end
-                print("sec_btns count:" .. #(sec_btns))
+                cclog("sec_btns count:" .. #(sec_btns))
                 for i=1, #(sec_top_arr) do
                     setInvisible(sec_btns[sec_top_arr[i]])
                 end
@@ -266,6 +300,7 @@ local function main()
                     current_menu_idx = -1
                 end
             elseif item < USER_LEVEL then
+                cclog("on clicked user.")
                 if item == user_menu.LOGIN then
                     plugin_channel:login()
                 elseif item == user_menu.LOGOUT then
@@ -286,20 +321,27 @@ local function main()
                     plugin_channel:submitLoginGameRole()
                 end
             elseif item < IAP_LEVEL then
+                cclog("on clicked pay.")
                 if item == iap_menu.PAY then
-                    cclog("on clicked pay.")
                     plugin_channel:pay();
                 end
             elseif item < SHARE_LEVEL then
+                cclog("on clicked share.")
                 if item == share_menu.SHARE then
-                    cclog("on clicked share.")
                     _share:share()
                 end
             elseif item < ADS_LEVEL then
-                if item == ads_menu.SHOW_ADS then
+                cclog("on clicked ads.")
+                if item == ads_menu.PRELOAD_ADS then
+                    _ads:preloadAds(AdsType.AD_TYPE_FULLSCREEN)
+                elseif item == ads_menu.SHOW_ADS then
                     _ads:showAds(AdsType.AD_TYPE_FULLSCREEN)
                 elseif item == ads_menu.HIDE_ADS then
                     _ads:hideAds(AdsType.AD_TYPE_FULLSCREEN)
+                elseif item == ads_menu.QUERY_POINTS then
+                    _ads:queryPoints()
+                elseif item == ads_menu.SPEND_POINTS then
+                    _ads:spendPoints(100)
                 end
             elseif item < SOCIAL_LEVEL then
                 cclog("on clicked social.")
@@ -314,7 +356,9 @@ local function main()
                 end
             elseif item < PUSH_LEVEL then
                 cclog("on clicked push.")
-                if item == push_menu.CLOSE_PUSH then
+                if item == push_menu.START_PUSH then
+                    _push:startPush()
+                elseif item == push_menu.CLOSE_PUSH then
                     _push:closePush()
                 elseif item == push_menu.SET_ALIAS then
                     _push:setAlias()
@@ -324,6 +368,27 @@ local function main()
                     _push:setTags()
                 elseif item == push_menu.DEL_TAGS then
                     _push:delTags()
+                end
+            elseif item < ANALYTICS_LEVEL then
+                cclog("on clicked analytics.")
+                if item == analytics_menu.START_SESSION then
+                    _analytics:startSession()
+                elseif item == analytics_menu.STOP_SESSION then
+                    _analytics:stopSession()
+                elseif item == analytics_menu.LOG_ERROR then
+                    _analytics:logError(1, "fail")
+                elseif item == analytics_menu.LOG_EVENT then
+                    _analytics:logEvent(2, {key1 = "value1", key2 = "value2"})
+                elseif item == analytics_menu.SET_ACCOUNT then
+                    _analytics:setAccount()
+                elseif item == analytics_menu.ON_CHARGE_REQUEST then
+                    _analytics:onChargeRequest()
+                elseif item == analytics_menu.ON_CHARGE_SUCCESS then
+                    _analytics:onChargeSuccess()
+                elseif item == analytics_menu.ON_CHARGE_ONLY_SUCCESS then
+                    _analytics:onChargeOnlySuccess()
+                elseif item == analytics_menu.ON_CHARGE_FAIL then
+                    _analytics:onChargeFail()
                 end
             end
         end

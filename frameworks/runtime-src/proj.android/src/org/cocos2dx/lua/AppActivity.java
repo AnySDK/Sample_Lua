@@ -27,6 +27,7 @@ THE SOFTWARE.
 package org.cocos2dx.lua;
 
 import org.cocos2dx.lib.Cocos2dxActivity;
+import org.cocos2dx.lib.Cocos2dxGLSurfaceView;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -34,28 +35,53 @@ import android.os.Bundle;
 import com.anysdk.framework.PluginWrapper;
 
 public class AppActivity extends Cocos2dxActivity {
+	@Override
 	protected void onCreate(Bundle savedState)
     {
         super.onCreate(savedState);
         PluginWrapper.init(this); // for plugins
+        PluginWrapper.setGLSurfaceView(Cocos2dxGLSurfaceView.getInstance());
     }
+    
 	@Override
-	protected void onActivityResult(int requestCode, int resultCode, Intent data){
-		super.onActivityResult(requestCode, resultCode, data);
-		PluginWrapper.onActivityResult(requestCode, resultCode, data);
+	protected void onDestroy() {
+		PluginWrapper.onDestroy();
+		super.onDestroy();
 	}
+
+	@Override
+	protected void onPause() {
+		PluginWrapper.onPause();
+		super.onPause();
+	}
+
 	@Override
 	protected void onResume() {
-	    super.onResume();
-	    PluginWrapper.onResume();
+		PluginWrapper.onResume();
+		super.onResume();
 	}
+
 	@Override
-	public void onPause(){
-	    PluginWrapper.onPause();
-	    super.onPause();
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		PluginWrapper.onActivityResult(requestCode, resultCode, data);
+		super.onActivityResult(requestCode, resultCode, data);
 	}
+
+	@Override
 	protected void onNewIntent(Intent intent) {
-	    PluginWrapper.onNewIntent(intent);
-	    super.onNewIntent(intent);
+		PluginWrapper.onNewIntent(intent);
+		super.onNewIntent(intent);
+	}
+
+	@Override
+	protected void onStop() {
+		PluginWrapper.onStop();
+		super.onStop();
+	}
+
+	@Override
+	protected void onRestart() {
+		PluginWrapper.onRestart();
+		super.onRestart();
 	}
 }

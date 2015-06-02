@@ -2,8 +2,18 @@ require "ClassBase"
 
 local share_plugin = nil
 
-local function onShareResult(code,msg)
-	print("onShareResult:",code,msg)
+local function onShareResult(code, msg)
+    print("on share result listener.")
+    print("code:"..code..",msg:"..msg)
+    if code == ShareResultCode.kShareSuccess then
+        --do
+    elseif code == ShareResultCode.kShareFail then
+        --do
+    elseif code == ShareResultCode.kShareCancel then
+        --do
+    elseif code == ShareResultCode.kShareNetworkError then
+        --do
+    end
 end
 
 Share = class()

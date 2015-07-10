@@ -129,7 +129,7 @@ function Analytics:onPurchase()
 					Item_Id = "123456",
 					Item_Type = "test",
 					Item_Count = tostring(2),
-					Vitural_Currency = "1",
+					Virtual_Currency = "1",
 					Currency_Type = "000000",
 				}
 			local data = PluginParam:create(paramMap)

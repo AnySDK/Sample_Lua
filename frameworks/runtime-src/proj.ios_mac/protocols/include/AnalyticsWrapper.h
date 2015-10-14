@@ -14,7 +14,7 @@ typedef enum {
     ACCOUNT_TYPE_SINA_WEIBO,/**< enum value is sineweibo type. */
     ACCOUNT_TYPE_TENCENT_WEIBO,/**< enum value is tecentweibo type */
     ACCOUNT_TYPE_QQ,/**< enum value is qq type */
-    ACCOUNT_TYPE_ ND91,/**< enum value is nd91 type. */
+    ACCOUNT_TYPE_ND91,/**< enum value is nd91 type. */
 } ANALYTICS_ACCOUNT_TYPE;
 
 typedef enum {
@@ -39,4 +39,3 @@ typedef enum {
     TASK_TYPE_OTHER,/**< enum value is other type. */
 } ANALYTICS_TASK_TYPE;
 
-@end

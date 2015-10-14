@@ -44,7 +44,6 @@ local function onUserResult( plugin, code, msg )
         --do
     end
 end
-
 local function onPayResult( code, msg, info )
     print("on iap result listener.")
     print("code:"..code..",msg:"..msg)
@@ -74,7 +73,7 @@ function PluginChannel:ctor()
     --for anysdk
     local agent = AgentManager:getInstance()
     --init
-    --anysdk
+    --anysdk //c++层初始化
     local appKey = "CED525C0-8D41-F514-96D8-90092EB3899A";
     local appSecret = "a29b4f22aa63b8274f7f6e2dd5893d9b";
     local privateKey = "963C4B4DA71BC51C69EB11D24D0C7D49";
@@ -102,6 +101,7 @@ end
 
 function PluginChannel:login()
 	if user_plugin ~= nil then
+        user_plugin:setActionListener(onUserResult)
 	    user_plugin:login()
 	end
 end

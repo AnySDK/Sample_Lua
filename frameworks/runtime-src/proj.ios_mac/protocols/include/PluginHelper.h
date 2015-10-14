@@ -28,6 +28,15 @@
 + (BOOL) getDebugModeStatus;
 
 /**
+ *
+ * @Title: getLogLevel
+ * @Description: get the level of log
+ * @param @return level
+ * @return "verbose" "debug" "info" "warning" "error"
+ */
++ (NSString*) getLogLevel;
+
+/**
  *  get the status of network
  *
  *  @return if the network is reachable ,return true
@@ -103,5 +112,12 @@
  *  @return version
  */
 + (NSString*) getApplicationVersion;
+
+/**
+ *  Parsing XML file
+ *  @param the name of XML file
+ *  @return NSMutableDictionary the content of XML file
+ */
++ (NSMutableDictionary*) getXMLInfoByFileName:(NSString*)fileName;
 
 @end

@@ -73,6 +73,11 @@ PayResultCode = {
     kPayExtension                    = 30000    --enum value is extension code.
 }
 
+RequestResultCode = {
+  	kRequestSuccess                  = 31000,/**< enum value is callback of succeeding in paying . */
+    kRequestFail                     = 31001  /**< enum value is callback of failing to pay . */
+} 
+
 -- for push action result code
 PushActionResultCode = {
 	kPushReceiveMessage    = 0,       --enum value is callback of receiving message.

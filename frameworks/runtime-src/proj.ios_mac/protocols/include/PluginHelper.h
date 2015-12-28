@@ -28,6 +28,15 @@
 + (BOOL) getDebugModeStatus;
 
 /**
+ *
+ * @Title: getLogLevel
+ * @Description: get the level of log
+ * @param @return level
+ * @return "verbose" "debug" "info" "warning" "error"
+ */
++ (NSString*) getLogLevel;
+
+/**
  *  get the status of network
  *
  *  @return if the network is reachable ,return true
@@ -52,6 +61,24 @@
  *  @note http use post
  */
 + (void) pluginHttp:(NSMutableDictionary*)data target:(id)target sel:(SEL)sel;
+
+/**
+ *
+ * @Title: pluginDecode
+ * @Description: decode source
+ * @return destination
+ * @throws
+ */
++ (NSString*) pluginDecode:(const char*)source;
+
+/**
+ *
+ * @Title: pluginEncode
+ * @Description: encode source
+ * @return destination
+ * @throws
+ */
++ (NSString*) pluginEncode:(const char*)source;
 
 /**
  *  log output ，the lever is verbose
@@ -103,5 +130,12 @@
  *  @return version
  */
 + (NSString*) getApplicationVersion;
+
+/**
+ *  Parsing XML file
+ *  @param the name of XML file
+ *  @return NSMutableDictionary the content of XML file
+ */
++ (NSMutableDictionary*) getXMLInfoByFileName:(NSString*)fileName;
 
 @end

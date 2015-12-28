@@ -58,6 +58,9 @@ local function main()
     require "Push"
     require "Share"
     require "Social"
+    require "REC"
+    require "Custom"
+    require "Crash"
     require "PluginChannel"
 
     local plugin_channel = PluginChannel.new()
@@ -66,6 +69,9 @@ local function main()
     local _share =  Share.new()
     local _push =  Push.new()
     local _analytics =  Analytics.new()
+    local _crash = Crash.new()
+    local _rec =  REC.new()
+    local _custom =  Custom.new()
 
     ---------------
 
@@ -91,7 +97,9 @@ local function main()
         "ADS_SYS",
         "SOCIAL_SYS",
         "PUSH_SYS",
-        "ANALYTICS_SYS"
+        "ANALYTICS_SYS",
+        "CRASH_SYS",
+        "REC_SYS"
     }
     base_menu = CreatEnumTable(base_menu, 1)
     local info_btns = {
@@ -101,7 +109,10 @@ local function main()
         {text = "Ads system", tag = base_menu.ADS_SYS},
         {text = "Social system", tag = base_menu.SOCIAL_SYS},
         {text = "Push system", tag = base_menu.PUSH_SYS},
-        {text = "Analytics system", tag = base_menu.ANALYTICS_SYS}
+        {text = "Analytics system", tag = base_menu.ANALYTICS_SYS},
+        {text = "Crash system", tag = base_menu.CRASH_SYS},
+        {text = "REC system", tag = base_menu.REC_SYS}
+
     }
     user_menu = {
         "LOGIN",
@@ -204,10 +215,48 @@ local function main()
         {text="onChargeOnlySuccess", tag = analytics_menu.ON_CHARGE_ONLY_SUCCESS},
         {text="onChargeFail", tag = analytics_menu.ON_CHARGE_FAIL}
     }
-    local sec_infos = {
-        user_btns, iap_btns, share_btns, ads_btns, social_btns, push_btns, analytics_btns
+
+    crash_menu = {
+        "SET_USER_IDENTIFIER",
+        "REPORT_EXCEPTION",
+        "LEAVE_BREAD_CRUMB"
     }
-    local FONT_SIZE = 24
+    crash_menu = CreatEnumTable(crash_menu, 800)
+    local crash_btns = {
+        {text="setUserIdentifier", tag = crash_menu.SET_USER_IDENTIFIER},
+        {text="reportException", tag = crash_menu.REPORT_EXCEPTION},
+        {text="leaveBreadcrumb", tag = crash_menu.LEAVE_BREAD_CRUMB}
+    }
+
+    rec_menu = {
+        "START_RECORDING",
+        "STOP_RECORDING",
+        "SHARE",
+        "PAUSE_RECORDING",
+        "RESUME_RECORDING",
+        "SHOW_TOOL_BAR",
+        "HIDE_TOOL_BAR",
+        "SHOW_VIDEO_CENTER",
+        "ENTER_PLATFORM",
+        "SET_META_DATA"
+    }
+    rec_menu = CreatEnumTable(rec_menu, 900)
+    local rec_btns = {
+        {text="startRecording", tag = rec_menu.START_RECORDING},
+        {text="stopRecording", tag = rec_menu.STOP_RECORDING},
+        {text="share", tag = rec_menu.SHARE},
+        {text="pauseRecording", tag = rec_menu.PAUSE_RECORDING},
+        {text="resumeRecording", tag = rec_menu.RESUME_RECORDING},
+        {text="showToolBar", tag = rec_menu.SHOW_TOOL_BAR},
+        {text="hideToolBar", tag = rec_menu.HIDE_TOOL_BAR},
+        {text="showVideoCenter", tag = rec_menu.SHOW_VIDEO_CENTER},
+        {text="enterPlatform", tag = rec_menu.ENTER_PLATFORM},
+        {text="setMetaData", tag = rec_menu.SET_META_DATA}
+    }
+    local sec_infos = {
+        user_btns, iap_btns, share_btns, ads_btns, social_btns, push_btns,analytics_btns,crash_btns,rec_btns
+    }
+    local FONT_SIZE = 20
     local current_menu_idx = -1
     local display_second_menu = false
 
@@ -237,6 +286,8 @@ local function main()
         local SOCIAL_LEVEL = 600
         local PUSH_LEVEL = 700
         local ANALYTICS_LEVEL = 800
+        local CRASH_LEVEL = 900
+        local REC_LEVEL = 1000
         local sec_btns = {}
         local sec_top_arr = {}
         local sec_top_idx = 0
@@ -248,7 +299,7 @@ local function main()
                 h = 31.5
             else
                 y = 300
-                h = 35
+                h = 25
             end
 
             local function createBtns( tb )
@@ -390,9 +441,45 @@ local function main()
                 elseif item == analytics_menu.ON_CHARGE_FAIL then
                     _analytics:onChargeFail()
                 end
+            elseif item < CRASH_LEVEL then
+                cclog("on clicked crash.")
+                if item == crash_menu.SET_USER_IDENTIFIER then
+                    _crash:setUserIdentifier("AnySDK")
+                elseif item == crash_menu.REPORT_EXCEPTION then
+                    _crash:reportException("ERROR","MESSAGE")
+                elseif item == crash_menu.LEAVE_BREAD_CRUMB then
+                    _crash:leaveBreadcrumb("TEST")
+                end
+            elseif item < REC_LEVEL then
+                cclog("on clicked rec.")
+                if item == rec_menu.START_RECORDING then
+                    _rec:isAvailable()
+                    _rec:startRecording()
+                elseif item == rec_menu.STOP_RECORDING then
+                    _rec:isRecording()
+                    _rec:stopRecording()
+                elseif item == rec_menu.SHARE then
+                    _rec:share()
+                elseif item == rec_menu.PAUSE_RECORDING then
+                    _rec:pauseRecording()
+                elseif item == rec_menu.RESUME_RECORDING then
+                    _rec:resumeRecording()
+                elseif item == rec_menu.SHOW_TOOL_BAR then
+                    _rec:showToolBar()
+                elseif item == rec_menu.HIDE_TOOL_BAR then
+                    _rec:hideToolBar()
+                elseif item == rec_menu.SHOW_VIDEO_CENTER then
+                    _rec:showVideoCenter()
+                elseif item == rec_menu.ENTER_PLATFORM then
+                    _rec:enterPlatform()
+                elseif item == rec_menu.SET_META_DATA then
+                    _rec:setMetaData()
+                end
             end
         end
-        
+        x = 100
+        y = 300
+        h = 28
         for i=1, #(info_btns) do
             local btn = createBtn(info_btns[i].text, info_btns[i].tag, cc.p(x, y-i*h))
             btn:registerScriptTapHandler(menuCallback)
@@ -454,14 +541,14 @@ local function main()
         -- add in farm background
         local bg = cc.Sprite:create("farm.jpg")
         bg:setPosition(origin.x + visibleSize.width / 2 + 80, origin.y + visibleSize.height / 2)
-        layerFarm:addChild(bg)
+        --layerFarm:addChild(bg)
 
         -- add land sprite
         for i = 0, 3 do
             for j = 0, 1 do
                 local spriteLand = cc.Sprite:create("land.png")
                 spriteLand:setPosition(200 + j * 180 - i % 2 * 90, 10 + i * 95 / 2)
-                layerFarm:addChild(spriteLand)
+                --layerFarm:addChild(spriteLand)
             end
         end
 
@@ -471,13 +558,13 @@ local function main()
             for j = 0, 1 do
                 local spriteCrop = cc.Sprite:createWithSpriteFrame(frameCrop);
                 spriteCrop:setPosition(10 + 200 + j * 180 - i % 2 * 90, 30 + 10 + i * 95 / 2)
-                layerFarm:addChild(spriteCrop)
+                --layerFarm:addChild(spriteCrop)
             end
         end
 
         -- add moving dog
         local spriteDog = createDog()
-        layerFarm:addChild(spriteDog)
+        --layerFarm:addChild(spriteDog)
 
         -- handing touch events
         local touchBeginPoint = nil
@@ -555,14 +642,14 @@ local function main()
         layerMenu:addChild(menuPopup)
 
         -- add the left-bottom "tools" menu to invoke menuPopup
-        local menuToolsItem = cc.MenuItemImage:create("menu1.png", "menu1.png")
-        menuToolsItem:setPosition(0, 0)
-        menuToolsItem:registerScriptTapHandler(menuCallbackOpenPopup)
-        menuTools = cc.Menu:create(menuToolsItem)
-        local itemWidth = menuToolsItem:getContentSize().width
-        local itemHeight = menuToolsItem:getContentSize().height
-        menuTools:setPosition(origin.x + itemWidth/2, origin.y + itemHeight/2)
-        layerMenu:addChild(menuTools)
+        --local menuToolsItem = cc.MenuItemImage:create("menu1.png", "menu1.png")
+        --menuToolsItem:setPosition(0, 0)
+        --menuToolsItem:registerScriptTapHandler(menuCallbackOpenPopup)
+        --menuTools = cc.Menu:create(menuToolsItem)
+        --local itemWidth = menuToolsItem:getContentSize().width
+        --local itemHeight = menuToolsItem:getContentSize().height
+        --menuTools:setPosition(origin.x + itemWidth/2, origin.y + itemHeight/2)
+        --layerMenu:addChild(menuTools)
 
         return layerMenu
     end
@@ -587,8 +674,10 @@ local function main()
 
 end
 
-
 local status, msg = xpcall(main, __G__TRACKBACK__)
 if not status then
     error(msg)
 end
+
+
+

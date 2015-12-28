@@ -88,5 +88,15 @@ THE SOFTWARE.
  */
 - (void) setDebugMode: (BOOL) debug;
 
+/**
+ *  whether function is supported
+ *
+ *  @param functionName the name of function
+ *
+ *  @return return If the function is supported, return true
+ or if the function is  not supported, return false
+ */
+- (BOOL) isFunctionSupported : (NSString*) functionName;
+
 
 @end

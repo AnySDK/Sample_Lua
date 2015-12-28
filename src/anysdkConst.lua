@@ -5,8 +5,29 @@ Plugin_type = {
     kPluginShare        = 4,
     kPluginUser         = 32,
     kPluginSocial       = 2,
-    kPluginPush         = 64
+    kPluginPush         = 64,
+    kPluginCrash        = 128,
+    kPluginCustom       = 256,
+    kPluginREC          = 512
 }
+
+RECResultCode = {
+    kRECInitSuccess     = 0,                --enum value is callback of succeeding in initing sdk . */
+    kRECInitFail        = 1,                --enum is callback of failing to init sdk. */
+    kRECStartRecording  = 2,                --enum  value is callback of starting to record. */
+    kRECStopRecording   = 3,                --enum value is callback of stoping to record. */
+    kRECPauseRecording  = 4,                --enum  value is callback of pausing to record. */
+    kRECResumeRecording = 5,                --enum value is callback of resuming to record. */
+    kRECEnterSDKPage    = 6,                --enum  value is callback of failing to init sdk. */
+    kRECQuitSDKPage     = 7,                --enum  value is callback of entering SDK`s page. */
+    kRECShareSuccess    = 8,                --enum value is callback of  quiting SDK`s page. */
+    kRECShareFail       = 9,                --enum value is callback of failing to share. */
+    kRECExtension       = 90000             --enum value is  extension code . */
+} ;
+
+CustomResultCode = {
+    kCustomExtension = 80000 --enum value is  extension code .
+}--custom result code
 
 -- for ads
 AdsResultCode = {
@@ -51,6 +72,11 @@ PayResultCode = {
 	kPayRechargeSuccess              = 8,       --enum value is callback of succeeding in recharging.
     kPayExtension                    = 30000    --enum value is extension code.
 }
+
+RequestResultCode = {
+  	kRequestSuccess                  = 31000,/**< enum value is callback of succeeding in paying . */
+    kRequestFail                     = 31001  /**< enum value is callback of failing to pay . */
+} 
 
 -- for push action result code
 PushActionResultCode = {

@@ -47,6 +47,9 @@
 #include "PluginParam.h"      
 #include "ProtocolIAP.h"     
 #include "ProtocolUser.h"
+#include "ProtocolCrash.h"
+#include "ProtocolREC.h"
+#include "ProtocolCustom.h"
 
 #include "CCLuaEngine.h"
 
@@ -68,6 +71,515 @@ using namespace anysdk::framework;
 USING_NS_CC;
 
 // extern const char* cocos2dVersion();
+
+/* method: Crash of class  setDebugMode */
+#ifndef TOLUA_DISABLE_tolua_anysdk_ProtocolCrash_setDebugMode
+static int tolua_anysdk_ProtocolCrash_setDebugMode(lua_State* tolua_S)
+{
+    CCLOG("\n********** setDebugMode was deprecated.\n**********");
+    CCLOG("in function protocols Crash\n");
+#ifndef TOLUA_RELEASE
+    tolua_Error tolua_err;
+    if (
+        !tolua_isusertype(tolua_S,1,"ProtocolCrash",0,&tolua_err) ||
+        !tolua_isboolean(tolua_S,2,0,&tolua_err)
+        )
+        goto tolua_lerror;
+    else
+#endif
+    {
+        ProtocolCrash* self = (ProtocolCrash*)  tolua_tousertype(tolua_S,1,0);
+        bool bDebug = ((bool)  tolua_toboolean(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+        if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setDebugMode'", NULL);
+#endif
+        {
+            self->setDebugMode(bDebug);
+        }
+    }
+    return 0;
+#ifndef TOLUA_RELEASE
+tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'setDebugMode'.",&tolua_err);
+    return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+
+static void extendProtocolCrash(lua_State* tolua_S)
+{
+    lua_pushstring(tolua_S, "ProtocolCrash");
+    lua_rawget(tolua_S, LUA_REGISTRYINDEX);
+    if (lua_istable(tolua_S,-1))
+    {
+        tolua_function(tolua_S, "setDebugMode", tolua_anysdk_ProtocolCrash_setDebugMode);
+    }
+    lua_pop(tolua_S, 1);
+}
+
+/* method: REC of class  setDebugMode */
+#ifndef TOLUA_DISABLE_tolua_anysdk_ProtocolREC_setDebugMode
+static int tolua_anysdk_ProtocolREC_setDebugMode(lua_State* tolua_S)
+{
+    CCLOG("\n********** setDebugMode was deprecated.\n**********");
+    CCLOG("in function protocols REC\n");
+#ifndef TOLUA_RELEASE
+    tolua_Error tolua_err;
+    if (
+        !tolua_isusertype(tolua_S,1,"ProtocolREC",0,&tolua_err) ||
+        !tolua_isboolean(tolua_S,2,0,&tolua_err)
+        )
+        goto tolua_lerror;
+    else
+#endif
+    {
+        ProtocolREC* self = (ProtocolREC*)  tolua_tousertype(tolua_S,1,0);
+        bool bDebug = ((bool)  tolua_toboolean(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+        if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setDebugMode'", NULL);
+#endif
+        {
+            self->setDebugMode(bDebug);
+        }
+    }
+    return 0;
+#ifndef TOLUA_RELEASE
+tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'setDebugMode'.",&tolua_err);
+    return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: share of class  ProtocolREC */
+#ifndef TOLUA_DISABLE_tolua_anysdk_ProtocolREC_share00
+static int tolua_anysdk_ProtocolREC_share00(lua_State* tolua_S)
+{
+    CCLOG("in function protocols REC\n");
+#ifndef TOLUA_RELEASE
+    tolua_Error tolua_err;
+    if (
+        !tolua_isusertype(tolua_S,1,"ProtocolREC",0,&tolua_err) ||
+        !tolua_istable(tolua_S,2,0,&tolua_err)
+        )
+        goto tolua_lerror;
+    else
+#endif
+    {
+        ProtocolREC* self = (ProtocolREC*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+        if (!self) tolua_error(tolua_S,"invalid 'self' in function 'share'", NULL);
+#endif
+        {
+            TVideoInfo strmap;
+            lua_pushnil(tolua_S);
+            while ( 0 != lua_next(tolua_S, 2 ) )                             /* L: lotable ..... key value */
+            {
+                if (!lua_isstring(tolua_S, -2))
+                {
+                    lua_pop(tolua_S, 1);                                      /* removes 'value'; keep 'key' for next iteration*/
+                    continue;
+                }
+                if (lua_isnil(tolua_S, -1) || !lua_isstring(tolua_S, -1))
+                {
+                    lua_pop(tolua_S, 1);
+                    continue;
+                }
+                std::string key = "";
+                key = tolua_tocppstring(tolua_S, -2, NULL);
+                std::string value = "";
+                value = tolua_tocppstring(tolua_S, -1, NULL);
+                CCLOG("key: %s, value: %s.", key.c_str(), value.c_str());
+                strmap.insert( StringMap::value_type(key, value) );
+                lua_pop(tolua_S, 1);                                          /* L: lotable ..... key */
+            }
+            self->share(strmap);
+        }
+    }
+    return 0;
+#ifndef TOLUA_RELEASE
+tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'share'.",&tolua_err);
+    return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+class ProtocolRECActionListener : public RECResultListener
+{
+public:
+    ProtocolRECActionListener():_handler(0)
+    {
+    }
+    ~ProtocolRECActionListener()
+    {
+        // if (VERSION_X == '2')
+        // {
+        //     #define ON_VERSION_2 TRUE
+        // }
+        
+#ifdef ON_VERSION_2
+        CCLuaStack* stack = CCLuaEngine::defaultEngine()->getLuaStack();
+        stack->removeScriptHandler(_handler);
+#else
+        LuaStack* stack = LuaEngine::getInstance()->getLuaStack();
+        stack->removeScriptHandler(_handler);
+#endif
+    }
+    
+    virtual void onRECResult(RECResultCode ret, const char* msg)
+    {
+#ifdef ON_VERSION_2
+        CCLOG("on REC action result: %d, msg: %s.", ret, msg);
+        CCLuaStack* stack = CCLuaEngine::defaultEngine()->getLuaStack();
+        lua_State* tolua_S    = stack->getLuaState();
+        tolua_pushnumber(tolua_S, (lua_Number)ret);
+        tolua_pushstring(tolua_S, (const char *)msg);
+        stack->executeFunctionByHandler(_handler, 2);
+        stack->clean();
+#else
+        CCLOG("on REC result result: %d, msg: %s.", ret, msg);
+        LuaStack* stack = LuaEngine::getInstance()->getLuaStack();
+        lua_State* tolua_S    = stack->getLuaState();
+        tolua_pushnumber(tolua_S, (lua_Number)ret);
+        tolua_pushstring(tolua_S, (const char *)msg);
+        stack->executeFunctionByHandler(_handler, 2);
+        stack->clean();
+#endif
+    }
+    
+    static ProtocolRECActionListener* _instance;
+    static ProtocolRECActionListener* getInstance()
+    {
+        if (_instance == NULL)
+        {
+            _instance = new ProtocolRECActionListener();
+        }
+        return _instance;
+    }
+    static void purge()
+    {
+        if (_instance != NULL)
+        {
+            delete _instance;
+            _instance = NULL;
+        }
+    }
+    
+    void setHandler(LUA_FUNCTION handler)
+    {
+        _handler = handler;
+        CCLOG("_handler: %d.", (int)_handler);
+    }
+private:
+    LUA_FUNCTION _handler;
+};
+ProtocolRECActionListener* ProtocolRECActionListener::_instance = NULL;
+
+/* method: setResultListener of class  ProtocolREC */
+#ifndef TOLUA_DISABLE_tolua_anysdk_ProtocolREC_setResultListener
+static int tolua_anysdk_ProtocolREC_setResultListener(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+    tolua_Error tolua_err;
+    if (
+        !tolua_isusertype(tolua_S,1,"ProtocolREC",0,&tolua_err)
+        )
+        goto tolua_lerror;
+    else
+#endif
+    {
+        ProtocolREC* self = (ProtocolREC*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+        if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setResultListener'", NULL);
+#endif
+        {
+            int argc = lua_gettop(tolua_S)-1;
+            CCLOG("argc: %d.", argc);
+            if (argc == 1)
+            {
+#ifndef TOLUA_RELEASE
+                if (!toluafix_isfunction(tolua_S,2,"LUA_FUNCTION",0,&tolua_err) )
+                {
+                    goto tolua_lerror;
+                }
+#endif
+                LUA_FUNCTION handler = (  toluafix_ref_function(tolua_S,2,0));
+                
+                CCLOG("will set push action listener:");
+                ProtocolRECActionListener* listener = ProtocolRECActionListener::getInstance();
+                listener->setHandler(handler);
+                self->setResultListener(listener);
+                
+                return 0;
+            }
+        }
+    }
+    return 1;
+#ifndef TOLUA_RELEASE
+tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'setResultListener'.",&tolua_err);
+    return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: removeListener of class  ProtocolREC */
+#ifndef TOLUA_DISABLE_tolua_anysdk_ProtocolREC_removeListener
+static int tolua_anysdk_ProtocolREC_removeListener(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+    tolua_Error tolua_err;
+    if (
+        !tolua_isusertype(tolua_S,1,"ProtocolREC",0,&tolua_err)
+        )
+        goto tolua_lerror;
+    else
+#endif
+    {
+        ProtocolREC* self = (ProtocolREC*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+        if (!self) tolua_error(tolua_S,"invalid 'self' in function 'removeListener'", NULL);
+#endif
+        {
+            int argc = lua_gettop(tolua_S)-1;
+            if (argc == 1)
+            {
+                if (ProtocolRECActionListener::_instance != NULL)
+                {
+                    ProtocolRECActionListener::purge();
+                }
+                return 0;
+            }
+        }
+    }
+    return 1;
+#ifndef TOLUA_RELEASE
+tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'removeListener'.",&tolua_err);
+    return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+static void extendProtocolREC(lua_State* tolua_S)
+{
+    lua_pushstring(tolua_S, "ProtocolREC");
+    lua_rawget(tolua_S, LUA_REGISTRYINDEX);
+    if (lua_istable(tolua_S,-1))
+    {
+        tolua_function(tolua_S, "share", tolua_anysdk_ProtocolREC_share00);
+        tolua_function(tolua_S, "setDebugMode", tolua_anysdk_ProtocolREC_setDebugMode);
+        tolua_function(tolua_S,"setResultListener",tolua_anysdk_ProtocolREC_setResultListener);
+        tolua_function(tolua_S,"removeListener",tolua_anysdk_ProtocolREC_removeListener);
+    }
+    lua_pop(tolua_S, 1);
+}
+
+/* method: Custom of class  setDebugMode */
+#ifndef TOLUA_DISABLE_tolua_anysdk_ProtocolCustom_setDebugMode
+static int tolua_anysdk_ProtocolCustom_setDebugMode(lua_State* tolua_S)
+{
+    CCLOG("\n********** setDebugMode was deprecated.\n**********");
+    CCLOG("in function protocols Custom\n");
+#ifndef TOLUA_RELEASE
+    tolua_Error tolua_err;
+    if (
+        !tolua_isusertype(tolua_S,1,"ProtocolCustom",0,&tolua_err) ||
+        !tolua_isboolean(tolua_S,2,0,&tolua_err)
+        )
+        goto tolua_lerror;
+    else
+#endif
+    {
+        ProtocolCustom* self = (ProtocolCustom*)  tolua_tousertype(tolua_S,1,0);
+        bool bDebug = ((bool)  tolua_toboolean(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+        if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setDebugMode'", NULL);
+#endif
+        {
+            self->setDebugMode(bDebug);
+        }
+    }
+    return 0;
+#ifndef TOLUA_RELEASE
+tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'setDebugMode'.",&tolua_err);
+    return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+class ProtocolCustomActionListener : public CustomResultListener
+{
+public:
+    ProtocolCustomActionListener():_handler(0)
+    {
+    }
+    ~ProtocolCustomActionListener()
+    {
+        // if (VERSION_X == '2')
+        // {
+        //     #define ON_VERSION_2 TRUE
+        // }
+        
+#ifdef ON_VERSION_2
+        CCLuaStack* stack = CCLuaEngine::defaultEngine()->getLuaStack();
+        stack->removeScriptHandler(_handler);
+#else
+        LuaStack* stack = LuaEngine::getInstance()->getLuaStack();
+        stack->removeScriptHandler(_handler);
+#endif
+    }
+    
+    virtual void onCustomResult(CustomResultCode ret, const char* msg)
+    {
+#ifdef ON_VERSION_2
+        CCLOG("on Custom action result: %d, msg: %s.", ret, msg);
+        CCLuaStack* stack = CCLuaEngine::defaultEngine()->getLuaStack();
+        lua_State* tolua_S    = stack->getLuaState();
+        tolua_pushnumber(tolua_S, (lua_Number)ret);
+        tolua_pushstring(tolua_S, (const char *)msg);
+        stack->executeFunctionByHandler(_handler, 2);
+        stack->clean();
+#else
+        CCLOG("on Custom result result: %d, msg: %s.", ret, msg);
+        LuaStack* stack = LuaEngine::getInstance()->getLuaStack();
+        lua_State* tolua_S    = stack->getLuaState();
+        tolua_pushnumber(tolua_S, (lua_Number)ret);
+        tolua_pushstring(tolua_S, (const char *)msg);
+        stack->executeFunctionByHandler(_handler, 2);
+        stack->clean();
+#endif
+    }
+    
+    static ProtocolCustomActionListener* _instance;
+    static ProtocolCustomActionListener* getInstance()
+    {
+        if (_instance == NULL)
+        {
+            _instance = new ProtocolCustomActionListener();
+        }
+        return _instance;
+    }
+    static void purge()
+    {
+        if (_instance != NULL)
+        {
+            delete _instance;
+            _instance = NULL;
+        }
+    }
+    
+    void setHandler(LUA_FUNCTION handler)
+    {
+        _handler = handler;
+        CCLOG("_handler: %d.", (int)_handler);
+    }
+private:
+    LUA_FUNCTION _handler;
+};
+ProtocolCustomActionListener* ProtocolCustomActionListener::_instance = NULL;
+
+/* method: setResultListener of class  ProtocolCustom */
+#ifndef TOLUA_DISABLE_tolua_anysdk_ProtocolCustom_setResultListener
+static int tolua_anysdk_ProtocolCustom_setResultListener(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+    tolua_Error tolua_err;
+    if (
+        !tolua_isusertype(tolua_S,1,"ProtocolCustom",0,&tolua_err)
+        )
+        goto tolua_lerror;
+    else
+#endif
+    {
+        ProtocolCustom* self = (ProtocolCustom*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+        if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setResultListener'", NULL);
+#endif
+        {
+            int argc = lua_gettop(tolua_S)-1;
+            CCLOG("argc: %d.", argc);
+            if (argc == 1)
+            {
+#ifndef TOLUA_RELEASE
+                if (!toluafix_isfunction(tolua_S,2,"LUA_FUNCTION",0,&tolua_err) )
+                {
+                    goto tolua_lerror;
+                }
+#endif
+                LUA_FUNCTION handler = (  toluafix_ref_function(tolua_S,2,0));
+                
+                CCLOG("will set push action listener:");
+                ProtocolCustomActionListener* listener = ProtocolCustomActionListener::getInstance();
+                listener->setHandler(handler);
+                self->setResultListener(listener);
+                
+                return 0;
+            }
+        }
+    }
+    return 1;
+#ifndef TOLUA_RELEASE
+tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'setResultListener'.",&tolua_err);
+    return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: removeListener of class  ProtocolCustom */
+#ifndef TOLUA_DISABLE_tolua_anysdk_ProtocolCustom_removeListener
+static int tolua_anysdk_ProtocolCustom_removeListener(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+    tolua_Error tolua_err;
+    if (
+        !tolua_isusertype(tolua_S,1,"ProtocolCustom",0,&tolua_err)
+        )
+        goto tolua_lerror;
+    else
+#endif
+    {
+        ProtocolCustom* self = (ProtocolCustom*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+        if (!self) tolua_error(tolua_S,"invalid 'self' in function 'removeListener'", NULL);
+#endif
+        {
+            int argc = lua_gettop(tolua_S)-1;
+            if (argc == 1)
+            {
+                if (ProtocolCustomActionListener::_instance != NULL)
+                {
+                    ProtocolCustomActionListener::purge();
+                }
+                return 0;
+            }
+        }
+    }
+    return 1;
+#ifndef TOLUA_RELEASE
+tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'removeListener'.",&tolua_err);
+    return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+static void extendProtocolCustom(lua_State* tolua_S)
+{
+    lua_pushstring(tolua_S, "ProtocolCustom");
+    lua_rawget(tolua_S, LUA_REGISTRYINDEX);
+    if (lua_istable(tolua_S,-1))
+    {
+        tolua_function(tolua_S, "setDebugMode", tolua_anysdk_ProtocolCustom_setDebugMode);
+        tolua_function(tolua_S,"setResultListener",tolua_anysdk_ProtocolCustom_setResultListener);
+        tolua_function(tolua_S,"removeListener",tolua_anysdk_ProtocolCustom_removeListener);
+    }
+    lua_pop(tolua_S, 1);
+}
 
 
 /* method: share of class  setDebugMode */
@@ -262,10 +774,6 @@ static int tolua_anysdk_ProtocolShare_setResultListener(lua_State* tolua_S)
 #endif
         LUA_FUNCTION handler = (  toluafix_ref_function(tolua_S,2,0));
 
-        if (ProtocolShareActionListener::_instance != NULL)
-        {
-            return 0;
-        }
         CCLOG("will set push action listener:");
         ProtocolShareActionListener* listener = ProtocolShareActionListener::getInstance();
         listener->setHandler(handler);
@@ -322,7 +830,7 @@ static int tolua_anysdk_ProtocolShare_removeListener(lua_State* tolua_S)
 }
 #endif //#ifndef TOLUA_DISABLE
 
-static void extendProtocolsShare(lua_State* tolua_S)
+static void extendProtocolShare(lua_State* tolua_S)
 {
     lua_pushstring(tolua_S, "ProtocolShare");
     lua_rawget(tolua_S, LUA_REGISTRYINDEX);
@@ -1414,11 +1922,6 @@ static int tolua_anysdk_ProtocolIAP_setResultListener(lua_State* tolua_S)
         }
 #endif
         LUA_FUNCTION handler = (  toluafix_ref_function(tolua_S,2,0));
-
-        if (ProtocolIAPActionListener::_instance != NULL)
-        {
-            return 0;
-        }
         ProtocolIAPActionListener* listener = ProtocolIAPActionListener::getInstance();
         listener->setHandler(handler);
         self->setResultListener(listener);
@@ -2089,6 +2592,7 @@ public:
         CCLOG("on action result: %d, msg: %s.", code, msg);
         LuaStack* stack = LuaEngine::getInstance()->getLuaStack();
         lua_State* tolua_S    = stack->getLuaState();
+        object_to_luaval<ProtocolUser>(tolua_S, "ProtocolUser",(ProtocolUser*)pPlugin);
         tolua_pushnumber(tolua_S, (lua_Number)code);
         tolua_pushstring(tolua_S, (const char *)msg);
         stack->executeFunctionByHandler(_handler, 3);
@@ -2186,10 +2690,6 @@ static int tolua_anysdk_ProtocolUser_setActionListener(lua_State* tolua_S)
 #endif
         LUA_FUNCTION handler = (  toluafix_ref_function(tolua_S,2,0));
 
-        if (ProtocolUserActionListener::_instance != NULL)
-        {
-            return 0;
-        }
         ProtocolUserActionListener* listener = ProtocolUserActionListener::getInstance();
         listener->setHandler(handler);
         self->setActionListener(listener);
@@ -2374,10 +2874,6 @@ static int tolua_anysdk_ProtocolAds_setAdsListener(lua_State* tolua_S)
 #endif
         LUA_FUNCTION handler = (  toluafix_ref_function(tolua_S,2,0));
 
-        if (ProtocolAdsListener::_instance != NULL)
-        {
-            return 0;
-        }
         ProtocolAdsListener* listener = ProtocolAdsListener::getInstance();
         listener->setHandler(handler);
         self->setAdsListener(listener);
@@ -2483,16 +2979,19 @@ static void extendProtocolAds(lua_State* tolua_S)
 /* Open function */
 TOLUA_API int tolua_anysdk_manual_open (lua_State* tolua_S)
 {
-	extendProtocolsShare(tolua_S);
+	extendProtocolShare(tolua_S);
 	extendPluginParam(tolua_S);
 	extendAgentManager(tolua_S);
-  extendPluginProtocol(tolua_S);
-  extendProtocolAnalytics(tolua_S);
-  extendProtocolIAP(tolua_S);
-  extendProtocolAds(tolua_S);
-  extendProtocolPush(tolua_S);
-  extendProtocolSocial(tolua_S);
-  extendProtocolUser(tolua_S);
+    extendPluginProtocol(tolua_S);
+    extendProtocolAnalytics(tolua_S);
+    extendProtocolIAP(tolua_S);
+    extendProtocolAds(tolua_S);
+    extendProtocolPush(tolua_S);
+    extendProtocolSocial(tolua_S);
+    extendProtocolUser(tolua_S);
+    extendProtocolCrash(tolua_S);
+    extendProtocolCustom(tolua_S);
+    extendProtocolREC(tolua_S);
 	return 0;
 }
 

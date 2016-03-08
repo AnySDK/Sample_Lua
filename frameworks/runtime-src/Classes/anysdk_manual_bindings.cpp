@@ -1386,8 +1386,10 @@ static int tolua_anysdk_PluginProtocol_callBoolFuncWithParam(lua_State* tolua_S)
     {
       std::string arg1 = (std::string)tolua_tostring(tolua_S, 2, 0);
       const char* temp = arg1.c_str();
-      self->callBoolFuncWithParam(temp, NULL);
-      return 0;
+      bool tolua_ret = (bool)self->callBoolFuncWithParam(temp, NULL);
+      CCLOG("callBoolFuncWithParam return %s", tolua_ret?"true":"false");
+      tolua_pushboolean(tolua_S,(bool)tolua_ret);
+      return 1;
     }
     else
     {
@@ -1427,8 +1429,10 @@ static int tolua_anysdk_PluginProtocol_callBoolFuncWithParam(lua_State* tolua_S)
             lua_pop(tolua_S, 1);
         }
       }
-      self->callBoolFuncWithParam(arg1, params);
-      return 0;
+      bool tolua_ret = (bool)self->callBoolFuncWithParam(arg1, params);
+      CCLOG("callBoolFuncWithParam return %s", tolua_ret?"true":"false");
+      tolua_pushboolean(tolua_S,(bool)tolua_ret);
+      return 1;
     }
   }
  }

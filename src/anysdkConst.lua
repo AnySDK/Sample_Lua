@@ -74,8 +74,8 @@ PayResultCode = {
 }
 
 RequestResultCode = {
-  	kRequestSuccess                  = 31000,/**< enum value is callback of succeeding in paying . */
-    kRequestFail                     = 31001  /**< enum value is callback of failing to pay . */
+  	kRequestSuccess                  = 31000,    --enum value is callback of succeeding in paying .
+    kRequestFail                     = 31001     --enum value is callback of failing to pay .
 } 
 
 -- for push action result code

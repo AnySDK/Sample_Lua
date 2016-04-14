@@ -62,6 +62,7 @@ local function main()
     require "Custom"
     require "Crash"
     require "PluginChannel"
+    require "AdTracking"
 
     local plugin_channel = PluginChannel.new()
     local _ads = Ads.new()
@@ -72,7 +73,7 @@ local function main()
     local _crash = Crash.new()
     local _rec =  REC.new()
     local _custom =  Custom.new()
-
+    local _adtracking =  AdTracking.new()
     ---------------
 
     local visibleSize = cc.Director:getInstance():getVisibleSize()
@@ -99,7 +100,8 @@ local function main()
         "PUSH_SYS",
         "ANALYTICS_SYS",
         "CRASH_SYS",
-        "REC_SYS"
+        "REC_SYS",
+        "ADTRACKING_SYS"
     }
     base_menu = CreatEnumTable(base_menu, 1)
     local info_btns = {
@@ -111,7 +113,8 @@ local function main()
         {text = "Push system", tag = base_menu.PUSH_SYS},
         {text = "Analytics system", tag = base_menu.ANALYTICS_SYS},
         {text = "Crash system", tag = base_menu.CRASH_SYS},
-        {text = "REC system", tag = base_menu.REC_SYS}
+        {text = "REC system", tag = base_menu.REC_SYS},
+        {text = "AdTracking system", tag = base_menu.ADTRACKING_SYS}
 
     }
     user_menu = {
@@ -253,10 +256,32 @@ local function main()
         {text="enterPlatform", tag = rec_menu.ENTER_PLATFORM},
         {text="setMetaData", tag = rec_menu.SET_META_DATA}
     }
-    local sec_infos = {
-        user_btns, iap_btns, share_btns, ads_btns, social_btns, push_btns,analytics_btns,crash_btns,rec_btns
+
+    adtracking_menu = {
+        "ON_REGISTER",
+        "ON_LOGIN",
+        "ON_PAY",
+        "TRACK_EVENT",
+        "ON_CREATE_ROLE",
+        "ON_LEVEL_UP",
+        "ON_START_TO_PAY"
     }
-    local FONT_SIZE = 20
+    adtracking_menu = CreatEnumTable(adtracking_menu, 1000)
+    local adtracking_btns = {
+        {text="onRegister", tag = adtracking_menu.ON_REGISTER},
+        {text="onLogin", tag = adtracking_menu.ON_LOGIN},
+        {text="onPay", tag = adtracking_menu.ON_PAY},
+        {text="trackEvent", tag = adtracking_menu.TRACK_EVENT},
+        {text="onCreateRole", tag = adtracking_menu.ON_CREATE_ROLE},
+        {text="onLevelUp", tag = adtracking_menu.ON_LEVEL_UP},
+        {text="onStartToPay", tag = adtracking_menu.ON_START_TO_PAY}
+
+    }
+
+    local sec_infos = {
+        user_btns, iap_btns, share_btns, ads_btns, social_btns, push_btns,analytics_btns,crash_btns,rec_btns,adtracking_btns
+    }
+    local FONT_SIZE = 10
     local current_menu_idx = -1
     local display_second_menu = false
 
@@ -268,7 +293,7 @@ local function main()
 
         local x = 100
         local y = 310
-        local h = 35
+        local h = 10
         
         local function createBtn(str, tag, pos)
             local lb = cc.Label:createWithSystemFont(str, "Helvetica", FONT_SIZE)
@@ -288,6 +313,7 @@ local function main()
         local ANALYTICS_LEVEL = 800
         local CRASH_LEVEL = 900
         local REC_LEVEL = 1000
+        local ADTRACKING_LEVEL = 1100
         local sec_btns = {}
         local sec_top_arr = {}
         local sec_top_idx = 0
@@ -295,11 +321,11 @@ local function main()
             cclog("on click:%d", item)
             x = 300
             if item == base_menu.USER_SYS or item == base_menu.ANALYTICS_SYS then
-                y = 320
-                h = 31.5
+                y = 300
+                h = 18
             else
                 y = 300
-                h = 25
+                h = 20
             end
 
             local function createBtns( tb )
@@ -475,11 +501,28 @@ local function main()
                 elseif item == rec_menu.SET_META_DATA then
                     _rec:setMetaData()
                 end
+            elseif item < ADTRACKING_LEVEL then
+                cclog("on clicked adtracking.")
+                if item == adtracking_menu.ON_REGISTER then
+                    _adtracking:onRegister()
+                elseif item == adtracking_menu.ON_LOGIN then
+                    _adtracking:onLogin()
+                elseif item == adtracking_menu.ON_PAY then
+                    _adtracking:onPay()
+                elseif item == adtracking_menu.TRACK_EVENT then
+                    _adtracking:trackEvent()
+                elseif item == adtracking_menu.ON_CREATE_ROLE then
+                    _adtracking:onCreateRole()                
+                elseif item == adtracking_menu.ON_LEVEL_UP then
+                    _adtracking:onLevelUp()
+                elseif item == adtracking_menu.ON_START_TO_PAY then
+                    _adtracking:onStartToPay()
+                end
             end
         end
         x = 100
         y = 300
-        h = 28
+        h = 20
         for i=1, #(info_btns) do
             local btn = createBtn(info_btns[i].text, info_btns[i].tag, cc.p(x, y-i*h))
             btn:registerScriptTapHandler(menuCallback)

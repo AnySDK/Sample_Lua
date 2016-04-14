@@ -102,7 +102,12 @@ end
 function PluginChannel:login()
 	if user_plugin ~= nil then
         user_plugin:setActionListener(onUserResult)
-	    user_plugin:login()
+        local paramMap = {
+            User_Id = "123456",
+            Role_Id = "test",
+            Role_Name = "test"
+        }
+	    user_plugin:login(paramMap)
 	end
 end
 

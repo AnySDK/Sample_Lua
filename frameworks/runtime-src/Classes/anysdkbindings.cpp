@@ -2240,20 +2240,70 @@ static int tolua_anysdk_ProtocolUser_login00(lua_State* tolua_S)
 #ifndef TOLUA_RELEASE
  tolua_Error tolua_err;
  if (
-     !tolua_isusertype(tolua_S,1,"ProtocolUser",0,&tolua_err) ||
-     !tolua_isnoobj(tolua_S,2,&tolua_err)
+     !tolua_isusertype(tolua_S,1,"ProtocolUser",0,&tolua_err)
  )
   goto tolua_lerror;
  else
 #endif
  {
-  ProtocolUser* self = (ProtocolUser*)  tolua_tousertype(tolua_S,1,0);
+     if(tolua_isnoobj(tolua_S,2,&tolua_err)){
+        ProtocolUser* self = (ProtocolUser*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'login'", NULL);
+         if (!self) tolua_error(tolua_S,"invalid 'self' in function 'login'", NULL);
 #endif
-  {
-   self->login();
-  }
+         {
+             self->login();
+         }
+     }
+     else if(lua_type(tolua_S, 2) == LUA_TSTRING)
+     {
+         ProtocolUser* self = (ProtocolUser*)  tolua_tousertype(tolua_S,1,0);
+         std::string server_id = ((std::string)  tolua_tocppstring(tolua_S,2,0));
+         std::string server_ip = "";
+         if ( lua_type(tolua_S, 3) == LUA_TSTRING )
+         {
+             server_ip = ((std::string)  tolua_tocppstring(tolua_S,3,0));
+         }
+#ifndef TOLUA_RELEASE
+         if (!self) tolua_error(tolua_S,"invalid 'self' in function 'login'", NULL);
+#endif
+         {
+             self->login(server_id, server_ip);
+         }
+     }
+     else
+     {
+         ProtocolUser* self = (ProtocolUser*)  tolua_tousertype(tolua_S,1,0);
+         std::map<std::string, std::string> strmap;
+         lua_pushnil(tolua_S);
+         while ( 0 != lua_next(tolua_S, 2 ) )                             /* L: lotable ..... key value */
+         {
+             if (!lua_isstring(tolua_S, -2))
+             {
+                 lua_pop(tolua_S, 1);                                      /* removes 'value'; keep 'key' for next iteration*/
+                 continue;
+             }
+             if (lua_isnil(tolua_S, -1) || !lua_isstring(tolua_S, -1))
+             {
+                 lua_pop(tolua_S, 1);
+                 continue;
+             }
+             std::string key = "";
+             key = tolua_tocppstring(tolua_S, -2, NULL);
+             std::string value = "";
+             value = tolua_tocppstring(tolua_S, -1, NULL);
+             strmap.insert( StringMap::value_type(key, value) );
+             lua_pop(tolua_S, 1);                                          /* L: lotable ..... key */
+         }
+#ifndef TOLUA_RELEASE
+         if (!self) tolua_error(tolua_S,"invalid 'self' in function 'login'", NULL);
+#endif
+         {
+             self->login(strmap);
+         }
+         return 0;
+         
+     }
  }
  return 0;
 #ifndef TOLUA_RELEASE
@@ -2261,39 +2311,6 @@ static int tolua_anysdk_ProtocolUser_login00(lua_State* tolua_S)
  tolua_error(tolua_S,"#ferror in function 'login'.",&tolua_err);
  return 0;
 #endif
-}
-#endif //#ifndef TOLUA_DISABLE
-
-/* method: login of class  ProtocolUser */
-#ifndef TOLUA_DISABLE_tolua_anysdk_ProtocolUser_login01
-static int tolua_anysdk_ProtocolUser_login01(lua_State* tolua_S)
-{
-   CCLOG("\n********** login(server_id,oauthLoginServer) was deprecated,please use login({server_id,server_url,server_ext}) instead\n**********");
- tolua_Error tolua_err;
- if (
-     !tolua_isusertype(tolua_S,1,"ProtocolUser",0,&tolua_err) ||
-     !tolua_iscppstring(tolua_S,2,0,&tolua_err)
- )
-  goto tolua_lerror;
- else
- {
-  ProtocolUser* self = (ProtocolUser*)  tolua_tousertype(tolua_S,1,0);
-  std::string server_id = ((std::string)  tolua_tocppstring(tolua_S,2,0));
-  std::string server_ip = "";
-  if ( lua_type(tolua_S, 3) == LUA_TSTRING )
-  {
-    server_ip = ((std::string)  tolua_tocppstring(tolua_S,3,0));
-  }
-#ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'login'", NULL);
-#endif
-  {
-   self->login(server_id, server_ip);
-  }
- }
- return 0;
-tolua_lerror:
- return tolua_anysdk_ProtocolUser_login00(tolua_S);
 }
 #endif //#ifndef TOLUA_DISABLE
 
@@ -2711,8 +2728,7 @@ TOLUA_API int tolua_anysdk_open (lua_State* tolua_S)
   tolua_cclass(tolua_S,"ProtocolUser","ProtocolUser","PluginProtocol",NULL);
   tolua_beginmodule(tolua_S,"ProtocolUser");
    tolua_function(tolua_S,"login",tolua_anysdk_ProtocolUser_login00);
-   tolua_function(tolua_S,"login",tolua_anysdk_ProtocolUser_login01);
-   tolua_function(tolua_S,"isLogined",tolua_anysdk_ProtocolUser_isLogined00);
+    tolua_function(tolua_S,"isLogined",tolua_anysdk_ProtocolUser_isLogined00);
    tolua_function(tolua_S,"getUserID",tolua_anysdk_ProtocolUser_getUserID00);
    tolua_function(tolua_S,"getPluginId",tolua_anysdk_ProtocolUser_getPluginId00);
   tolua_endmodule(tolua_S);

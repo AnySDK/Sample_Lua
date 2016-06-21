@@ -2856,62 +2856,6 @@ private:
 };
 ProtocolUserActionListener* ProtocolUserActionListener::_instance = NULL;
 
-/* method: login of class  ProtocolUser */
-#ifndef tolua_anysdk_ProtocolUser_login02
-static int tolua_anysdk_ProtocolUser_login02(lua_State* tolua_S)
-{
-#ifndef TOLUA_RELEASE
- tolua_Error tolua_err;
- if (
-     !tolua_isusertype(tolua_S,1,"ProtocolUser",0,&tolua_err) 
- )
-  goto tolua_lerror;
- else
-#endif
- {
-  ProtocolUser* self = (ProtocolUser*)  tolua_tousertype(tolua_S,1,0);
-#ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'login'", NULL);
-#endif
-  {
-    int argc = lua_gettop(tolua_S)-1;
-    if (argc == 1)
-    { 
-      std::map<std::string, std::string> strmap;
-      lua_pushnil(tolua_S);
-      while ( 0 != lua_next(tolua_S, 2 ) )                             /* L: lotable ..... key value */
-      {
-          if (!lua_isstring(tolua_S, -2))
-          {
-              lua_pop(tolua_S, 1);                                      /* removes 'value'; keep 'key' for next iteration*/
-              continue;
-          }
-          if (lua_isnil(tolua_S, -1) || !lua_isstring(tolua_S, -1))
-          {
-              lua_pop(tolua_S, 1);
-              continue;
-          }
-          std::string key = "";
-          key = tolua_tocppstring(tolua_S, -2, NULL);
-          std::string value = "";
-          value = tolua_tocppstring(tolua_S, -1, NULL);
-          strmap.insert( StringMap::value_type(key, value) );
-          lua_pop(tolua_S, 1);                                          /* L: lotable ..... key */
-      }
-      self->login(strmap);
-      return 0;
-    }
-    CCLOG("error params count of function login.");
-  }
-}
- return 0;
-#ifndef TOLUA_RELEASE
- tolua_lerror:
- tolua_error(tolua_S,"#ferror in function 'login'.",&tolua_err);
- return 0;
-#endif
-}
-#endif //#ifndef TOLUA_DISABLE
 
 /* method: setDebugMode of class  ProtocolUser */
 #ifndef TOLUA_DISABLE_tolua_anysdk_ProtocolUser_setDebugMode
@@ -3039,7 +2983,6 @@ static void extendProtocolUser(lua_State* tolua_S)
         tolua_function(tolua_S, "setActionListener", tolua_anysdk_ProtocolUser_setActionListener);
         tolua_function(tolua_S, "setDebugMode", tolua_anysdk_ProtocolUser_setDebugMode);
         tolua_function(tolua_S, "removeListener", tolua_anysdk_ProtocolUser_removeListener);
-        tolua_function(tolua_S, "login",tolua_anysdk_ProtocolUser_login02);
 
     }
     lua_pop(tolua_S, 1);

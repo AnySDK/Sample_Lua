@@ -1,5 +1,5 @@
 /*
-** Lua binding: anysdk
+** Lua binding: sdk
 ** Generated automatically by tolua++-1.0.92 on Wed Jul  2 14:12:17 2014.
 */
 
@@ -27,7 +27,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 // extern "C" {
-#include "tolua_fix.h"
+#include "scripting/lua-bindings/manual/tolua_fix.h"
 // }
 
 #include <map>
@@ -50,8 +50,9 @@
 #include "ProtocolCrash.h"
 #include "ProtocolREC.h"
 #include "ProtocolCustom.h"
+#include "ProtocolAdTracking.h"
 
-#include "CCLuaEngine.h"
+#include "scripting/lua-bindings/manual/CCLuaEngine.h"
 
 #include "anysdk_manual_bindings.h"
 #include "cocos2d.h"
@@ -60,7 +61,7 @@
 // #define ON_VERSION_2 1
 
 #ifndef ON_VERSION_2
-    #include "LuaBasicConversions.h"
+    #include "scripting/lua-bindings/manual/LuaBasicConversions.h"
 #endif
 
 
@@ -71,6 +72,229 @@ using namespace anysdk::framework;
 USING_NS_CC;
 
 // extern const char* cocos2dVersion();
+
+/* method: AdTracking of class  setDebugMode */
+#ifndef TOLUA_DISABLE_tolua_anysdk_ProtocolAdTracking_setDebugMode
+static int tolua_anysdk_ProtocolAdTracking_setDebugMode(lua_State* tolua_S)
+{
+    CCLOG("\n********** setDebugMode was deprecated.\n**********");
+    CCLOG("in function protocols AdTracking\n");
+#ifndef TOLUA_RELEASE
+    tolua_Error tolua_err;
+    if (
+        !tolua_isusertype(tolua_S,1,"ProtocolAdTracking",0,&tolua_err) ||
+        !tolua_isboolean(tolua_S,2,0,&tolua_err)
+        )
+        goto tolua_lerror;
+    else
+#endif
+    {
+        ProtocolAdTracking* self = (ProtocolAdTracking*)  tolua_tousertype(tolua_S,1,0);
+        bool bDebug = ((bool)  tolua_toboolean(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+        if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setDebugMode'", NULL);
+#endif
+        {
+            self->setDebugMode(bDebug);
+        }
+    }
+    return 0;
+#ifndef TOLUA_RELEASE
+tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'setDebugMode'.",&tolua_err);
+    return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: onLogin of class  ProtocolAdTracking */
+#ifndef TOLUA_DISABLE_tolua_anysdk_ProtocolAdTracking_onLogin00
+static int tolua_anysdk_ProtocolAdTracking_onLogin00(lua_State* tolua_S)
+{
+    CCLOG("in function protocols AdTracking\n");
+#ifndef TOLUA_RELEASE
+    tolua_Error tolua_err;
+    if (
+        !tolua_isusertype(tolua_S,1,"ProtocolAdTracking",0,&tolua_err) ||
+        !tolua_istable(tolua_S,2,0,&tolua_err)
+        )
+        goto tolua_lerror;
+    else
+#endif
+    {
+        ProtocolAdTracking* self = (ProtocolAdTracking*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+        if (!self) tolua_error(tolua_S,"invalid 'self' in function 'onLogin'", NULL);
+#endif
+        {
+            std::map<std::string, std::string> strmap;
+            lua_pushnil(tolua_S);
+            while ( 0 != lua_next(tolua_S, 2 ) )                             /* L: lotable ..... key value */
+            {
+                if (!lua_isstring(tolua_S, -2))
+                {
+                    lua_pop(tolua_S, 1);                                      /* removes 'value'; keep 'key' for next iteration*/
+                    continue;
+                }
+                if (lua_isnil(tolua_S, -1) || !lua_isstring(tolua_S, -1))
+                {
+                    lua_pop(tolua_S, 1);
+                    continue;
+                }
+                std::string key = "";
+                key = tolua_tocppstring(tolua_S, -2, NULL);
+                std::string value = "";
+                value = tolua_tocppstring(tolua_S, -1, NULL);
+                CCLOG("key: %s, value: %s.", key.c_str(), value.c_str());
+                strmap.insert( StringMap::value_type(key, value) );
+                lua_pop(tolua_S, 1);                                          /* L: lotable ..... key */
+            }
+            self->onLogin(strmap);
+        }
+    }
+    return 0;
+#ifndef TOLUA_RELEASE
+tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'onLogin'.",&tolua_err);
+    return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: onPay of class  ProtocolAdTracking */
+#ifndef TOLUA_DISABLE_tolua_anysdk_ProtocolAdTracking_onPay00
+static int tolua_anysdk_ProtocolAdTracking_onPay00(lua_State* tolua_S)
+{
+    CCLOG("in function protocols AdTracking\n");
+#ifndef TOLUA_RELEASE
+    tolua_Error tolua_err;
+    if (
+        !tolua_isusertype(tolua_S,1,"ProtocolAdTracking",0,&tolua_err) ||
+        !tolua_istable(tolua_S,2,0,&tolua_err)
+        )
+        goto tolua_lerror;
+    else
+#endif
+    {
+        ProtocolAdTracking* self = (ProtocolAdTracking*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+        if (!self) tolua_error(tolua_S,"invalid 'self' in function 'onPay'", NULL);
+#endif
+        {
+            std::map<std::string, std::string> strmap;
+            lua_pushnil(tolua_S);
+            while ( 0 != lua_next(tolua_S, 2 ) )                             /* L: lotable ..... key value */
+            {
+                if (!lua_isstring(tolua_S, -2))
+                {
+                    lua_pop(tolua_S, 1);                                      /* removes 'value'; keep 'key' for next iteration*/
+                    continue;
+                }
+                if (lua_isnil(tolua_S, -1) || !lua_isstring(tolua_S, -1))
+                {
+                    lua_pop(tolua_S, 1);
+                    continue;
+                }
+                std::string key = "";
+                key = tolua_tocppstring(tolua_S, -2, NULL);
+                std::string value = "";
+                value = tolua_tocppstring(tolua_S, -1, NULL);
+                CCLOG("key: %s, value: %s.", key.c_str(), value.c_str());
+                strmap.insert( StringMap::value_type(key, value) );
+                lua_pop(tolua_S, 1);                                          /* L: lotable ..... key */
+            }
+            self->onPay(strmap);
+        }
+    }
+    return 0;
+#ifndef TOLUA_RELEASE
+tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'onPay'.",&tolua_err);
+    return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: trackEvent of class  ProtocolAdTracking */
+#ifndef TOLUA_DISABLE_tolua_anysdk_ProtocolAdTracking_trackEvent00
+static int tolua_anysdk_ProtocolAdTracking_trackEvent00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"ProtocolAdTracking",0,&tolua_err) 
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  ProtocolAdTracking* self = (ProtocolAdTracking*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'trackEvent'", NULL);
+#endif
+  {
+    int argc = lua_gettop(tolua_S)-1;
+    if (argc == 0)
+    {
+      CCLOG("error params count of function trackEvent.");
+      return 0;
+    }
+    std::string temp = (std::string)tolua_tostring(tolua_S, 2, 0);
+    const char* arg1 = temp.c_str();
+    if (argc == 1)
+    {
+      self->trackEvent(arg1, NULL);
+      return 0;
+    }
+    if (argc == 2)
+    {
+      LogEventParamMap strmap;
+      lua_pushnil(tolua_S);
+      while ( 0 != lua_next(tolua_S, 3 ) )                             /* L: lotable ..... key value */
+      {
+          if (!lua_isstring(tolua_S, -2))
+          {
+              lua_pop(tolua_S, 1);                                      /* removes 'value'; keep 'key' for next iteration*/
+              continue;
+          }
+          if (lua_isnil(tolua_S, -1) || !lua_isstring(tolua_S, -1))
+          {
+              lua_pop(tolua_S, 1);
+              continue;
+          }
+          std::string key = "";
+          key = tolua_tocppstring(tolua_S, -2, NULL);
+          std::string value = "";
+          value = tolua_tocppstring(tolua_S, -1, NULL);
+          strmap.insert( LogEventParamMap::value_type(key, value) );
+          lua_pop(tolua_S, 1);                                          /* L: lotable ..... key */
+      }
+      self->trackEvent(arg1, &strmap);
+    }
+  }
+}
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'trackEvent'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+static void extendProtocolAdTracking(lua_State* tolua_S)
+{
+    lua_pushstring(tolua_S, "ProtocolAdTracking");
+    lua_rawget(tolua_S, LUA_REGISTRYINDEX);
+    if (lua_istable(tolua_S,-1))
+    {
+        tolua_function(tolua_S, "onLogin", tolua_anysdk_ProtocolAdTracking_onLogin00);
+        tolua_function(tolua_S, "setDebugMode", tolua_anysdk_ProtocolAdTracking_setDebugMode);
+        tolua_function(tolua_S, "onPay",tolua_anysdk_ProtocolAdTracking_onPay00);
+        tolua_function(tolua_S, "trackEvent",tolua_anysdk_ProtocolAdTracking_trackEvent00);
+    }
+    lua_pop(tolua_S, 1);
+}
 
 /* method: Crash of class  setDebugMode */
 #ifndef TOLUA_DISABLE_tolua_anysdk_ProtocolCrash_setDebugMode
@@ -2632,6 +2856,7 @@ private:
 };
 ProtocolUserActionListener* ProtocolUserActionListener::_instance = NULL;
 
+
 /* method: setDebugMode of class  ProtocolUser */
 #ifndef TOLUA_DISABLE_tolua_anysdk_ProtocolUser_setDebugMode
 static int tolua_anysdk_ProtocolUser_setDebugMode(lua_State* tolua_S)
@@ -2758,6 +2983,7 @@ static void extendProtocolUser(lua_State* tolua_S)
         tolua_function(tolua_S, "setActionListener", tolua_anysdk_ProtocolUser_setActionListener);
         tolua_function(tolua_S, "setDebugMode", tolua_anysdk_ProtocolUser_setDebugMode);
         tolua_function(tolua_S, "removeListener", tolua_anysdk_ProtocolUser_removeListener);
+
     }
     lua_pop(tolua_S, 1);
 }
@@ -2996,6 +3222,7 @@ TOLUA_API int tolua_anysdk_manual_open (lua_State* tolua_S)
     extendProtocolCrash(tolua_S);
     extendProtocolCustom(tolua_S);
     extendProtocolREC(tolua_S);
+    extendProtocolAdTracking(tolua_S);
 	return 0;
 }
 

@@ -1,5 +1,5 @@
-#ifndef __LUA_ANYSDK_BINDINGS_H_
-#define __LUA_ANYSDK_BINDINGS_H_
+#ifndef __LUA_SDK_BINDINGS_H_
+#define __LUA_SDK_BINDINGS_H_
 
 #ifdef __cplusplus
 extern "C" {

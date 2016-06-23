@@ -8,7 +8,8 @@ Plugin_type = {
     kPluginPush         = 64,
     kPluginCrash        = 128,
     kPluginCustom       = 256,
-    kPluginREC          = 512
+    kPluginREC          = 512,
+    kPluginAdTracking   = 1024
 }
 
 RECResultCode = {
@@ -74,8 +75,8 @@ PayResultCode = {
 }
 
 RequestResultCode = {
-  	kRequestSuccess                  = 31000,    --enum value is callback of succeeding in paying .
-    kRequestFail                     = 31001     --enum value is callback of failing to pay .
+  	kRequestSuccess                  = 31000,   --enum value is callback of succeeding in paying . 
+    kRequestFail                     = 31001    --enum value is callback of failing to pay . 
 } 
 
 -- for push action result code

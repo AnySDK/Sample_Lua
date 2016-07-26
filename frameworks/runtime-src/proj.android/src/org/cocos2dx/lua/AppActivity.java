@@ -41,7 +41,7 @@ public class AppActivity extends Cocos2dxActivity {
         super.onCreate(savedState);
         PluginWrapper.init(this); // for plugins
         PluginWrapper.setGLSurfaceView(Cocos2dxGLSurfaceView.getInstance());
-        wrapper.nativeInitPlugins();
+        //wrapper.nativeInitPlugins();
         
        
     }

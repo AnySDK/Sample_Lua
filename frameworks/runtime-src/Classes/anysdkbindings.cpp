@@ -2246,7 +2246,7 @@ static int tolua_anysdk_ProtocolUser_login00(lua_State* tolua_S)
  else
 #endif
  {
-     if(tolua_isnoobj(tolua_S,2,&tolua_err)){
+     if(lua_type(tolua_S, 2) == LUA_TNONE){
         ProtocolUser* self = (ProtocolUser*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
          if (!self) tolua_error(tolua_S,"invalid 'self' in function 'login'", NULL);

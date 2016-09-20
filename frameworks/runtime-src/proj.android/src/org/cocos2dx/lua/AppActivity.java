@@ -30,6 +30,7 @@ import org.cocos2dx.lib.Cocos2dxActivity;
 import org.cocos2dx.lib.Cocos2dxGLSurfaceView;
 
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 
 import com.anysdk.framework.PluginWrapper;
@@ -41,9 +42,7 @@ public class AppActivity extends Cocos2dxActivity {
         super.onCreate(savedState);
         PluginWrapper.init(this); // for plugins
         PluginWrapper.setGLSurfaceView(Cocos2dxGLSurfaceView.getInstance());
-        //wrapper.nativeInitPlugins();
-        
-       
+        PluginWrapper.loadAllPlugins();
     }
     
 	@Override
@@ -87,4 +86,34 @@ public class AppActivity extends Cocos2dxActivity {
 		PluginWrapper.onRestart();
 		super.onRestart();
 	}
+	
+	@Override
+	protected void onStart() {
+		PluginWrapper.onStart();
+		super.onStart();
+	}
+	
+	@Override
+	public void onBackPressed() {
+		PluginWrapper.onBackPressed();
+        super.onBackPressed();
+    }
+	
+    @Override
+	public void onConfigurationChanged(Configuration newConfig) {
+    	PluginWrapper.onConfigurationChanged(newConfig);
+        super.onConfigurationChanged(newConfig);
+    }
+    
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+    	PluginWrapper.onRestoreInstanceState(savedInstanceState);
+        super.onRestoreInstanceState(savedInstanceState);
+    }
+    
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+    	PluginWrapper.onSaveInstanceState(outState);
+        super.onSaveInstanceState(outState);
+    }
 }

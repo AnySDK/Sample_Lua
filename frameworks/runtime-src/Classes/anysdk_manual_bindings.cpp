@@ -1082,7 +1082,7 @@ static int tolua_anysdk_PluginParam_create(lua_State* tolua_S)
 			param = new PluginParam();
 		}
 		else if(argc == 1){
-			if( tolua_isboolean(tolua_S,2,0,&tolua_err) )
+			if( lua_type(tolua_S, 2) == LUA_TBOOLEAN)
 			{
 				bool temp = ((bool)  tolua_toboolean(tolua_S,2,true));
 				param = new PluginParam(temp);
@@ -1101,13 +1101,13 @@ static int tolua_anysdk_PluginParam_create(lua_State* tolua_S)
 	                param = new PluginParam((int)argi);
 	            }
 			}
-			else if(tolua_isstring(tolua_S, 2, 0, &tolua_err))
+			else if(lua_type(tolua_S, 2) == LUA_TSTRING )
 	        {
 	            std::string arg1 = (std::string)tolua_tostring(tolua_S, 2, 0);
 	            const char* temp = arg1.c_str();
 	            param = new PluginParam(temp);
 	        }
-	        else if (tolua_istable(tolua_S, 2, 0, &tolua_err))
+	        else if (lua_type(tolua_S, 2) == LUA_TTABLE)
 	        {
 	            StringMap strmap;
 	            lua_pushnil(tolua_S);                                            /* first key L: lotable ..... nil */
@@ -1371,7 +1371,7 @@ static int tolua_anysdk_PluginProtocol_callFuncWithParam(lua_State* tolua_S)
       std::string temp = (std::string)tolua_tostring(tolua_S, 2, 0);
       const char* arg1 = temp.c_str();
       std::vector<PluginParam*> params;
-      if (!tolua_istable(tolua_S, 3, 0, &tolua_err))
+      if (lua_type(tolua_S, 3) != LUA_TTABLE)
       {
         for (int i = 2; i <= argc; ++i)
         {
@@ -1445,15 +1445,17 @@ static int tolua_anysdk_PluginProtocol_callStringFuncWithParam(lua_State* tolua_
     {
       std::string arg1 = (std::string)tolua_tostring(tolua_S, 2, 0);
       const char* temp = arg1.c_str();
-      self->callStringFuncWithParam(temp, NULL);
-      return 0;
+      std::string tolua_ret = self->callStringFuncWithParam(temp, NULL);
+      CCLOG("callStringFuncWithParam return %s", tolua_ret.c_str());
+      tolua_pushstring(tolua_S,(const char *)tolua_ret.c_str());
+      return 1;
     }
     else
     {
       std::string temp = (std::string)tolua_tostring(tolua_S, 2, 0);
       const char* arg1 = temp.c_str();
       std::vector<PluginParam*> params;
-      if (!tolua_istable(tolua_S, 3, 0, &tolua_err))
+      if (lua_type(tolua_S, 2) != LUA_TTABLE)
       {
         for (int i = 2; i <= argc; ++i)
         {
@@ -1486,8 +1488,10 @@ static int tolua_anysdk_PluginProtocol_callStringFuncWithParam(lua_State* tolua_
             lua_pop(tolua_S, 1);
         }
       }
-      self->callStringFuncWithParam(arg1, params);
-      return 0;
+      std::string tolua_ret = self->callStringFuncWithParam(arg1, params);
+      CCLOG("callStringFuncWithParam return %s", tolua_ret.c_str());
+      tolua_pushstring(tolua_S,(const char *)tolua_ret.c_str());
+      return 1;
     }
   }
  }
@@ -1527,15 +1531,17 @@ static int tolua_anysdk_PluginProtocol_callIntFuncWithParam(lua_State* tolua_S)
     {
       std::string arg1 = (std::string)tolua_tostring(tolua_S, 2, 0);
       const char* temp = arg1.c_str();
-      self->callIntFuncWithParam(temp, NULL);
-      return 0;
+      int tolua_ret = (int)self->callIntFuncWithParam(temp, NULL);
+      CCLOG("callIntFuncWithParam return %d", tolua_ret);
+      tolua_pushnumber(tolua_S,(lua_Number)tolua_ret);
+      return 1;
     }
     else
     {
       std::string temp = (std::string)tolua_tostring(tolua_S, 2, 0);
       const char* arg1 = temp.c_str();
       std::vector<PluginParam*> params;
-      if (!tolua_istable(tolua_S, 3, 0, &tolua_err))
+      if (lua_type(tolua_S, 3) != LUA_TTABLE)
       {
 
         for (int i = 2; i <= argc; ++i)
@@ -1569,8 +1575,10 @@ static int tolua_anysdk_PluginProtocol_callIntFuncWithParam(lua_State* tolua_S)
             lua_pop(tolua_S, 1);
         }
       }
-      self->callIntFuncWithParam(arg1, params);
-      return 0;
+      int tolua_ret = (int)self->callIntFuncWithParam(arg1, params);
+      CCLOG("callIntFuncWithParam return %d", tolua_ret);
+      tolua_pushnumber(tolua_S,(lua_Number)tolua_ret);
+      return 1;
     }
   }
  }
@@ -1620,7 +1628,7 @@ static int tolua_anysdk_PluginProtocol_callBoolFuncWithParam(lua_State* tolua_S)
       std::string temp = (std::string)tolua_tostring(tolua_S, 2, 0);
       const char* arg1 = temp.c_str();
       std::vector<PluginParam*> params;
-      if (!tolua_istable(tolua_S, 3, 0, &tolua_err))
+      if (lua_type(tolua_S, 3) != LUA_TTABLE)
       {
         for (int i = 2; i <= argc; ++i)
         {
@@ -1696,15 +1704,17 @@ static int tolua_anysdk_PluginProtocol_callFloatFuncWithParam(lua_State* tolua_S
     {
       std::string arg1 = (std::string)tolua_tostring(tolua_S, 2, 0);
       const char* temp = arg1.c_str();
-      self->callFloatFuncWithParam(temp, NULL);
-      return 0;
+      float tolua_ret = (float)self->callFloatFuncWithParam(temp, NULL);
+      CCLOG("callFloatFuncWithParam return %f", tolua_ret);
+      tolua_pushnumber(tolua_S,(lua_Number)tolua_ret);
+      return 1;
     }
     else
     {
       std::string temp = (std::string)tolua_tostring(tolua_S, 2, 0);
       const char* arg1 = temp.c_str();
       std::vector<PluginParam*> params;
-      if (!tolua_istable(tolua_S, 3, 0, &tolua_err))
+      if (lua_type(tolua_S, 3) != LUA_TTABLE)
       {
         for (int i = 2; i <= argc; ++i)
         {
@@ -1737,8 +1747,10 @@ static int tolua_anysdk_PluginProtocol_callFloatFuncWithParam(lua_State* tolua_S
             lua_pop(tolua_S, 1);
         }
       }
-      self->callFloatFuncWithParam(arg1, params);
-      return 0;
+      float tolua_ret = (float)self->callFloatFuncWithParam(arg1, params);
+      CCLOG("callFloatFuncWithParam return %f", tolua_ret);
+      tolua_pushnumber(tolua_S,(lua_Number)tolua_ret);
+      return 1;
     }
   }
  }
@@ -2240,8 +2252,12 @@ static int tolua_anysdk_ProtocolPush_setTags(lua_State* tolua_S)
     int argc = lua_gettop(tolua_S)-1;
     if (argc == 1)
     {
-      if( tolua_istable(tolua_S, 2, 0, &tolua_err) )
-      {
+#ifndef TOLUA_RELEASE
+        if (!tolua_istable(tolua_S, 2, 0, &tolua_err)  )
+        {
+            goto tolua_lerror;
+        }
+#endif
         size_t len = lua_objlen(tolua_S, 2);
         std::list<std::string> tags;
         for (int i = 0; i < len; i++)
@@ -2262,10 +2278,7 @@ static int tolua_anysdk_ProtocolPush_setTags(lua_State* tolua_S)
             lua_pop(tolua_S, 1);
         }
         self->setTags(tags);
-        return 0;
-      }
-      CCLOG("error param type.");
-      return 0;
+        return 1;
     }
     CCLOG("error params count of function setTags.");
   }
@@ -2333,7 +2346,7 @@ static int tolua_anysdk_ProtocolPush_delTags(lua_State* tolua_S)
     int argc = lua_gettop(tolua_S)-1;
     if (argc == 1)
     {
-      if( tolua_istable(tolua_S, 2, 0, &tolua_err) )
+      if(lua_type(tolua_S, 2) == LUA_TTABLE)
       {
         size_t len = lua_objlen(tolua_S, 2);
         std::list<std::string> tags;

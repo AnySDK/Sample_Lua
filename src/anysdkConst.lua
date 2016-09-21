@@ -40,6 +40,9 @@ AdsResultCode = {
     kNetworkError                = 5,       --enum value is callback of network error at center.
     kUnknownError                = 6,       --enum value is callback of unknown error.
     kOfferWallOnPointsChanged    = 7,       --enum value is callback of changing the point of offerwall.
+    kRewardedVideoWithReward     = 8,       --enum the callback of receiving the reward of rewardedvideo. */
+    kInAppPurchaseFinished       = 9,       --enum the callback of finishing IAP ad. */
+    kAdsClicked					 = 10,		--enum the callback of the advertisement clicked. */
     kAdsExtension                = 40000    --enum value is extension code.
 }	--ads result code
 
@@ -57,7 +60,10 @@ AdsType = {
 	AD_TYPE_BANNER        = 0,   --enum value is banner ads.
 	AD_TYPE_FULLSCREEN    = 1,   --enum value is fullscreen ads.
 	AD_TYPE_MOREAPP       = 2,   --enum value is moreapp ads.
-	AD_TYPE_OFFERWALL	  = 3    --enum value is offerwall ads.
+	AD_TYPE_OFFERWALL	  = 3,   --enum value is offerwall ads.
+    AD_TYPE_REWARDEDVIDEO = 4,  --enum value is rewarded video ads . 
+    AD_TYPE_NATIVEEXPRESS = 5,  -- enum value is Native express  ads . 
+    AD_TYPE_NATIVEADVANCED = 6 -- enum value is Native advanced  ads . 
 }	--ads type
 
 --for pay result code
@@ -130,6 +136,8 @@ UserActionResultCode = {
     kAccountSwitchSuccess    = 15,      --enum value is callback of succeeding in switching account.
     kAccountSwitchFail       = 16,      --enum value is callback of failing to switch account.
     kOpenShop                = 17,      --enum value is callback of opening the shop.
+    kAccountSwitchCancel     = 18,      --enum value is callback of canceling to switch account. 
+    kGameExitPage            = 19,      --enum value is callback of no channel exit page. 
     kUserExtension           = 50000    --enum value is extension code.
 }
 

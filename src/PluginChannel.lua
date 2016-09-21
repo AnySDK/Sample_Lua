@@ -73,15 +73,19 @@ function PluginChannel:ctor()
     --for anysdk
     local agent = AgentManager:getInstance()
     --init
-    --anysdk //c++层初始化
     local appKey = "CED525C0-8D41-F514-96D8-90092EB3899A";
     local appSecret = "a29b4f22aa63b8274f7f6e2dd5893d9b";
     local privateKey = "963C4B4DA71BC51C69EB11D24D0C7D49";
 
     local oauthLoginServer = "http://oauth.anysdk.com/api/OauthLoginDemo/Login.php";
     agent:init(appKey,appSecret,privateKey,oauthLoginServer)
-    --load
-    agent:loadAllPlugins()
+
+    local targetPlatform = cc.Application:getInstance():getTargetPlatform()
+    if targetPlatform ~= cc.PLATFORM_OS_ANDROID then
+        --load
+        --Android建议在onCreate里调用PluginWrapper.loadAllPlugins();来进行插件初始化
+        agent:loadAllPlugins()
+    end
 
     -- get user plugin
     user_plugin = agent:getUserPlugin()

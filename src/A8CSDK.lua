@@ -87,15 +87,18 @@ function A8CSDK:onExit()
 end
 
 function A8CSDK:onLevelUp()
-	if adtracking_plugin ~= nil and adtracking_plugin:isFunctionSupported("onLevelUp") then
-		local paramMap = {
-        	User_Id = "123456",
-        	Role_Id = "test",
-        	Role_Name = "test",
-        	Level = "10"
-		}
-		adtracking_plugin:trackEvent("onLevelUp", paramMap)
-	end
+    if a8csdk ~= nil and a8csdk:isFunctionSupported("onLevelUp") then
+        local info = {
+            serverId = "123456",
+            serverName = "test",
+            roleId = "test",
+            roleName = "10",
+            roleLevel = "10",
+            ext = ""
+        }
+        local data = PluginParam:create(info)
+        a8csdk:callFuncWithParam("onLevelUp",data)  
+    end
 end
 
 function A8CSDK:onRegister()

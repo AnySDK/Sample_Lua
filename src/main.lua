@@ -563,7 +563,7 @@ local function main()
                 elseif item == a8csdk_menu.ON_LEVEL_UP then
                     _a8csdk:onLevelUp()
                 elseif item == a8csdk_menu.ON_REGISTER then
-                    _a8csdk:onStartToPay()
+                    _a8csdk:onRegister()
                 elseif item == a8csdk_menu.ON_CUSTOM_EVENT then
                     _a8csdk:onCustomEvent()
                 elseif item == a8csdk_menu.GET_LAST_GAME_SERVER_INFO then

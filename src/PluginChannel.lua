@@ -175,7 +175,20 @@ end
 function PluginChannel:submitLoginGameRole()
 	if user_plugin ~= nil then
         if user_plugin:isFunctionSupported("submitLoginGameRole") then
-            local data = PluginParam:create({roleId="123456",roleName="test",roleLevel="10",zoneId="123",zoneName="test",dataType="1",ext="login"})
+            local info = {
+                dataType="1",
+                roleId="123456",
+                roleName="test",
+                roleLevel="1",
+                zoneId="1",
+                zoneName="test",
+                balance="1",
+                partyName="test",
+                vipLevel="1",
+                roleCTime="1480318110",
+                roleLevelMTime="-1"
+            }
+            local data = PluginParam:create(info)
             user_plugin:callFuncWithParam("submitLoginGameRole", data)
         end
 	end
@@ -184,13 +197,22 @@ end
 function PluginChannel:pay()
 	if iap_plugin_maps ~= nil then
         local info = {
-                Product_Price="0.1", 
-                Product_Id="monthly",  
-                Product_Name="gold",  
-                Server_Id="13",  
-                Product_Count="1",  
-                Role_Id="1001",  
-                Role_Name="asd"
+                Product_Id="1",
+                Product_Name="10元宝",
+                Product_Price="1",
+                Product_Count="1",
+                Product_Desc="gold",
+                Coin_Name="元宝",
+                Coin_Rate="10",
+                Role_Id="123456",
+                Role_Name="test",
+                Role_Grade="1",
+                Role_Balance="1",
+                Vip_Level="1",
+                Party_Name="1",
+                Server_Id="1",
+                Server_Name="test",
+                EXT="test"
             }
         -- analytics_plugin:logEvent("pay", info)
         for key, value in pairs(iap_plugin_maps) do

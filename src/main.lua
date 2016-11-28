@@ -63,6 +63,7 @@ local function main()
     require "Crash"
     require "PluginChannel"
     require "AdTracking"
+    require "A8CSDK"
 
     local plugin_channel = PluginChannel.new()
     local _ads = Ads.new()
@@ -74,6 +75,7 @@ local function main()
     local _rec =  REC.new()
     local _custom =  Custom.new()
     local _adtracking =  AdTracking.new()
+    local _a8csdk =  A8CSDK.new()
     ---------------
 
     local visibleSize = cc.Director:getInstance():getVisibleSize()
@@ -101,7 +103,8 @@ local function main()
         "ANALYTICS_SYS",
         "CRASH_SYS",
         "REC_SYS",
-        "ADTRACKING_SYS"
+        "ADTRACKING_SYS",
+        "A8CSDK_SYS"
     }
     base_menu = CreatEnumTable(base_menu, 1)
     local info_btns = {
@@ -114,7 +117,8 @@ local function main()
         {text = "Analytics system", tag = base_menu.ANALYTICS_SYS},
         {text = "Crash system", tag = base_menu.CRASH_SYS},
         {text = "REC system", tag = base_menu.REC_SYS},
-        {text = "AdTracking system", tag = base_menu.ADTRACKING_SYS}
+        {text = "AdTracking system", tag = base_menu.ADTRACKING_SYS},
+        {text = "A8CSDK system", tag = base_menu.A8CSDK_SYS}
 
     }
     user_menu = {
@@ -278,8 +282,33 @@ local function main()
 
     }
 
+    a8csdk_menu = {
+        "ON_CREATE_ROLE",
+        "ON_ENTER_GAME",
+        "ON_LOGIN",
+        "ON_PAY",
+        "ON_EXIT",
+        "ON_LEVEL_UP",
+        "ON_REGISTER",
+        "ON_CUSTOM_EVENT",
+        "GET_LAST_GAME_SERVER_INFO"
+    }
+    a8csdk_menu = CreatEnumTable(a8csdk_menu, 1100)
+    local  a8csdk_btns = {
+        {text="onCreateRole", tag = a8csdk_menu.ON_CREATE_ROLE},
+        {text="onEnterGame", tag = a8csdk_menu.ON_ENTER_GAME},
+        {text="onLogin", tag = a8csdk_menu.ON_LOGIN},
+        {text="onPay", tag = a8csdk_menu.ON_PAY},
+        {text="onExit", tag = a8csdk_menu.ON_EXIT},
+        {text="onLevelUp", tag = a8csdk_menu.ON_LEVEL_UP},
+        {text="onRegister", tag = a8csdk_menu.ON_REGISTER},
+        {text="onCustomEvent", tag = a8csdk_menu.ON_CUSTOM_EVENT},
+        {text="getLastGameServerInfo", tag = a8csdk_menu.GET_LAST_GAME_SERVER_INFO}
+
+    }
+
     local sec_infos = {
-        user_btns, iap_btns, share_btns, ads_btns, social_btns, push_btns,analytics_btns,crash_btns,rec_btns,adtracking_btns
+        user_btns, iap_btns, share_btns, ads_btns, social_btns, push_btns,analytics_btns,crash_btns,rec_btns,adtracking_btns,a8csdk_btns
     }
     local FONT_SIZE = 10
     local current_menu_idx = -1
@@ -314,6 +343,7 @@ local function main()
         local CRASH_LEVEL = 900
         local REC_LEVEL = 1000
         local ADTRACKING_LEVEL = 1100
+        local A8CSDK_LEVEL = 1200
         local sec_btns = {}
         local sec_top_arr = {}
         local sec_top_idx = 0
@@ -517,6 +547,27 @@ local function main()
                     _adtracking:onLevelUp()
                 elseif item == adtracking_menu.ON_START_TO_PAY then
                     _adtracking:onStartToPay()
+                end
+            elseif item < A8CSDK_LEVEL then
+                cclog("on clicked adtracking.")
+                if item == a8csdk_menu.ON_CREATE_ROLE then
+                    _a8csdk:onCreateRole()
+                elseif item == a8csdk_menu.ON_ENTER_GAME then
+                    _a8csdk:onEnterGame()
+                elseif item == a8csdk_menu.ON_LOGIN then
+                    _a8csdk:onLogin()
+                elseif item == a8csdk_menu.ON_PAY then
+                    _a8csdk:onPay()
+                elseif item == a8csdk_menu.ON_EXIT then
+                    _a8csdk:onExit()
+                elseif item == a8csdk_menu.ON_LEVEL_UP then
+                    _a8csdk:onLevelUp()
+                elseif item == a8csdk_menu.ON_REGISTER then
+                    _a8csdk:onRegister()
+                elseif item == a8csdk_menu.ON_CUSTOM_EVENT then
+                    _a8csdk:onCustomEvent()
+                elseif item == a8csdk_menu.GET_LAST_GAME_SERVER_INFO then
+                    _a8csdk:getLastGameServerInfo()
                 end
             end
         end

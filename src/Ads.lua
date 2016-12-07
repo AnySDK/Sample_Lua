@@ -2,11 +2,6 @@ require "ClassBase"
 
 local ads_plugin = nil
 
-local function onPlayerGetPoints( plugin, points )
-    print("on ads player get points listener.")
-    print("points:"..points)
-end
-
 local function onAdsResult( code, msg )
     print("on ads result listener.")
     print("code:"..code..",msg:"..msg)
@@ -33,13 +28,7 @@ Ads = class()
 function Ads:ctor()
 	ads_plugin = AgentManager:getInstance():getAdsPlugin()
     if ads_plugin ~= nil then
-        ads_plugin:setAdsListener(function (param1, param2)
-            if type(param1) == "number" then
-                onAdsResult(param1, param2)
-            else
-                onPlayerGetPoints(param1, param2)
-            end
-        end)
+        ads_plugin:setAdsListener(onAdsResult)
     end
 end
 

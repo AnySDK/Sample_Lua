@@ -2,7 +2,7 @@ require "ClassBase"
 
 local push_plugin = nil
 
-local function onActionResult(plugin, code, msg)
+local function onPushResult(plugin, code, msg)
 	print("on push result listener.")
 	print("code:"..code..",msg:"..msg)
 	if code == PushActionResultCode.kPushReceiveMessage then
@@ -14,7 +14,7 @@ Push = class()
 function Push:ctor()
 	push_plugin = AgentManager:getInstance():getPushPlugin()
 	if push_plugin ~= nil then
-	    push_plugin:setActionListener(onActionResult)
+	    push_plugin:setActionListener(onPushResult)
 	end
 end
 
